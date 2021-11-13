@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, nativeImage } from 'electron';
+import path from 'path';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
@@ -8,7 +9,9 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = (): void => {
+  const icon = nativeImage.createFromPath(path.resolve(__dirname, 'assets', 'images', 'librarian.png'));
   const mainWindow = new BrowserWindow({
+    icon,
     height: 600,
     width: 800,
   });
