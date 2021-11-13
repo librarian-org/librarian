@@ -1,9 +1,17 @@
 import React from 'react';
-import Translator from './components/i18n/Translator';
+import I18n from './components/I18n/I18n';
+import Translator from './components/I18n/Translator';
 
 const App: React.FC = () => {
     return (
-        <div><Translator path="home.message" /></div>
+        <>
+        <header>
+          <I18n />
+        </header>
+        <div>
+          <Translator path="home.message" />
+        </div>
+      </>
     )
 }
 
