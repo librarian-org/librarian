@@ -1,0 +1,57 @@
+# :construction_worker: Contributing to Librarians
+
+Thank you for considering contributing to the Librarian! Welcome to our Contribution Guide.
+
+## Table of Contents
+
+1. [Getting Started](#getting-started)
+2. [Reporting an Issue](#reporting-an-issue)
+3. [Cloning the repository](#cloning-the-repository)
+
+## Getting Started
+
+If you don't want contribute with code, but want to help us Reporting Issues, just skip to [Reporting an Issue](#reporting-an-issue) section.
+
+However, if you prefer to work with code, simply go to [Cloning the repository](#cloning-the-repository) section and continue to the end of this document.
+
+## Reporting an Issue
+
+1. Describe what you expected to happen and what actually happens.
+
+2. If possible, include a minimal but complete example to help us reproduce the issue.
+
+3. We'll try to fix it as soon as possible but be in mind that Librarian is open source and you can probably submit a pull request to fix it even faster.
+
+4. Just [open you issue](https://github.com/danilolutz/librarian/issues/new).
+
+## Cloning the repository
+
+First of all you'll need some tools like [NodeJS](https://nodejs.org/en/) and [Git](https://git-scm.com/) to get your development environment working, as code editor we used [Visual Studio Code](https://code.visualstudio.com/), but it's only a suggestion, use whatever code editor you want.
+
+You can clone by https:
+
+```bash
+git clone https://github.com/danilolutz/librarian.git
+```
+
+Or by SSH:
+
+```bash
+git clone git@github.com:danilolutz/librarian.git
+```
+
+Whatever you prefer. Clone the repo and start your work following this steps (aka gitflow):
+
+1. :wrench: Create a new branch based on **develop**
+2. :white_check_mark: Name you branch how you prefer BUT **develop** or **master**
+3. :art: Do the best of your art
+4. :pencil: Make commit with a clear message
+5. :ok_hand: Open a pull request from your new branch to **develop**
+
+Maybe you ask yourself: _How can I contribute?_ or _What i can do?_
+
+We'll help you:
+
+- You can find and fix bugs;
+- Implement openned issues;
+- Improve the Librarian programming.
