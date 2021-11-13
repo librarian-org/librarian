@@ -1,5 +1,7 @@
 # About Librarian
 
+[![Build](https://github.com/danilolutz/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/danilolutz/librarian/actions/workflows/build.yml)
+
 A free OpenSource software to handle with books. It's ideal for library schools
 and for someone who have many books.
 
