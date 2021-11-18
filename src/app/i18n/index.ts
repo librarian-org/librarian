@@ -1,13 +1,16 @@
-import i18n from 'i18next';
+import i18n, { InitOptions } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-import translations from './locales';
-
-const i18nConfig = {
-  resources: translations,
-  fallbackLng: 'pt-br',
-  defaultNS: 'translations'
+const i18nConfig: InitOptions = {
+  saveMissing: true,
+  fallbackLng: 'en-US',
+  ns: ['common'],
+  defaultNS: 'common',
+  react: {
+    wait: false,
+    useSuspense : true,
+  }
 };
 
 i18n

@@ -1,15 +1,15 @@
 import React from 'react';
-import I18n from './components/I18n/I18n';
+import LanguageSelector from './components/I18n/LanguageSelector';
 import Translator from './components/I18n/Translator';
 
 const App: React.FC = () => {
     return (
-        <>
+      <>
         <header>
-          <I18n />
+          <LanguageSelector />
         </header>
         <div>
-          <Translator path="home.message" />
+          <Translator path="code" />
         </div>
       </>
     )
