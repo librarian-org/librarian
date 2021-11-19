@@ -1,54 +1,98 @@
 import { BrowserWindow } from 'electron';
+import { i18n } from 'i18next';
 
-export default function createMenuTemplate(
+type Language = {
+  code: string;
+  name: string;
+}
+
+const createMenuTemplate = async (
   mainWindow: BrowserWindow,
-): Electron.MenuItemConstructorOptions[] {
-  const template: Electron.MenuItemConstructorOptions[] = [
-    {
-      label: 'Arquivo',
+  i18n: i18n,
+  languages: string[],
+): Promise<Electron.MenuItemConstructorOptions[]> => {
+  const template: Electron.MenuItemConstructorOptions[] = [];
+
+  await Promise.all(
+    languages.map(async item => {
+        await i18n.loadLanguages(item);
+      })
+  );
+
+  const data = Object.entries(i18n.services.resourceStore.data);
+  const lngs: Language[] = data.map((item) => {
+    const l = item[1].common as Language;
+    return {code: l.code, name: l.name};
+  });
+
+  const languageMenu: Electron.MenuItemConstructorOptions[] = lngs.map((lang) => {
+    return {
+      label: i18n.t(lang.name),
+      type: 'radio',
+      checked: i18n.language === lang.code,
+      click: () => {
+        i18n.changeLanguage(lang.code);
+      }
+    }
+  });
+
+  const language = {
+    label: i18n.t('menu.language'),
+    submenu: languageMenu
+  };
+
+  template.push({
+      label: i18n.t('menu.file'),
       submenu: [
-        { role: 'quit', label: 'Sair' },
+        { role: 'quit', label: i18n.t('menu.quit') },
       ],
-    },
-    {
-      label: 'Visualizar',
-      submenu: [
-        {
-          label: 'Tema Escuro',
-          id: 'dark-theme',
-          type: 'checkbox',
-          click: async () => {
-            if (mainWindow) {
-              mainWindow.webContents.send('set-theme');
-            }
-          },
+  });
+
+  template.push({
+    label: i18n.t('menu.view'),
+    submenu: [
+      language,
+      { type: 'separator' },
+      {
+        label: i18n.t('menu.darkTheme'),
+        id: 'dark-theme',
+        type: 'checkbox',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send('set-theme');
+          }
         },
-        { role: 'reload', label: 'Recarregar' },
-        { role: 'forceReload', label: 'Forçar recarregamento' },
-        { role: 'toggleDevTools', label: 'Alternar Ferramentas e dev' },
-        { type: 'separator' },
-        { role: 'resetZoom', label: 'Redefinir zoom' },
-        { role: 'zoomIn', label: 'Ampliar' },
-        { role: 'zoomOut', label: 'Reduzir' },
-        { type: 'separator' },
-        { role: 'togglefullscreen', label: 'Tela cheia' },
-      ],
-    },
-    {
-      label: 'Janela',
-      submenu: [
-        { role: 'minimize', label: 'Minimizar' },
-        { role: 'zoom', label: 'Zoom' },
-        { role: 'close', label: 'Fechar' },
-      ],
-    },
-    {
+      },
+      { type: 'separator' },
+      { role: 'reload', label: i18n.t('menu.reload') },
+      { role: 'forceReload', label: i18n.t('menu.forceReload') },
+      { role: 'toggleDevTools', label: i18n.t('menu.toggleDevTools') },
+      { type: 'separator' },
+      { role: 'resetZoom', label: i18n.t('menu.resetZoom') },
+      { role: 'zoomIn', label: i18n.t('menu.zoomIn') },
+      { role: 'zoomOut', label: i18n.t('menu.zoomOut') },
+      { type: 'separator' },
+      { role: 'togglefullscreen', label: i18n.t('menu.fullScreen') },
+    ],
+  });
+
+
+  template.push({
+    label: i18n.t('menu.window'),
+    submenu: [
+      { role: 'minimize', label: i18n.t('menu.minimize') },
+      { role: 'zoom', label: i18n.t('menu.zoom') },
+      { role: 'close', label: i18n.t('menu.close') },
+    ],
+  });
+
+  template.push({
       role: 'help',
-      label: 'Ajuda',
+      label: i18n.t('menu.help'),
       submenu: [
         {
           id: 'about-menu',
-          label: 'Sobre',
+          label: i18n.t('menu.about'),
           click: async () => {
             if (mainWindow) {
               mainWindow.webContents.send('about', true);
@@ -56,8 +100,9 @@ export default function createMenuTemplate(
           },
         },
       ],
-    },
-  ];
+    });
 
   return template;
 }
+
+export default createMenuTemplate;
