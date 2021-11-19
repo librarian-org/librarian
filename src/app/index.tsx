@@ -10,7 +10,7 @@ interface Message {
   resource: unknown;
 }
 
-window.api.receive('language-changed', (event, message: Message) => {
+window.api.on('language-changed', (event, message: Message) => {
   if (!i18n.hasResourceBundle(message.language, message.namespace)) {
     i18n.addResourceBundle(message.language, message.namespace, message.resource);
   }

@@ -1,7 +1,8 @@
-import { app, BrowserWindow, nativeImage, ipcMain, NativeImage } from 'electron';
+import { app, BrowserWindow, nativeImage, ipcMain, NativeImage, Menu } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
 import Bootstrap from './Bootstrap';
+import createMenuTemplate from './Menu';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -37,6 +38,7 @@ export default class Main {
       icon: this.getIcon(),
       height: 600,
       width: 800,
+      show: false,
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
@@ -46,7 +48,15 @@ export default class Main {
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate(createMenuTemplate(mainWindow)),
+    );
+
     mainWindow.webContents.openDevTools();
+
+    mainWindow.once('ready-to-show', () => {
+      mainWindow.show()
+    })
 
     await this.handleTranslations(mainWindow);
   }
@@ -99,6 +109,12 @@ export default class Main {
       );
       event.returnValue = initial;
     });
+
+    ipcMain.on('get-theme', (event, content) => {
+      const menu = Menu.getApplicationMenu();
+      menu.getMenuItemById('dark-theme').checked = content as boolean;
+    });
+
   }
 
   protected handleWindowsShortcuts(): void {
