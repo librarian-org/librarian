@@ -38,6 +38,7 @@ export default class Main {
       icon: this.getIcon(),
       height: 600,
       width: 800,
+      show: false,
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
@@ -52,6 +53,10 @@ export default class Main {
     );
 
     mainWindow.webContents.openDevTools();
+
+    mainWindow.once('ready-to-show', () => {
+      mainWindow.show()
+    })
 
     await this.handleTranslations(mainWindow);
   }
