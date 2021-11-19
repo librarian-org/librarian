@@ -69,13 +69,11 @@ export default class Main {
     this.translations = await this.bootstrap.startI18n();
 
     this.translations.on('loaded', () => {
-      console.log('loaded PASSOU');
       this.translations.changeLanguage('en-US');
       this.translations.off('loaded');
     });
 
     this.translations.on('languageChanged', (lng: string) => {
-      console.log('languageChanged', lng);
       window.webContents.send('language-changed', {
         language: lng,
         namespace: 'common',
@@ -85,16 +83,21 @@ export default class Main {
   }
 
   protected setIpcMainListeners(): void {
-    ipcMain.on('get-initial-translations', (event) => {
-      this.translations.loadLanguages('en-US', () => {
-        const initial = {
-          'en-US': {
-            'translation': this.translations.getResourceBundle('en-US', 'common')
-          }
-        };
-        console.log('eI18n222', initial);
-        event.returnValue = initial;
-      });
+    ipcMain.on('get-initial-translations', async (event) => {
+      let initial: any;
+      await Promise.all(
+        this.bootstrap.getLanguages().map(async item => {
+          await this.translations.loadLanguages(item, () => {
+            const lang = {
+              [item]: {
+                'common': this.translations.getResourceBundle(item, 'common')
+              }
+            };
+            initial = { ...initial, ...lang};
+          });
+        })
+      );
+      event.returnValue = initial;
     });
   }
 

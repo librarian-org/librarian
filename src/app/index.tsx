@@ -10,10 +10,7 @@ interface Message {
   resource: unknown;
 }
 
-window.api.sendSync('get-initial-translations', {});
-
-window.api.receive('language-changed', (message: Message) => {
-  console.log('messageXXXX', message);
+window.api.receive('language-changed', (event, message: Message) => {
   if (!i18n.hasResourceBundle(message.language, message.namespace)) {
     i18n.addResourceBundle(message.language, message.namespace, message.resource);
   }
@@ -24,7 +21,7 @@ window.api.receive('language-changed', (message: Message) => {
 ReactDOM.render(
   <React.StrictMode>
     {/* <I18nextProvider i18n={i18n}> */}
-    <I18nextProvider i18n={i18n}>
+    <I18nextProvider i18n={i18n} defaultNS='common'>
       <Suspense fallback={<div>Loading ... </div>}>
         <App />
       </Suspense>
