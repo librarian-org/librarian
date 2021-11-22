@@ -59,18 +59,17 @@ export default class Main {
 
     ipcMain.on("add", async (event, content: EventInterface[]) => {
       const repository = Maker.make(connection, content[0].entity);
-      console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(repository)));
       event.returnValue = await repository.add(content[0].value);
     });
 
     ipcMain.on("edit", async (event, content: EventInterface[]) => {
       const repository = Maker.make(connection, content[0].entity);
-      await repository.edit(content[0].value);
+      event.returnValue = await repository.edit(content[0].value);
     });
 
     ipcMain.on("delete", async (event, content: EventInterface[]) => {
       const repository = Maker.make(connection, content[0].entity);
-      await repository.delete(content[0].value);
+      event.returnValue = await repository.delete(content[0].value);
     });
 
     ipcMain.on("show", async (event, content: EventInterface[]) => {
@@ -81,7 +80,7 @@ export default class Main {
     ipcMain.on("getAll", async (event, content: EventInterface[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.getAll(content[0]);
-    }); 
+    });
 
     const mainWindow = new BrowserWindow({
       icon: this.getIcon(),

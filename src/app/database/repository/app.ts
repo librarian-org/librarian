@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import AppRepositoryInterface from './AppRepositoryInterface';
+import AppRepositoryInterface from "./AppRepositoryInterface";
 interface ObjectDto {
   value: any;
 }
@@ -16,7 +16,7 @@ export class AppRepository implements AppRepositoryInterface {
     try {
       const item = await this.repository.create(content);
       await this.repository.save(item);
-	  return this.repository.find();
+      return this.repository.find();
     } catch (err) {
       throw err;
     }
@@ -24,9 +24,8 @@ export class AppRepository implements AppRepositoryInterface {
 
   public async edit(content: object) {
     try {
-      const item = await this.repository.update(content);
-      await this.repository.save(item);
-	  return this.repository.find();
+      await this.repository.save(content);
+      return this.repository.find();
     } catch (err) {
       throw err;
     }
@@ -36,6 +35,7 @@ export class AppRepository implements AppRepositoryInterface {
     try {
       const item = await this.repository.create(content);
       await this.repository.remove(item);
+	  return this.repository.find();
     } catch (err) {
       throw err;
     }
@@ -51,9 +51,7 @@ export class AppRepository implements AppRepositoryInterface {
 
   public async getAll(content: ObjectDto) {
     try {
-      const filter = content.value
-        ? { where: content.value }
-        : {};
+      const filter = content.value ? { where: content.value } : {};
       return await this.repository.find(filter);
     } catch (err) {
       throw err;
