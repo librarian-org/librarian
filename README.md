@@ -15,7 +15,7 @@ yarn
 
 ## Contributing
 
-Thank you for considering contributing to the Librarian! Follow the [Contributing Guide](.github/CONTRIBUTING.md.md).
+Thank you for considering contributing to the Librarian! Follow the [Contributing Guide](.github/CONTRIBUTING.md).
 
 ## Code of Conduct
 
