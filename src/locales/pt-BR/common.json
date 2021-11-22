@@ -1,6 +1,26 @@
 {
   "code": "pt-BR",
-  "name": "Português",
+  "name": "Português Brasileiro",
+  "menu": {
+    "file": "&Arquivo",
+    "quit": "&Sair",
+    "view": "&Visualizar",
+    "darkTheme": "&Tema Escuro",
+    "reload": "&Recarregar",
+    "forceReload": "Forçar Recarga",
+    "toggleDevTools": "Habilitar Dev Tools",
+    "resetZoom": "Resetar Zoom",
+    "zoomIn": "Aproximar",
+    "zoomOut": "Afastar",
+    "fullScreen": "Tela Cheia",
+    "window": "Janela",
+    "minimize": "Minimizar",
+    "zoom": "Zoom",
+    "close": "Fechar",
+    "help": "&Ajuda",
+    "about": "&Sobre",
+    "language": "&Idioma"
+  },
   "home": {
     "message": "Olá Mundo!"
   }

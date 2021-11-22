@@ -1,6 +1,26 @@
 {
   "code": "en-US",
   "name": "English",
+  "menu": {
+    "file": "&File",
+    "quit": "&Quit",
+    "view": "&View",
+    "darkTheme": "&Dark Theme",
+    "reload": "&Reload",
+    "forceReload": "Force Reload",
+    "toggleDevTools": "Toggle Dev Tools",
+    "resetZoom": "Reset Zoom",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "fullScreen": "Full Screen",
+    "window": "Window",
+    "minimize": "Minimize",
+    "zoom": "Zoom",
+    "close": "Close",
+    "help": "&Help",
+    "about": "&About",
+    "language": "&Language"
+  },
   "home": {
     "message": "Hello World!"
   }
