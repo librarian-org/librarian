@@ -48,10 +48,6 @@ export default class Main {
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-    Menu.setApplicationMenu(
-      Menu.buildFromTemplate(createMenuTemplate(mainWindow)),
-    );
-
     mainWindow.webContents.openDevTools();
 
     mainWindow.once('ready-to-show', () => {
@@ -77,6 +73,14 @@ export default class Main {
 
   protected async handleTranslations(window: BrowserWindow): Promise<void> {
     this.translations = await this.bootstrap.startI18n();
+
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate(await createMenuTemplate(
+        window,
+        this.translations,
+        this.bootstrap.getLanguages()
+      )),
+    );
 
     this.translations.on('loaded', () => {
       this.translations.changeLanguage('en-US');
