@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import LanguageSelector from './components/I18n/LanguageSelector';
 import Translator from './components/I18n/Translator';
+import FormBook from './components/Book/FormBook';
 import usePersistedState from './hooks/usePersistedState';
 
 import GlobalStyle from './styles/global';
@@ -35,6 +36,7 @@ const App: React.FC = () => {
       </header>
       <div>
         <Translator path="home.message" />
+        <FormBook></FormBook>
       </div>
       <GlobalStyle />
     </ThemeProvider>

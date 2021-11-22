@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "*": ["node_modules/*"]
     }
