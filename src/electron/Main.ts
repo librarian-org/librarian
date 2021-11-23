@@ -26,11 +26,14 @@ export default class Main {
   private translations: i18n;
   private connection: Connection;
 
-  constructor() {
-    this.init();
+  public async start(): Promise<void> {
+    this.handleWindowsShortcuts();
+    await this.setListeners();
+    await this.setConnection();
+    this.setIpcMainListeners();
   }
 
-  private async init() {
+  protected async setConnection(): Promise<void> {
     this.connection = await createConnection({
       type: 'sqlite',
       synchronize: true,
@@ -39,12 +42,6 @@ export default class Main {
       database: './src/database/database.sqlite',
       entities: [Book, User],
     });
-  }
-
-  public async start(): Promise<void> {
-    this.handleWindowsShortcuts();
-    await this.setListeners();
-    this.setIpcMainListeners();
   }
 
   protected async setListeners(): Promise<void> {
@@ -66,14 +63,14 @@ export default class Main {
   }
 
   protected async createWindow(): Promise<void> {
-    ipcMain.on('insert', async (event, content: Event[]) => {
+    ipcMain.on('create', async (event, content: Event[]) => {
       const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.insert(content[0].value);
+      event.returnValue = await repository.create(content[0].value);
     });
 
-    ipcMain.on('edit', async (event, content: Event[]) => {
+    ipcMain.on('update', async (event, content: Event[]) => {
       const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.edit(content[0].value);
+      event.returnValue = await repository.update(content[0].value);
     });
 
     ipcMain.on('delete', async (event, content: Event[]) => {
@@ -81,9 +78,9 @@ export default class Main {
       event.returnValue = await repository.delete(content[0].value);
     });
 
-    ipcMain.on('show', async (event, content: Event[]) => {
+    ipcMain.on('read', async (event, content: Event[]) => {
       const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.show(content[0].value);
+      event.returnValue = await repository.read(content[0].value);
     });
 
     ipcMain.on('list', async (event, content: Event[]) => {

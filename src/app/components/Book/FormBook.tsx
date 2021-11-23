@@ -4,9 +4,9 @@ const FormBook: React.FC = () => {
   const [name, setName] = useState("");
   const [books, setBooks] = useState([]);
 
-  const handleInsert = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const retorno: any = window.api.sendSync("insert", {
+    const retorno: any = window.api.sendSync("create", {
       entity: "Book",
       value: {
         name: name,
@@ -31,7 +31,7 @@ const FormBook: React.FC = () => {
 
   const handleUpdate = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const retorno: any = window.api.sendSync("edit", {
+    const retorno: any = window.api.sendSync("update", {
       entity: "Book",
       value: {
         id: 1,
@@ -48,7 +48,7 @@ const FormBook: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={(event) => handleInsert(event)}>
+      <form onSubmit={(event) => handleCreate(event)}>
         <label>
           Nome:
           <input

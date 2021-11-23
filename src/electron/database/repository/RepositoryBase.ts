@@ -8,7 +8,7 @@ export default class RepositoryBase implements Repository {
     return this;
   }
 
-  public async insert(content: unknown) {
+  public async create(content: unknown) {
     try {
       const item = await this.repository.create(content);
       await this.repository.save(item);
@@ -18,7 +18,7 @@ export default class RepositoryBase implements Repository {
     }
   }
 
-  public async edit(content: unknown) {
+  public async update(content: unknown) {
     try {
       await this.repository.save(content);
       return this.repository.find();
@@ -37,7 +37,7 @@ export default class RepositoryBase implements Repository {
     }
   }
 
-  public async show(content: unknown) {
+  public async read(content: unknown) {
     try {
       return await this.repository.find({ where: { id: content } });
     } catch (err) {

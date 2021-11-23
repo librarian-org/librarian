@@ -1,7 +1,7 @@
 export interface Repository {
-  insert(content: unknown): any;
-  edit(content: unknown): any;
+  create(content: unknown): any;
+  update(content: unknown): any;
   delete(content: unknown): any;
-  show(content: unknown): any;
+  read(content: unknown): any;
   list(content: unknown): any;
 }
