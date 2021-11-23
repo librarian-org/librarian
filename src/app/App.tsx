@@ -3,6 +3,7 @@ import { DefaultTheme, ThemeProvider } from 'styled-components';
 import LanguageSelector from './components/I18n/LanguageSelector';
 import Translator from './components/I18n/Translator';
 import usePersistedState from './hooks/usePersistedState';
+import FormBook from './components/Book/FormBook';
 
 import GlobalStyle from './styles/global';
 import light from './styles/themes/light';
@@ -11,7 +12,7 @@ import dark from './styles/themes/dark';
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
     '@librarian:theme',
-    light,
+    light
   );
 
   useEffect(() => {
@@ -27,7 +28,6 @@ const App: React.FC = () => {
     toggleTheme();
   });
 
-
   return (
     <ThemeProvider theme={theme}>
       <header>
@@ -35,10 +35,11 @@ const App: React.FC = () => {
       </header>
       <div>
         <Translator path="home.message" />
+        <FormBook></FormBook>
       </div>
       <GlobalStyle />
     </ThemeProvider>
-  )
-}
+  );
+};
 
 export default App;
