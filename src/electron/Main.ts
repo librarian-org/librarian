@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { app, BrowserWindow, nativeImage, ipcMain, NativeImage, Menu } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
