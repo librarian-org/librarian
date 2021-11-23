@@ -38,4 +38,4 @@ In order to ensure that the Librarian community is welcoming to all, please revi
 The Librarian is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
-Made with :heart: by [Danilo Lutz](https://github.com/danilolutz)
+Made with :heart: by [this amazing people](https://github.com/danilolutz/librarian/graphs/contributors).
