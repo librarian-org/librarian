@@ -13,6 +13,18 @@ Just clone the project and, to install dependencies, type:
 yarn
 ```
 
+To run the project, execute:
+
+```bash
+yarn start
+```
+
+To build the project, execute:
+
+```bash
+yarn make
+```
+
 ## Contributing
 
 Thank you for considering contributing to the Librarian! Follow the [Contributing Guide](.github/CONTRIBUTING.md).
