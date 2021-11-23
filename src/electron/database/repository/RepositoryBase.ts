@@ -1,5 +1,4 @@
-import { Repository } from "../../contracts/Repository";
-
+import { Repository } from '../../contracts/Repository';
 
 export default class RepositoryBase implements Repository {
   private repository;
