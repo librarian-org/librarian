@@ -1,10 +1,11 @@
 import { Repository } from "typeorm";
-import AppRepositoryInterface from "./AppRepositoryInterface";
+import { AppRepository } from "../../contracts/AppRepository";
+
 interface ObjectDto {
   value: any;
 }
 
-export class AppRepository implements AppRepositoryInterface {
+export class App implements AppRepository {
   private repository;
 
   constructor(typeOrm: any) {
@@ -35,7 +36,7 @@ export class AppRepository implements AppRepositoryInterface {
     try {
       const item = await this.repository.create(content);
       await this.repository.remove(item);
-	  return this.repository.find();
+      return this.repository.find();
     } catch (err) {
       throw err;
     }

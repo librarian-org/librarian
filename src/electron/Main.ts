@@ -14,7 +14,7 @@ import Maker from "../app/database/factory/maker";
 import { createConnection } from "typeorm";
 import { Book } from "../app/database/models/book.schema";
 import { User } from "../app/database/models/user.schema";
-import EventInterface from "./eventInterface";
+import { Event } from "../app/contracts/Event";
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -57,27 +57,27 @@ export default class Main {
       entities: [Book, User],
     });
 
-    ipcMain.on("add", async (event, content: EventInterface[]) => {
+    ipcMain.on("add", async (event, content: Event[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.add(content[0].value);
     });
 
-    ipcMain.on("edit", async (event, content: EventInterface[]) => {
+    ipcMain.on("edit", async (event, content: Event[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.edit(content[0].value);
     });
 
-    ipcMain.on("delete", async (event, content: EventInterface[]) => {
+    ipcMain.on("delete", async (event, content: Event[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.delete(content[0].value);
     });
 
-    ipcMain.on("show", async (event, content: EventInterface[]) => {
+    ipcMain.on("show", async (event, content: Event[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.show(content[0].value);
     });
 
-    ipcMain.on("getAll", async (event, content: EventInterface[]) => {
+    ipcMain.on("getAll", async (event, content: Event[]) => {
       const repository = Maker.make(connection, content[0].entity);
       event.returnValue = await repository.getAll(content[0]);
     });

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  ChangeEvent,
-  ChangeEventHandler,
-  MouseEvent,
-} from "react";
-import ListBook from "./ListBook";
+import React, { useState } from "react";
 
 const FormBook: React.FC = () => {
   const [name, setName] = useState("");
@@ -12,34 +6,37 @@ const FormBook: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const retorno = window.api.sendSync("add", {
+    const retorno: any = window.api.sendSync("add", {
       entity: "Book",
       value: {
         name: name,
       },
     });
+    setBooks(retorno);
   };
 
   const handleDelete = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const retorno = window.api.sendSync("delete", {
+    const retorno: any = window.api.sendSync("delete", {
       entity: "Book",
       value: {
         id: 1,
         name: "testeTE",
       },
     });
+    setBooks(retorno);
   };
 
   const handleUpdate = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    const retorno = window.api.sendSync("edit", {
+    const retorno: any = window.api.sendSync("edit", {
       entity: "Book",
       value: {
         id: 1,
         name: "testeTE",
       },
     });
+    setBooks(retorno);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +62,5 @@ const FormBook: React.FC = () => {
     </>
   );
 };
-//<ListBook books={books}></ListBook>
 
 export default FormBook;
