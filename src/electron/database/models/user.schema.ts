@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Profile } from './profile.schema';
 @Entity()
 export class User
 {
@@ -8,4 +8,8 @@ export class User
 
   @Column()
   name: string;
+
+  @OneToMany(() => Profile, profile => profile.users)
+  profiles: Profile[];
+
 }
