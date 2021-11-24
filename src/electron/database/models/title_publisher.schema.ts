@@ -17,6 +17,12 @@ export class TitlePublisher
   @Column({ type: 'date' })
   published_at: string;
 
+  @Column()
+  title_id: number;
+
+  @Column()
+  publisher_id: number;
+
   @ManyToOne(() => Title, title => title.titlePublishers)
   title: Title;
 
