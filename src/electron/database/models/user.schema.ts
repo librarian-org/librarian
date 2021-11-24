@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Contact } from './contact.schema';
 
 @Entity()
 export class User
@@ -8,4 +9,7 @@ export class User
 
   @Column()
   name: string;
+  
+  @OneToMany(() => Contact, contact => contact.user)
+  contacts: Contact[];
 }
