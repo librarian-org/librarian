@@ -17,6 +17,7 @@ import { Title } from './database/models/title.schema';
 import { User } from './database/models/user.schema';
 import { Event } from '../electron/contracts/Event';
 import Maker from './database/factory/maker';
+import { Country } from './database/models/country.schema';
 import { Publisher } from './database/models/publisher.schema';
 import { Category } from './database/models/category.schema';
 import { Author } from './database/models/author.schema';
@@ -43,7 +44,7 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [Title, User, Author, Category, Publisher],
+      entities: [Title, User, Author, Category, Publisher, Country],
     });
   }
 
