@@ -13,11 +13,18 @@ import Bootstrap from './Bootstrap';
 import createMenuTemplate from './Menu';
 
 import { Connection, createConnection } from 'typeorm';
-import { Book } from './database/models/book.schema';
+import { Title } from './database/models/title.schema';
 import { User } from './database/models/user.schema';
 import { Event } from '../electron/contracts/Event';
 import Maker from './database/factory/maker';
 import { Settings } from './database/models/settings.schema';
+import { ContactType } from './database/models/contact_type.schema';
+import { TypeUser } from './database/models/type_user.schema';
+import { Profile } from './database/models/profile.schema';
+import { Country } from './database/models/country.schema';
+import { Publisher } from './database/models/publisher.schema';
+import { Category } from './database/models/category.schema';
+import { Author } from './database/models/author.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -41,7 +48,7 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [Book, User, Settings],
+      entities: [Title, User, Author, Category, Publisher, Country, Profile, TypeUser, ContactType, Settings],
     });
   }
 
