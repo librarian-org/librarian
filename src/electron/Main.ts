@@ -17,6 +17,7 @@ import { Book } from './database/models/book.schema';
 import { User } from './database/models/user.schema';
 import { Event } from '../electron/contracts/Event';
 import Maker from './database/factory/maker';
+import { Category } from './database/models/category.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -40,7 +41,7 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [Book, User],
+      entities: [Book, User, Category],
     });
   }
 
