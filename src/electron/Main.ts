@@ -13,7 +13,7 @@ import Bootstrap from './Bootstrap';
 import createMenuTemplate from './Menu';
 
 import { Connection, createConnection } from 'typeorm';
-import { Book } from './database/models/book.schema';
+import { Title } from './database/models/title.schema';
 import { User } from './database/models/user.schema';
 import { Event } from '../electron/contracts/Event';
 import Maker from './database/factory/maker';
@@ -40,7 +40,7 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [Book, User],
+      entities: [Title, User],
     });
   }
 
