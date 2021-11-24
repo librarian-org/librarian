@@ -7,9 +7,10 @@ const FormBook: React.FC = () => {
   const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const retorno: any = window.api.sendSync("create", {
-      entity: "Book",
+      entity: "Title",
       value: {
         name: name,
+        ISBN: 'teste'
       },
     });
     setBooks(retorno);
@@ -19,7 +20,7 @@ const FormBook: React.FC = () => {
   const handleDelete = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const retorno: any = window.api.sendSync("delete", {
-      entity: "Book",
+      entity: "Title",
       value: {
         id: 1,
         name: "testeTE",
@@ -32,7 +33,7 @@ const FormBook: React.FC = () => {
   const handleUpdate = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const retorno: any = window.api.sendSync("update", {
-      entity: "Book",
+      entity: "Title",
       value: {
         id: 1,
         name: "testeTE",
