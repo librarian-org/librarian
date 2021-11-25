@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'ty
 import { Profile } from './profile.schema';
 import { Contact } from './contact.schema';
 import { TypeUser } from './type_user.schema';
+import { Borrow } from './borrow.schema';
 
 @Entity()
 export class User {
@@ -37,5 +38,8 @@ export class User {
 
   @OneToMany(() => Profile, profile => profile.users)
   profiles: Profile[];
+
+  @OneToMany(() => Borrow, borrow => borrow.user)
+  borrows: Borrow[];
 
 }

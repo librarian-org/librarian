@@ -17,8 +17,11 @@
     "minimize": "Minimizar",
     "zoom": "Zoom",
     "close": "Fechar",
-    "help": "&Ajuda",
-    "about": "&Sobre",
+    "help": {
+      "label": "&Ajuda",
+      "documentation": "&Documentação",
+      "about": "&Sobre"
+    },
     "language": "&Idioma"
   },
   "button": {
