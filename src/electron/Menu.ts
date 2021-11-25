@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, shell } from 'electron';
 import { i18n } from 'i18next';
 
 type Language = {
@@ -88,11 +88,18 @@ const createMenuTemplate = async (
 
   template.push({
       role: 'help',
-      label: i18n.t('menu.help'),
+      label: i18n.t('menu.help.label'),
       submenu: [
         {
+          label: i18n.t('menu.help.documentation'),
+          click: async () => {
+            shell.openExternal('https://danilolutz.gitbook.io/librarian/');
+          },
+        },
+        { type: 'separator' },
+        {
           id: 'about-menu',
-          label: i18n.t('menu.about'),
+          label: i18n.t('menu.help.about'),
           click: async () => {
             if (mainWindow) {
               mainWindow.webContents.send('about', true);
