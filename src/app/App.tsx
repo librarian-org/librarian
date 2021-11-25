@@ -8,6 +8,7 @@ import GlobalStyle from './styles/global';
 import light from './styles/themes/light';
 import dark from './styles/themes/dark';
 import Header from './components/Header';
+import Content from './components/Content';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -33,9 +34,9 @@ const App: React.FC = () => {
       <Header>
         <LanguageSelector />
       </Header>
-      <div>
+      <Content>
         <Translator path="home.message" />
-      </div>
+      </Content>
       <GlobalStyle />
     </ThemeProvider>
   );
