@@ -1,13 +1,13 @@
 import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
 
-export class createUser1637784086085 implements MigrationInterface {
+export class createUser1637774086085 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
             name: "user",
             columns: [
                 {
-                    name: "id", 
+                    name: "id",
                     type: "int",
                     isPrimary: true
                 },
@@ -55,7 +55,7 @@ export class createUser1637784086085 implements MigrationInterface {
 
         const userTypeId = table.foreignKeys.find(fk => fk.columnNames.indexOf("user_type_id") !== -1);
         await queryRunner.dropForeignKey("user", userTypeId);
-        
+
         await queryRunner.dropTable("user");
     }
 
