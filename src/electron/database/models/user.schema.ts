@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Contact } from './contact.schema';
 import { TypeUser } from './type_user.schema';
 
 @Entity()
@@ -8,7 +9,7 @@ export class User {
 
   @Column()
   name: string;
-
+  
   @Column()
   login: string;
 
@@ -29,4 +30,8 @@ export class User {
 
   @ManyToOne(() => TypeUser, type => type.users)
   type: TypeUser;
+
+  @OneToMany(() => Contact, contact => contact.user)
+  contacts: Contact[];
+
 }
