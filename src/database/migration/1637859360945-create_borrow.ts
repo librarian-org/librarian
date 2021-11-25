@@ -21,11 +21,11 @@ export class createBorrow1637859360945 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'estimated_devolution',
+            name: 'estimated_return',
             type: 'varchar',
           },
           {
-            name: 'devolved_at',
+            name: 'returned_at',
             type: 'varchar',
           },
           {

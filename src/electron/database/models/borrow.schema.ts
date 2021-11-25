@@ -14,10 +14,10 @@ export class Borrow {
   borrow: string;
 
   @Column({ type: 'date' })
-  estimated_devolution: string;
+  estimated_return: string;
 
   @Column({ type: 'date' })
-  devolved_at: string;
+  returned_at: string;
 
   @Column()
   status: number;
