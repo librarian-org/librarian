@@ -12,6 +12,10 @@ declare module 'styled-components' {
       header: {
         background: string;
       }
+
+      card: {
+        background: string;
+      }
     }
   }
 }
