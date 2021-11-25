@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Profile } from './profile.schema';
 import { Contact } from './contact.schema';
 import { TypeUser } from './type_user.schema';
 
@@ -9,7 +10,7 @@ export class User {
 
   @Column()
   name: string;
-  
+
   @Column()
   login: string;
 
@@ -33,5 +34,8 @@ export class User {
 
   @OneToMany(() => Contact, contact => contact.user)
   contacts: Contact[];
+
+  @OneToMany(() => Profile, profile => profile.users)
+  profiles: Profile[];
 
 }
