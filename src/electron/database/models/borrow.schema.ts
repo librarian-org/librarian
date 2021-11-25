@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { BorrowRenovation } from './borrow_renovation.schema';
 import { Publisher } from './publisher.schema';
 import { User } from './user.schema';
 
@@ -36,4 +37,7 @@ export class Borrow {
 
   @ManyToOne(() => Publisher, (publisher) => publisher.borrows)
   publisher: Publisher;
+
+  @OneToMany(() => BorrowRenovation, renovation => renovation.borrow)
+  renovations: BorrowRenovation[];
 }
