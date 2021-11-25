@@ -29,6 +29,7 @@ import { Author } from './database/models/author.schema';
 import { TitlePublisher } from './database/models/title_publisher.schema';
 import { Contact } from './database/models/contact.schema';
 import { Region } from './database/models/region.schema';
+import { Borrow } from './database/models/borrow.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -66,7 +67,8 @@ export default class Main {
         TypeUser,
         ContactType,
         Contact,
-        Settings
+        Settings,
+        Borrow
       ],
     });
   }
