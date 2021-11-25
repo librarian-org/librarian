@@ -1,11 +1,24 @@
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow, nativeImage, NativeImage } from 'electron';
 import { i18n } from 'i18next';
+import path from 'path';
+
 
 type Language = {
   code: string;
   name: string;
 }
 
+const getIcon = (): string => {
+  return path.resolve(
+      __dirname,
+      '..',
+      'renderer',
+      'main_window',
+      'assets',
+      'images',
+      'librarian.png'
+    );
+}
 const createMenuTemplate = async (
   mainWindow: BrowserWindow,
   i18n: i18n,
@@ -94,9 +107,16 @@ const createMenuTemplate = async (
           id: 'about-menu',
           label: i18n.t('menu.about'),
           click: async () => {
-            if (mainWindow) {
-              mainWindow.webContents.send('about', true);
-            }
+            app.setAboutPanelOptions({
+              applicationName: 'Librarian',
+              applicationVersion: app.getVersion(),
+              copyright: 'Librarian Team',
+              authors: ['Danilo Lutz', 'André Gava', 'All the amazing Github contributors'],
+              website: 'https://github.com/danilolutz/librarian',
+              iconPath: getIcon(),
+            });
+            console.log('getIcon(): ', getIcon());
+            app.showAboutPanel()
           },
         },
       ],
