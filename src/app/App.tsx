@@ -11,6 +11,7 @@ import Content from './components/Content';
 import Card from './components/Card';
 import Button from './components/Button';
 import Input from './components/Input';
+import { FiAlignJustify } from 'react-icons/fi';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -38,11 +39,16 @@ const App: React.FC = () => {
       </Header>
       <Content>
         <Card title="home.message">
-          <Input name="input" label="Input" />
+          <Input
+            name="input"
+            icon={FiAlignJustify}
+            label="Input"
+            placeholder="Type something here..."
+           />
           <br /><br />
-          <Button>Text</Button>
-          <Button color="primary">Text</Button>
-          <Button color="secondary">Text</Button>
+          <Button>Default</Button>
+          <Button color="primary">Primary</Button>
+          <Button color="secondary">Secondary</Button>
         </Card>
       </Content>
       <GlobalStyle />

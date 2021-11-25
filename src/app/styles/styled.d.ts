@@ -29,7 +29,7 @@ declare module 'styled-components' {
       input: {
         background: string;
         text: string;
-        // icon: string;
+        icon: string;
         placeholder: string;
       }
     }
