@@ -25,6 +25,13 @@ declare module 'styled-components' {
       card: {
         background: string;
       }
+
+      input: {
+        background: string;
+        text: string;
+        // icon: string;
+        placeholder: string;
+      }
     }
   }
 }

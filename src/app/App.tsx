@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Content from './components/Content';
 import Card from './components/Card';
 import Button from './components/Button';
+import Input from './components/Input';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -37,6 +38,8 @@ const App: React.FC = () => {
       </Header>
       <Content>
         <Card title="home.message">
+          <Input name="input" label="Input" />
+          <br /><br />
           <Button>Text</Button>
           <Button color="primary">Text</Button>
           <Button color="secondary">Text</Button>

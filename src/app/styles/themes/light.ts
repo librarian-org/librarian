@@ -22,5 +22,12 @@ export default {
     card: {
       background: '#E7E7EE',
     },
+
+    input: {
+      background: '#D7D7DD',
+      // icon: '#666360',
+      text: '#666360',
+      placeholder: '#A0A0A0',
+    }
   }
 };
