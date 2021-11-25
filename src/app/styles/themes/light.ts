@@ -9,6 +9,10 @@ export default {
 
     header: {
       background: '#E7E7EE',
+    },
+
+    card: {
+      background: '#E7E7EE',
     }
   }
 };
