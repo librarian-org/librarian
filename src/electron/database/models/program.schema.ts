@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Permission } from './permission.schema';
 
 @Entity()
 export class Program
@@ -11,4 +12,7 @@ export class Program
 
   @Column()
   screen: string;
+
+  @OneToMany(() => Permission, permission => permission.program)
+  permissions: Permission[];
 }
