@@ -1,11 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Book
-{
-  @PrimaryGeneratedColumn()
-  id: number;
+export class Settings {
+  @Column()
+  days_return_date: number;
 
   @Column()
-  name: string;
+  backup_path: string;
 }
