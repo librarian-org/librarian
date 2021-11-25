@@ -17,8 +17,11 @@
     "minimize": "Minimize",
     "zoom": "Zoom",
     "close": "Close",
-    "help": "&Help",
-    "about": "&About",
+    "help": {
+      "label": "&Help",
+      "documentation": "&Documentation",
+      "about": "&About"
+    },
     "language": "&Language"
   },
   "button": {
