@@ -21,6 +21,9 @@
     "about": "&About",
     "language": "&Language"
   },
+  "button": {
+    "loading": "Loading..."
+  },
   "home": {
     "message": "Hello World!"
   }
