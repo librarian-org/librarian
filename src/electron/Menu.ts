@@ -1,7 +1,6 @@
-import { app, BrowserWindow, nativeImage, NativeImage } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
-
 
 type Language = {
   code: string;
@@ -101,11 +100,18 @@ const createMenuTemplate = async (
 
   template.push({
       role: 'help',
-      label: i18n.t('menu.help'),
+      label: i18n.t('menu.help.label'),
       submenu: [
         {
+          label: i18n.t('menu.help.documentation'),
+          click: async () => {
+            shell.openExternal('https://danilolutz.gitbook.io/librarian/');
+          },
+        },
+        { type: 'separator' },
+        {
           id: 'about-menu',
-          label: i18n.t('menu.about'),
+          label: i18n.t('menu.help.about'),
           click: async () => {
             app.setAboutPanelOptions({
               applicationName: 'Librarian',
@@ -115,7 +121,6 @@ const createMenuTemplate = async (
               website: 'https://github.com/danilolutz/librarian',
               iconPath: getIcon(),
             });
-            console.log('getIcon(): ', getIcon());
             app.showAboutPanel()
           },
         },
