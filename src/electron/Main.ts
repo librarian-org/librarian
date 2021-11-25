@@ -32,6 +32,7 @@ import { Region } from './database/models/region.schema';
 import { Permission } from './database/models/permission.schema';
 import { Borrow } from './database/models/borrow.schema';
 import { City } from './database/models/city.schema';
+import { Address } from './database/models/address.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -66,6 +67,7 @@ export default class Main {
         Publisher,
         Region,
         City,
+        Address,
         Country,
         Profile,
         TypeUser,
