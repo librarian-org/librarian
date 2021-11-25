@@ -2,10 +2,18 @@ export default {
   title: 'light',
 
   colors: {
-    primary: '#2AAA65',
-    secondary: '#D77D13',
     background: '#D7D7DD',
     text: '#8A8A8A',
+
+    primary: {
+      dark: '#1D6F93',
+      light: '#B0DBEE',
+    },
+
+    secondary: {
+      dark: '#E98D25',
+      light: '#FFDEBA',
+    },
 
     header: {
       background: '#E7E7EE',
@@ -13,6 +21,6 @@ export default {
 
     card: {
       background: '#E7E7EE',
-    }
+    },
   }
 };

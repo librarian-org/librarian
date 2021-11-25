@@ -21,6 +21,9 @@
     "about": "&Sobre",
     "language": "&Idioma"
   },
+  "button": {
+    "loading": "Carregando..."
+  },
   "home": {
     "message": "Olá Mundo!"
   }

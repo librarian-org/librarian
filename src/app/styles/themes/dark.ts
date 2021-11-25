@@ -2,17 +2,25 @@ export default {
   title: 'dark',
 
   colors: {
-    primary: '#31BFFD',
-    secondary: '#FF8700',
-    background: '#16161D',
+    background: '#090909',
     text: '#CCCCCC',
 
+    primary: {
+      dark: '#1D6F93',
+      light: '#B0DBEE',
+    },
+
+    secondary: {
+      dark: '#E98D25',
+      light: '#FFDEBA',
+    },
+
     header: {
-      background: '#34343D',
+      background: '#181818',
     },
 
     card: {
-      background: '#34343D',
-    }
+      background: '#181818',
+    },
   }
 };
