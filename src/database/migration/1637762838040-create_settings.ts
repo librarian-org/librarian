@@ -6,14 +6,19 @@ export class createSettings1637762838040 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: "settings",
             columns: [
-                {
-                    name: "days_return_date", 
-                    type: "int",
-                },
-                {
-                    name: "backup_path",
-                    type: "varchar",
-                }
+              {
+                name: "id",
+                type: "int",
+                isPrimary: true
+              },
+              {
+                  name: "days_return_date",
+                  type: "int",
+              },
+              {
+                  name: "backup_path",
+                  type: "varchar",
+              }
             ]
         }), true)
     }
