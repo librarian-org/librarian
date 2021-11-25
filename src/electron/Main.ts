@@ -29,6 +29,7 @@ import { Author } from './database/models/author.schema';
 import { TitlePublisher } from './database/models/title_publisher.schema';
 import { Contact } from './database/models/contact.schema';
 import { Region } from './database/models/region.schema';
+import { Permission } from './database/models/permission.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -53,6 +54,7 @@ export default class Main {
       logger: 'simple-console',
       database: './src/database/database.sqlite',
       entities: [
+        Permission,
         Title,
         TitlePublisher,
         User,
