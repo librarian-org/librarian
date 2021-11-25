@@ -3,6 +3,7 @@ import { Profile } from './profile.schema';
 import { Contact } from './contact.schema';
 import { TypeUser } from './type_user.schema';
 import { Borrow } from './borrow.schema';
+import { Address } from './address.schema';
 
 @Entity()
 export class User {
@@ -41,5 +42,8 @@ export class User {
 
   @OneToMany(() => Borrow, borrow => borrow.user)
   borrows: Borrow[];
+
+  @OneToMany(() => Address, address => address.user)
+  addresses: Address[];
 
 }
