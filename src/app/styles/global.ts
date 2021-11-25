@@ -1,3 +1,4 @@
+import { shade } from 'polished';
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
@@ -28,5 +29,23 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  .primary {
+    background: ${(props) => props.theme.colors.primary.dark};
+    color: ${(props) => props.theme.colors.primary.light};
+
+    &:hover {
+      background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
+    }
+  }
+
+  .secondary {
+    background: ${(props) => props.theme.colors.secondary.dark};
+    color: ${(props) => props.theme.colors.secondary.light};
+
+    &:hover {
+      background: ${(props) => shade(0.2, props.theme.colors.secondary.dark)};
+    }
   }
 `;

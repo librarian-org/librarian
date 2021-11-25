@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import LanguageSelector from './components/I18n/LanguageSelector';
-import Translator from './components/I18n/Translator';
 import usePersistedState from './hooks/usePersistedState';
 
 import GlobalStyle from './styles/global';
@@ -10,6 +9,7 @@ import dark from './styles/themes/dark';
 import Header from './components/Header';
 import Content from './components/Content';
 import Card from './components/Card';
+import Button from './components/Button';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -37,7 +37,9 @@ const App: React.FC = () => {
       </Header>
       <Content>
         <Card title="home.message">
-          <Translator path="home.message" />
+          <Button>Text</Button>
+          <Button color="primary">Text</Button>
+          <Button color="secondary">Text</Button>
         </Card>
       </Content>
       <GlobalStyle />
