@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Category } from './category.schema';
 import { Author } from './author.schema';
 import { TitlePublisher } from './title_publisher.schema';
 
@@ -13,6 +14,9 @@ export class Title
 
   @Column()
   ISBN: string;
+
+  @OneToMany(() => Category, category => category.titles)
+  categories: Category[];
 
   @OneToMany(() => Author, author => author.titles)
   authors: Author[];
