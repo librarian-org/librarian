@@ -26,6 +26,9 @@ import { Country } from './database/models/country.schema';
 import { Publisher } from './database/models/publisher.schema';
 import { Category } from './database/models/category.schema';
 import { Author } from './database/models/author.schema';
+import { TitlePublisher } from './database/models/title_publisher.schema';
+import { Contact } from './database/models/contact.schema';
+import { Region } from './database/models/region.schema';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -49,7 +52,22 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [Title, User, Author, Program, Category, Publisher, Country, Profile, TypeUser, ContactType, Settings],
+      entities: [
+        Title,
+        TitlePublisher,
+        User,
+        Author,
+        Program,
+        Category,
+        Publisher,
+        Region,
+        Country,
+        Profile,
+        TypeUser,
+        ContactType,
+        Contact,
+        Settings
+      ],
     });
   }
 

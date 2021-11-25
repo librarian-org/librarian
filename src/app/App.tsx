@@ -3,11 +3,11 @@ import { DefaultTheme, ThemeProvider } from 'styled-components';
 import LanguageSelector from './components/I18n/LanguageSelector';
 import Translator from './components/I18n/Translator';
 import usePersistedState from './hooks/usePersistedState';
-import FormBook from './components/Book/FormBook';
 
 import GlobalStyle from './styles/global';
 import light from './styles/themes/light';
 import dark from './styles/themes/dark';
+import Header from './components/Header';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -30,12 +30,11 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <header>
+      <Header>
         <LanguageSelector />
-      </header>
+      </Header>
       <div>
         <Translator path="home.message" />
-        <FormBook></FormBook>
       </div>
       <GlobalStyle />
     </ThemeProvider>
