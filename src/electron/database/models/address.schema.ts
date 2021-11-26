@@ -6,7 +6,8 @@ import { User } from './user.schema';
 export class Address {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+
+  @Column({ nullable: true })
   complement: string;
 
   @Column()

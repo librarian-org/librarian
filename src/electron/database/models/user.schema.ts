@@ -13,16 +13,16 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({nullable: true})
   login: string;
 
-  @Column()
+  @Column({nullable: true})
   password: string;
 
   @Column()
   language: string;
 
-  @Column()
+  @Column({nullable: true})
   notes: string;
 
   @Column()
