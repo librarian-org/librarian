@@ -23,6 +23,7 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
               {
                 name: 'returned_at',
                 type: 'varchar',
+                isNullable: true,
               },
               {
                 name: 'borrow_id',

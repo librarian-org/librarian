@@ -18,10 +18,12 @@ export class createUser1637774086085 implements MigrationInterface {
                 {
                     name: "login",
                     type: "varchar",
+                    isNullable: true,
                 },
                 {
                     name: "password",
                     type: "varchar",
+                    isNullable: true,
                 },
                 {
                     name: "language",
@@ -30,6 +32,7 @@ export class createUser1637774086085 implements MigrationInterface {
                 {
                     name: "notes",
                     type: "varchar",
+                    isNullable: true,
                 },
                 {
                     name: "document",

@@ -2,19 +2,18 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Profile } from './profile.schema';
 import { Program } from './program.schema';
 
-
 @Entity()
 export class Permission {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: false })
   save: boolean;
 
-  @Column()
+  @Column({ default: false })
   delete: boolean;
 
-  @Column()
+  @Column({ default: false })
   read: boolean;
 
   @Column()
