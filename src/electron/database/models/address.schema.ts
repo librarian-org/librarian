@@ -10,7 +10,7 @@ export class Address {
   complement: string;
 
   @Column()
-  zip_code: string;
+  zipcode: string;
 
   @Column()
   neighborhood: string;
