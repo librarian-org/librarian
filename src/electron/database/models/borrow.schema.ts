@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { BorrowRenovation } from './borrow_renovation.schema';
 import { Publisher } from './publisher.schema';
 import { User } from './user.schema';
@@ -17,13 +23,13 @@ export class Borrow {
   @Column({ type: 'date' })
   estimated_return: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   returned_at: string;
 
   @Column()
   status: number;
 
-  @Column()
+  @Column({ default: false })
   is_reserva: boolean;
 
   @Column()
@@ -38,6 +44,6 @@ export class Borrow {
   @ManyToOne(() => Publisher, (publisher) => publisher.borrows)
   publisher: Publisher;
 
-  @OneToMany(() => BorrowRenovation, renovation => renovation.borrow)
+  @OneToMany(() => BorrowRenovation, (renovation) => renovation.borrow)
   renovations: BorrowRenovation[];
 }

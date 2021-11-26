@@ -12,7 +12,7 @@ export class BorrowRenovation {
   @Column({type: 'date'})
   renewed_at: string;
   
-  @Column({type: 'date'})
+  @Column({type: 'date' , nullable: true})
   returned_at: string;
   
   @Column()

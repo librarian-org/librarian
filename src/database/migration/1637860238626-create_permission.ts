@@ -15,14 +15,17 @@ export class createPermission1637860238626 implements MigrationInterface {
               {
                 name: 'save',
                 type: 'boolean',
+                default: false,
               },
               {
                 name: 'delete',
                 type: 'boolean',
+                default: false,
               },
               {
                 name: 'read',
                 type: 'boolean',
+                default: false,
               },
               {
                 name: 'program_id',

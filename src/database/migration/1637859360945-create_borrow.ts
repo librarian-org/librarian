@@ -27,6 +27,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
           {
             name: 'returned_at',
             type: 'varchar',
+            isNullable: true,
           },
           {
             name: 'status',
@@ -35,6 +36,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
           {
             name: 'is_reserva',
             type: 'boolean',
+            default: false,
           },
           {
             name: 'title_publisher_id',
