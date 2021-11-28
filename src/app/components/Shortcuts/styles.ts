@@ -6,7 +6,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-grow: 1;
-  height: calc(100vh - 42px);
+  height: calc(100vh - (42px + 2rem));
   background: ${(props) => props.theme.colors.card.background};
 `;
 

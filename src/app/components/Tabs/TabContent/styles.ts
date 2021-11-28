@@ -10,7 +10,7 @@ export const Container = styled.div<ContainerProps>`
   color: ${(props) =>  props.theme.colors.text};
   padding: 16px;
   margin-top: -2px !important;
-  height: calc(100vh - 40px);
+  height: calc(100vh - (40px + 2rem));
 
   ${props =>
     props.isActive &&
