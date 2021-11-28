@@ -34,6 +34,7 @@ import { Borrow } from './database/models/borrow.schema';
 import { BorrowRenovation } from './database/models/borrow_renovation.schema';
 import { City } from './database/models/city.schema';
 import { Address } from './database/models/address.schema';
+import { AppEvent } from '../common/AppEvent';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -181,7 +182,7 @@ export default class Main {
     });
 
     this.translations.on('languageChanged', (lng: string) => {
-      window.webContents.send('language-changed', {
+      window.webContents.send(AppEvent.languageChange, {
         language: lng,
         namespace: 'common',
         resource: this.translations.getResourceBundle(lng, 'common'),
@@ -190,7 +191,7 @@ export default class Main {
   }
 
   protected setIpcMainListeners(): void {
-    ipcMain.on('get-initial-translations', async (event) => {
+    ipcMain.on(AppEvent.getInitialTranslations, async (event) => {
       let initial: any;
       await Promise.all(
         this.bootstrap.getLanguages().map(async (item) => {
@@ -207,7 +208,7 @@ export default class Main {
       event.returnValue = initial;
     });
 
-    ipcMain.on('get-theme', (event, content) => {
+    ipcMain.on(AppEvent.getTheme, (event, content) => {
       const menu = Menu.getApplicationMenu();
       menu.getMenuItemById('dark-theme').checked = content as boolean;
     });
