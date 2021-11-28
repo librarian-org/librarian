@@ -32,6 +32,11 @@ declare module 'styled-components' {
         icon: string;
         placeholder: string;
       }
+
+      tab: {
+        active: string;
+        background: string;
+      }
     }
   }
 }

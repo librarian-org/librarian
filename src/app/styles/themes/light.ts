@@ -28,6 +28,11 @@ export default {
       icon: '#666360',
       text: '#666360',
       placeholder: '#A0A0A0',
-    }
+    },
+
+    tab: {
+      active: '#E7E7EE',
+      background: '#E0E0E0',
+    },
   }
 };

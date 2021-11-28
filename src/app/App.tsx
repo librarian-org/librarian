@@ -12,6 +12,8 @@ import Card from './components/Card';
 import Button from './components/Button';
 import Input from './components/Input';
 import { FiAlignJustify } from 'react-icons/fi';
+import Tabs from './components/Tabs';
+import { AppEvent } from '../common/AppEvent';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -20,21 +22,24 @@ const App: React.FC = () => {
   );
 
   useEffect(() => {
-    window.api.send('get-theme', theme.title === 'dark');
+    window.api.send(AppEvent.getTheme, theme.title === 'dark');
   }, [theme.title]);
 
   const toggleTheme = useCallback(() => {
     setTheme(theme.title === 'light' ? dark : light);
   }, [setTheme, theme]);
 
-  window.api.removeAllListeners('set-theme');
-  window.api.once('set-theme', async () => {
+  window.api.removeAllListeners(AppEvent.setTheme);
+  window.api.once(AppEvent.setTheme, async () => {
     toggleTheme();
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <Header>
+      <Content>
+        <Tabs />
+      </Content>
+      {/* <Header>
         <LanguageSelector />
       </Header>
       <Content>
@@ -50,7 +55,7 @@ const App: React.FC = () => {
           <Button color="primary">Primary</Button>
           <Button color="secondary">Secondary</Button>
         </Card>
-      </Content>
+      </Content> */}
       <GlobalStyle />
     </ThemeProvider>
   );

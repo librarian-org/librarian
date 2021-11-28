@@ -2,7 +2,15 @@
   "code": "pt-BR",
   "name": "Português Brasileiro",
   "menu": {
-    "file": "&Arquivo",
+    "file": {
+      "label": "&Arquivo",
+      "newBorrow": "Novo Empréstimo",
+      "newPerson": "Nova Pessoa",
+      "newTitle": "Novo Título",
+      "quickSearch": "Busca Rápida",
+      "closeTab": "Fechar aba",
+      "settings": "Configurações"
+    },
     "quit": "&Sair",
     "view": "&Visualizar",
     "darkTheme": "&Tema Escuro",
@@ -20,6 +28,7 @@
     "help": {
       "label": "&Ajuda",
       "documentation": "&Documentação",
+      "reportIssue": "Reportar um problema",
       "about": "&Sobre"
     },
     "language": "&Idioma"
@@ -29,5 +38,17 @@
   },
   "home": {
     "message": "Olá Mundo!"
+  },
+  "person": {
+    "label": "Pessoa"
+  },
+  "borrow": {
+    "label": "Empréstimo"
+  },
+  "title": {
+    "label": "Título"
+  },
+  "settings": {
+    "label": "Configurações"
   }
 }
