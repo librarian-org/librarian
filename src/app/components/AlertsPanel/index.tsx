@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { FiX } from 'react-icons/fi';
 import { ToastMessage, useToast } from '../../hooks/toast';
+import Translator from '../I18n/Translator';
 
 import { AlertItem, AlertList, Container } from './style';
 
@@ -21,7 +22,7 @@ const AlertsPanel: React.FC<AlertPanelProps> = ({ alerts }) => {
         {alerts && alerts.length === 0 && (
           <AlertItem>
             <div>
-              <span>No new notifications</span>
+              <span><Translator path="notifications.noNewNotifications" /></span>
             </div>
           </AlertItem>
         )}

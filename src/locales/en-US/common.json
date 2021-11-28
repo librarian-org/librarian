@@ -50,5 +50,8 @@
   },
   "settings": {
     "label": "Settings"
+  },
+  "notifications": {
+    "noNewNotifications": "No new notifications"
   }
 }
