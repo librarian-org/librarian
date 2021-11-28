@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
+import { AppEvent } from '../common/AppEvent';
 
 type Language = {
   code: string;
@@ -54,8 +55,65 @@ const createMenuTemplate = async (
   };
 
   template.push({
-      label: i18n.t('menu.file'),
+      label: i18n.t('menu.file.label'),
       submenu: [
+        {
+          label: i18n.t('menu.file.newBorrow'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+B' : 'Ctrl+B',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.borrowTab);
+            }
+          }
+        },
+        {
+          label: i18n.t('menu.file.newPerson'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+P' : 'Ctrl+P',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.personTab);
+            }
+          }
+        },
+        {
+          label: i18n.t('menu.file.newTitle'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+T' : 'Ctrl+T',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.titleTab);
+            }
+          }
+        },
+        { type: 'separator' },
+        {
+          label: i18n.t('menu.file.quickSearch'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+F' : 'Ctrl+F',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.quickSearch);
+            }
+          }
+        },
+        {
+          label: i18n.t('menu.file.closeTab'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+K' : 'Ctrl+K',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.closeCurrentTab);
+            }
+          }
+        },
+        { type: 'separator' },
+        {
+          label: i18n.t('menu.file.settings'),
+          accelerator: process.platform === 'darwin' ? 'Cmd+G' : 'Ctrl+G',
+          click: async() => {
+            if (mainWindow) {
+              mainWindow.webContents.send(AppEvent.settingsTab);
+            }
+          }
+        },
+        { type: 'separator' },
         { role: 'quit', label: i18n.t('menu.quit') },
       ],
   });
@@ -71,7 +129,7 @@ const createMenuTemplate = async (
         type: 'checkbox',
         click: async () => {
           if (mainWindow) {
-            mainWindow.webContents.send('set-theme');
+            mainWindow.webContents.send(AppEvent.setTheme);
           }
         },
       },
@@ -106,6 +164,12 @@ const createMenuTemplate = async (
           label: i18n.t('menu.help.documentation'),
           click: async () => {
             shell.openExternal('https://danilolutz.gitbook.io/librarian/');
+          },
+        },
+        {
+          label: i18n.t('menu.help.reportIssue'),
+          click: async () => {
+            shell.openExternal('https://github.com/danilolutz/librarian/issues/new');
           },
         },
         { type: 'separator' },

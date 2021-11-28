@@ -2,7 +2,15 @@
   "code": "en-US",
   "name": "English",
   "menu": {
-    "file": "&File",
+    "file": {
+      "label": "&File",
+      "newBorrow": "New Borrow",
+      "newPerson": "New Person",
+      "newTitle": "New Title",
+      "quickSearch": "Quick Search",
+      "closeTab": "Close Tab",
+      "settings": "Settings"
+    },
     "quit": "&Quit",
     "view": "&View",
     "darkTheme": "&Dark Theme",
@@ -20,6 +28,7 @@
     "help": {
       "label": "&Help",
       "documentation": "&Documentation",
+      "reportIssue": "Report an Issue",
       "about": "&About"
     },
     "language": "&Language"
@@ -29,5 +38,17 @@
   },
   "home": {
     "message": "Hello World!"
+  },
+  "person": {
+    "label": "Person"
+  },
+  "borrow": {
+    "label": "Borrow"
+  },
+  "title": {
+    "label": "Title"
+  },
+  "settings": {
+    "label": "Settings"
   }
 }

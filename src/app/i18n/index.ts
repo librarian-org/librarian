@@ -1,8 +1,9 @@
 import i18n, { InitOptions, Resource } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+import { AppEvent } from '../../common/AppEvent';
 
-const languages: Resource = window.api.sendSync('get-initial-translations', {}) as Resource;
+const languages: Resource = window.api.sendSync(AppEvent.getInitialTranslations, {}) as Resource;
 
 const i18nConfig: InitOptions = {
   saveMissing: true,
