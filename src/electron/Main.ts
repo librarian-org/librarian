@@ -128,6 +128,8 @@ export default class Main {
 
     const mainWindow = new BrowserWindow({
       icon: this.getIcon(),
+      minWidth: 800,
+      minHeight: 600,
       height: 600,
       width: 800,
       show: false,
