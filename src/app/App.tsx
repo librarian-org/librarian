@@ -8,6 +8,8 @@ import dark from './styles/themes/dark';
 import Content from './components/Content';
 import Tabs from './components/Tabs';
 import { AppEvent } from '../common/AppEvent';
+import StatusBar from './components/StatusBar';
+import { ToastProvider } from './hooks/toast';
 
 const App: React.FC = () => {
   const [theme, setTheme] = usePersistedState<DefaultTheme>(
@@ -31,7 +33,10 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Content>
-        <Tabs />
+        <ToastProvider>
+          <Tabs />
+          <StatusBar />
+        </ToastProvider>
       </Content>
       <GlobalStyle />
     </ThemeProvider>
