@@ -39,23 +39,6 @@ const App: React.FC = () => {
       <Content>
         <Tabs />
       </Content>
-      {/* <Header>
-        <LanguageSelector />
-      </Header>
-      <Content>
-        <Card title="home.message">
-          <Input
-            name="input"
-            icon={FiAlignJustify}
-            label="Input"
-            placeholder="Type something here..."
-           />
-          <br /><br />
-          <Button>Default</Button>
-          <Button color="primary">Primary</Button>
-          <Button color="secondary">Secondary</Button>
-        </Card>
-      </Content> */}
       <GlobalStyle />
     </ThemeProvider>
   );
