@@ -22,7 +22,6 @@ export const Container = styled.li<ContainerProps>`
 
   > span {
     text-overflow: clip;
-    padding-right: 28px;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -37,7 +36,6 @@ export const Container = styled.li<ContainerProps>`
 
   div:last-child {
     display: flex;
-    position: absolute;
     right: 0;
     align-items: center;
     justify-content: center;
@@ -48,8 +46,6 @@ export const Container = styled.li<ContainerProps>`
 
     span {
       min-width: 24px;
-
-      position: absolute;
       right: 0;
       display: flex;
       align-items: center;

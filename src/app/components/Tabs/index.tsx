@@ -11,6 +11,9 @@ import Borrow from '../Borrow';
 import Title from '../Title';
 import Person from '../Person';
 import Settings from '../Settings';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import update from 'immutability-helper'
 
 interface Event {
   event: string;
@@ -133,20 +136,46 @@ const Tabs: React.FC = () => {
     }
   }, [registerEvents]);
 
+  const moveTab = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const dragCard = tabItems[dragIndex]
+      setTabItems(
+        update(tabItems, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
+        }),
+      )
+    },
+    [tabItems],
+  )
+
+  const rendererTabs = (tab: Tab, index: number, isActive: boolean) => {
+    return (
+      <TabHeader
+        isActive={isActive}
+        key={`tab-header-${tab.id}`}
+        title={tab.title}
+        tab={tab}
+        index={index}
+        moveTab={moveTab}
+        onClick={() => handleClick(tab)}
+        close={close}
+        id={tab.id}
+      />
+    )
+  }
+
   return (
     <>
-      <Container>
-        {tabItems && tabItems.map(tab => (
-          <TabHeader
-            isActive={activeTab === tab}
-            key={`tab-header-${tab.id}`}
-            title={tab.title}
-            tab={tab}
-            onClick={() => handleClick(tab)}
-            close={close}
-          />
-        ))}
-      </Container>
+      <DndProvider backend={HTML5Backend}>
+        <Container>
+          {tabItems && tabItems.map((tab, i) => (
+            rendererTabs(tab, i, activeTab === tab)
+          ))}
+        </Container>
+      </DndProvider>
       <TabContents>
         {tabItems.length === 0 && (<Shortcuts />)}
         {tabItems && tabItems.map(tab =>
