@@ -50,7 +50,7 @@ const Tabs: React.FC = () => {
     }
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
-  const previousTab = useCallback(async (): Promise<void> => {
+  const previousTab = useCallback((): void => {
     if (activeTab == firstTab()) {
       setActiveTab(lastTab());
     } else {
@@ -96,16 +96,6 @@ const Tabs: React.FC = () => {
       close(activeTab);
     }
   }, [activeTab, close]);
-
-  // const closeAll = (): void => {
-  //   setTabItems([]);
-  //   setActiveTab(null);
-  // }
-
-  // const closeOther = (tab: Tab) => {
-  //   const tabs = tabItems.filter(t => t == tab);
-  //   setActiveTab(tab);
-  // }
 
   const borrowTab = useCallback(() => {
     handleCreateTab('borrow');
@@ -158,7 +148,6 @@ const Tabs: React.FC = () => {
         ))}
       </Container>
       <TabContents>
-        {/* {JSON.stringify(activeTab)} */}
         {tabItems.length === 0 && (<Shortcuts />)}
         {tabItems && tabItems.map(tab =>
           tab === activeTab && (
