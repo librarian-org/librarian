@@ -21,7 +21,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ title, onClick, close, isActive, 
         <div>
           {tab.type === 'title' && (<FiBook size={14} color="#4ad0ff" />)}
           {tab.type === 'person' && (<FiUser size={14} color="#ff78f7" />)}
-          {tab.type === 'borrow' && (<FaHandshake size={14} color="#e3bb06" />)}
+          {tab.type === 'borrow' && (<FaHandshake size={14} color="#50fa7b" />)}
           {tab.type === 'settings' && (<FiSettings size={14} color="#e3bb06" />)}
         </div>
         <span><Translator path={title} /></span>
@@ -29,7 +29,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ title, onClick, close, isActive, 
           <span>
             <FiX
               size={15}
-              onClick={() => close(tab)}
+              onClick={(e) => { e.stopPropagation(); close(tab); }}
             />
           </span>
         </div>
