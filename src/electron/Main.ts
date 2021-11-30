@@ -169,9 +169,7 @@ export default class Main {
   protected getSelectedLanguage(): string {
     try {
       const rawdata = fs.readFileSync('./selected-language.json');
-      console.log('rawdata: ', rawdata);
       const language: { language: string } = JSON.parse(rawdata.toString());
-        console.log(language.language);
         return language.language;
       } catch (err) {
         return 'en-US';
