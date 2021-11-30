@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FaBell, FaRegBell } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
+import { on, off } from '../../util/EventHandler';
 import { ToastMessage, useToast } from '../../hooks/toast';
 import AlertsPanel from '../AlertsPanel';
 
 import { Container, StatusItem } from './styles';
+import i18n from '../../i18n';
 
 interface User {
   name: string;
@@ -15,7 +17,7 @@ const StatusBar: React.FC = () => {
   const [alertsPanel, setAlertsPanel] = useState(false);
   const [user, setUser] = useState<User>();
 
-  const { getAlerts } = useToast();
+  const { getAlerts, addToast } = useToast();
 
   useEffect(() => {
     setUser({name: 'John Doe'});
@@ -26,6 +28,22 @@ const StatusBar: React.FC = () => {
   const handleAlertPanelClick = useCallback(() => {
     setAlertsPanel(oldState => !oldState);
   }, []);
+
+  const languageChangeHandler = () => {
+    addToast({
+      title: i18n.t('notifications.warning'),
+      type: 'info',
+      description: i18n.t('notifications.restartFullEffect'),
+    });
+  };
+
+  useEffect(() => {
+      on('languageChange', languageChangeHandler);
+
+    return function cleanup () {
+        off('languageChange', languageChangeHandler);
+    }
+  });
 
   return (
     <Container>

@@ -52,6 +52,11 @@
     "label": "Configurações"
   },
   "notifications": {
-    "noNewNotifications": "Sem novas notificações"
+    "information": "Informação",
+    "error": "Erro",
+    "success": "Sucesso",
+    "warning": "Aviso",
+    "noNewNotifications": "Sem novas notificações",
+    "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo"
   }
 }

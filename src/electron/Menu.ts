@@ -1,7 +1,8 @@
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, Notification, shell } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
 import { AppEvent } from '../common/AppEvent';
+import fs from 'fs';
 
 type Language = {
   code: string;
@@ -19,6 +20,16 @@ const getIcon = (): string => {
       'librarian.png'
     );
 }
+
+const writeLanguageFile = (language: string) => {
+  fs.writeFile('./selected-language.json', JSON.stringify({ language }, null, 4 ), (err) => {
+      if (err) {
+        console.error(err);  return;
+      }
+      console.log('File has been created');
+  });
+}
+
 const createMenuTemplate = async (
   mainWindow: BrowserWindow,
   i18n: i18n,
@@ -44,6 +55,7 @@ const createMenuTemplate = async (
       type: 'radio',
       checked: i18n.language === lang.code,
       click: () => {
+        writeLanguageFile(lang.code);
         i18n.changeLanguage(lang.code);
       }
     }
