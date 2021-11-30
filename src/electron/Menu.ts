@@ -23,10 +23,9 @@ const getIcon = (): string => {
 
 const writeLanguageFile = (language: string) => {
   fs.writeFile('./selected-language.json', JSON.stringify({ language }, null, 4 ), (err) => {
-      if (err) {
-        console.error(err);  return;
-      }
-      console.log('File has been created');
+    if (err) {
+      console.error(err);  return;
+    }
   });
 }
 
@@ -54,6 +53,7 @@ const createMenuTemplate = async (
       label: i18n.t(lang.name),
       type: 'radio',
       checked: i18n.language === lang.code,
+      enabled: i18n.language !== lang.code,
       click: () => {
         writeLanguageFile(lang.code);
         i18n.changeLanguage(lang.code);
