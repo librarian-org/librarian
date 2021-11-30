@@ -11,6 +11,15 @@
       "closeTab": "Close Tab",
       "settings": "Settings"
     },
+    "edit": {
+      "label": "&Edit",
+      "undo": "&Undo",
+      "redo": "&Redo",
+      "cut": "Cu&t",
+      "copy": "&Copy",
+      "paste": "&Paste",
+      "selectAll": "select&All"
+    },
     "quit": "&Quit",
     "view": "&View",
     "darkTheme": "&Dark Theme",
