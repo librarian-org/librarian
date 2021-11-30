@@ -52,6 +52,11 @@
     "label": "Settings"
   },
   "notifications": {
-    "noNewNotifications": "No new notifications"
+    "information": "Information",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "noNewNotifications": "No new notifications",
+    "restartFullEffect": "You'll need restart app for this changes take full effect"
   }
 }

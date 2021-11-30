@@ -90,3 +90,6 @@ out/
 
 # database
 src/database/database.sqlite
+
+# App files
+selected-language.json
