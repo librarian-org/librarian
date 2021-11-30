@@ -1,12 +1,12 @@
 {
   "name": "librarian",
-  "homepage": "https://github.com/danilolutz/librarian#readme",
+  "homepage": "https://github.com/librarian-org/librarian#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danilolutz/librarian"
+    "url": "https://github.com/librarian-org/librarian"
   },
   "bugs": {
-    "url": "https://github.com/danilolutz/librarian/issues"
+    "url": "https://github.com/librarian-org/librarian/issues"
   },
   "productName": "librarian",
   "version": "1.0.0",

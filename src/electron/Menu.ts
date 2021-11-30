@@ -163,13 +163,13 @@ const createMenuTemplate = async (
         {
           label: i18n.t('menu.help.documentation'),
           click: async () => {
-            shell.openExternal('https://danilolutz.gitbook.io/librarian/');
+            shell.openExternal('https://librarian-org.gitbook.io/librarian/');
           },
         },
         {
           label: i18n.t('menu.help.reportIssue'),
           click: async () => {
-            shell.openExternal('https://github.com/danilolutz/librarian/issues/new');
+            shell.openExternal('https://github.com/librarian-org/librarian/issues/new');
           },
         },
         { type: 'separator' },
@@ -182,7 +182,7 @@ const createMenuTemplate = async (
               applicationVersion: app.getVersion(),
               copyright: 'Librarian Team',
               authors: ['Danilo Lutz', 'André Gava', 'All the amazing Github contributors'],
-              website: 'https://github.com/danilolutz/librarian',
+              website: 'https://github.com/librarian-org/librarian',
               iconPath: getIcon(),
             });
             app.showAboutPanel()

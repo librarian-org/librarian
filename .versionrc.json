@@ -9,6 +9,6 @@
     {"type": "perf", "hidden": true},
     {"type": "test", "hidden": true}
   ],
-  "commitUrlFormat": "https://github.com/danilolutz/librarian/commits/{{hash}}",
-  "compareUrlFormat": "https://github.com/danilolutz/librarian/compare/{{previousTag}}...{{currentTag}}"
+  "commitUrlFormat": "https://github.com/librarian-org/librarian/commits/{{hash}}",
+  "compareUrlFormat": "https://github.com/librarian-org/librarian/compare/{{previousTag}}...{{currentTag}}"
 }
