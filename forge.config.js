@@ -52,7 +52,7 @@ module.exports = {
           owner: "danilolutz",
           name: "librarian",
         },
-        prerelease: true,
+        draft: true,
       },
     },
   ],
