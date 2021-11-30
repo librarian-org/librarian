@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Notification, shell } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { i18n } from 'i18next';
 import path from 'path';
 import { AppEvent } from '../common/AppEvent';
