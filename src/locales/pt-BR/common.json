@@ -11,6 +11,15 @@
       "closeTab": "Fechar aba",
       "settings": "Configurações"
     },
+    "edit": {
+      "label": "&Editar",
+      "undo": "&Desfazer",
+      "redo": "&Refazer",
+      "cut": "Recor&tar",
+      "copy": "&Copiar",
+      "paste": "C&olar",
+      "selectAll": "Selecion&ar Tudo"
+    },
     "quit": "&Sair",
     "view": "&Visualizar",
     "darkTheme": "&Tema Escuro",
