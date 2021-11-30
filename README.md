@@ -1,6 +1,6 @@
 # About Librarian
 
-[![Build](https://github.com/danilolutz/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/danilolutz/librarian/actions/workflows/build.yml)
+[![Build](https://github.com/librarian-org/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/librarian-org/librarian/actions/workflows/build.yml)
 
 A free OpenSource software to handle with books. It's ideal for school libraries
 and for someone who have many books.
@@ -38,4 +38,4 @@ In order to ensure that the Librarian community is welcoming to all, please revi
 The Librarian is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ---
-Made with :heart: by [this amazing people](https://github.com/danilolutz/librarian/graphs/contributors).
+Made with :heart: by [this amazing people](https://github.com/librarian-org/librarian/graphs/contributors).
