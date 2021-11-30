@@ -23,7 +23,7 @@ However, if you prefer to work with code, simply go to [Cloning the repository](
 
 3. We'll try to fix it as soon as possible but be in mind that Librarian is open source and you can probably submit a pull request to fix it even faster.
 
-4. Just [open your issue](https://github.com/danilolutz/librarian/issues/new).
+4. Just [open your issue](https://github.com/librarian-org/librarian/issues/new).
 
 ## Cloning the repository
 
@@ -38,13 +38,13 @@ sudo apt install dpkg fakeroot build-essential
 And now, you can clone by https:
 
 ```bash
-git clone https://github.com/danilolutz/librarian.git
+git clone https://github.com/librarian-org/librarian.git
 ```
 
 Or by SSH:
 
 ```bash
-git clone git@github.com:danilolutz/librarian.git
+git clone git@github.com:librarian-org/librarian.git
 ```
 
 Whatever you prefer. Clone the repo and start your work following this steps (aka gitflow):
