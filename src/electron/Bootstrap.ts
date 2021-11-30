@@ -10,7 +10,7 @@ export default class Bootstrap {
     this.setLanguages();
   }
 
-  public async startI18n(): Promise<i18n> {
+  public async startI18n(language: string): Promise<i18n> {
     const folder = path.resolve(
       __dirname,
       '..',
@@ -25,7 +25,7 @@ export default class Bootstrap {
         addPath: `${folder}/{{lng}}/{{ns}}.missing.json`,
         jsonIndent: 2,
       },
-      lng: 'en-US',
+      lng: language,
       interpolation: {
         escapeValue: false,
       },

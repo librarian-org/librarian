@@ -35,6 +35,7 @@ import { BorrowRenovation } from './database/models/borrow_renovation.schema';
 import { City } from './database/models/city.schema';
 import { Address } from './database/models/address.schema';
 import { AppEvent } from '../common/AppEvent';
+import fs from 'fs';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -165,8 +166,18 @@ export default class Main {
     );
   }
 
+  protected getSelectedLanguage(): string {
+    try {
+      const rawdata = fs.readFileSync('./selected-language.json');
+      const language: { language: string } = JSON.parse(rawdata.toString());
+        return language.language;
+      } catch (err) {
+        return 'en-US';
+      }
+  }
+
   protected async handleTranslations(window: BrowserWindow): Promise<void> {
-    this.translations = await this.bootstrap.startI18n();
+    this.translations = await this.bootstrap.startI18n(this.getSelectedLanguage());
 
     Menu.setApplicationMenu(
       Menu.buildFromTemplate(
