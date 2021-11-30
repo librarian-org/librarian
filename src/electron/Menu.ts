@@ -131,6 +131,68 @@ const createMenuTemplate = async (
   });
 
   template.push({
+    label: i18n.t('menu.edit.label'),
+    submenu: [
+      {
+        label: i18n.t('menu.edit.undo'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+Z' : 'Ctrl+Z',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.undo();
+          }
+        }
+      },
+      {
+        label: i18n.t('menu.edit.redo'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+Option+Z' : 'Ctrl+Shift+Z',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.redo();
+          }
+        }
+      },
+      { type: 'separator' },
+      {
+        label: i18n.t('menu.edit.cut'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+X' : 'Ctrl+X',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.cut();
+          }
+        }
+      },
+      {
+        label: i18n.t('menu.edit.copy'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+C' : 'Ctrl+C',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.copy();
+          }
+        }
+      },
+      {
+        label: i18n.t('menu.edit.paste'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+V' : 'Ctrl+V',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.paste();
+          }
+        }
+      },
+      { type: 'separator' },
+      {
+        label: i18n.t('menu.edit.selectAll'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+A' : 'Ctrl+A',
+        click: async() => {
+          if (mainWindow) {
+            mainWindow.webContents.selectAll();
+          }
+        }
+      },
+    ]
+  });
+
+  template.push({
     label: i18n.t('menu.view'),
     submenu: [
       language,
