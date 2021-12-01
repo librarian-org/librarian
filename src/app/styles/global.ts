@@ -1,4 +1,4 @@
-import { shade } from 'polished';
+import { rgba, shade } from 'polished';
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
@@ -47,5 +47,39 @@ export default createGlobalStyle`
     &:hover {
       background: ${(props) => shade(0.2, props.theme.colors.secondary.dark)};
     }
+  }
+
+  .modal{
+    background-color: ${(props) => props.theme.colors.card.background};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    padding: 32px;
+    border-radius: 8px;
+  }
+
+  .quick-search{
+    background-color: ${(props) => props.theme.colors.card.background};
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    padding: 32px;
+    border-radius: 8px;
+  }
+
+  .modal-overlay{
+    background-color: ${(props) => rgba(props.theme.colors.text, 0.4)};
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
   }
 `;
