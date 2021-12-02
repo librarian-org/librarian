@@ -4,22 +4,22 @@ import { ActionMeta, OnChangeValue } from 'react-select';
 import { Container } from './styles';
 import i18n from '../../i18n';
 import CreatableSelectInput from '../CreatableSelectInput';
-import { Publisher } from '../../../electron/database/models/publisher.schema';
+import { Author } from '../../../electron/database/models/author.schema';
 
 interface Option {
   readonly label: string;
   readonly value: string;
 }
 
-const PublisherSelect: React.FC = () => {
+const AuthorSelect: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Option[]>([]);
   const [value, setValue] = useState(undefined);
 
   useEffect (() => {
     const result = window.api.sendSync('list', {
-      entity: 'Publisher',
-    }) as Publisher[];
+      entity: 'Author',
+    }) as Author[];
 
     const mappedOptions = result.map(item => ({
       label: item.name,
@@ -42,11 +42,11 @@ const PublisherSelect: React.FC = () => {
     setIsLoading(true);
 
     const result = window.api.sendSync('create', {
-      entity: 'Publisher',
+      entity: 'Author',
       value: {
         name: inputValue,
       }
-    }) as Publisher;
+    }) as Author;
 
     const newOption = createOption(result.name, result.id.toString());
     setOptions(options => [...options, newOption]);
@@ -58,9 +58,9 @@ const PublisherSelect: React.FC = () => {
     <Container>
       <CreatableSelectInput
         isClearable
-        label={i18n.t('publisher.label')}
-        placeholder={i18n.t('publisher.selectOrCreate')}
-        noOptionsMessage={() => i18n.t('publisher.selectEmpty')}
+        label={i18n.t('author.label')}
+        placeholder={i18n.t('author.selectOrCreate')}
+        noOptionsMessage={() => i18n.t('author.selectEmpty')}
         isDisabled={isLoading}
         isLoading={isLoading}
         onChange={handleChange}
@@ -72,4 +72,4 @@ const PublisherSelect: React.FC = () => {
   );
 };
 
-export default PublisherSelect;
+export default AuthorSelect;
