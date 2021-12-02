@@ -112,10 +112,12 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
 
   const enterClick = useCallback(
     (e: React.KeyboardEvent): void => {
-      const itemRevert =
-        selectedItem % 2 ? (selectedItem - 1) / 2 : selectedItem / 2 - 1;
-      const item = searchResult[itemRevert];
-      selectedItem % 2 ? item.handler.onPress(e) : item.action.onPress(e);
+      if (selectedItem > 0) {
+        const itemRevert =
+          selectedItem % 2 ? (selectedItem - 1) / 2 : selectedItem / 2 - 1;
+        const item = searchResult[itemRevert];
+        selectedItem % 2 ? item.handler.onPress(e) : item.action.onPress(e);
+      }
     },
     [searchResult, selectedItem]
   );
