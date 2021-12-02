@@ -89,7 +89,7 @@ typings/
 out/
 
 # database
-src/database/database.sqlite
+database.sqlite
 
 # App files
 selected-language.json

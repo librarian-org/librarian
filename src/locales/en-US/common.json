@@ -77,5 +77,10 @@
     "label": "Author",
     "selectOrCreate": "Select an author or type a name to create it",
     "selectEmpty": "No author created so far"
+  },
+  "category": {
+    "label": "Category",
+    "selectOrCreate": "Select a category or type a name to create it",
+    "selectEmpty": "No category created so far"
   }
 }
