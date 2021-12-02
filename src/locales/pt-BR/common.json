@@ -67,5 +67,20 @@
     "warning": "Aviso",
     "noNewNotifications": "Sem novas notificações",
     "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo"
+  },
+  "publisher": {
+    "label": "Editora",
+    "selectOrCreate": "Selecione uma editora ou digite um nome para criá-la",
+    "selectEmpty": "Nenhuma editora criada até o momento"
+  },
+  "author": {
+    "label": "Autor",
+    "selectOrCreate": "Selecione um autor ou digite um nome para criá-lo",
+    "selectEmpty": "Nenhum autor criado até o momento"
+  },
+  "category": {
+    "label": "Categoria",
+    "selectOrCreate": "Selecione uma categoria ou digite um nome para criá-la",
+    "selectEmpty": "Nenhuma categoria criada até o momento"
   }
 }

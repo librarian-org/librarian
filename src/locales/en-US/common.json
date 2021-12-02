@@ -67,5 +67,20 @@
     "warning": "Warning",
     "noNewNotifications": "No new notifications",
     "restartFullEffect": "You'll need restart app for this changes take full effect"
+  },
+  "publisher": {
+    "label": "Publisher",
+    "selectOrCreate": "Select a publisher or type a name to create it",
+    "selectEmpty": "No publisher created so far"
+  },
+  "author": {
+    "label": "Author",
+    "selectOrCreate": "Select an author or type a name to create it",
+    "selectEmpty": "No author created so far"
+  },
+  "category": {
+    "label": "Category",
+    "selectOrCreate": "Select a category or type a name to create it",
+    "selectEmpty": "No category created so far"
   }
 }
