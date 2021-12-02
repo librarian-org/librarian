@@ -24,6 +24,8 @@ export default class {
     this.forward(AppEvent.settingsTab);
     this.forward(AppEvent.closeCurrentTab);
     this.forward(AppEvent.languageChange);
+    this.forward(AppEvent.quickSearch);
+    this.forward(AppEvent.tabClick);
   }
 
   forward(event: string): void {
