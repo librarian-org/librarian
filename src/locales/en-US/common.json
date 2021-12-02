@@ -73,7 +73,7 @@
     "selectOrCreate": "Select a publisher or type a name to create it",
     "selectEmpty": "No publisher created so far"
   },
-  "Author": {
+  "author": {
     "label": "Author",
     "selectOrCreate": "Select an author or type a name to create it",
     "selectEmpty": "No author created so far"

@@ -48,8 +48,6 @@ const AuthorSelect: React.FC = () => {
       }
     }) as Author;
 
-    console.log(result);
-
     const newOption = createOption(result.name, result.id.toString());
     setOptions(options => [...options, newOption]);
     setValue(newOption);

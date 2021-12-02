@@ -48,8 +48,6 @@ const PublisherSelect: React.FC = () => {
       }
     }) as Publisher;
 
-    console.log(result);
-
     const newOption = createOption(result.name, result.id.toString());
     setOptions(options => [...options, newOption]);
     setValue(newOption);
