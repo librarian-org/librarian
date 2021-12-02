@@ -16,6 +16,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line @typescript-eslint/ban-types
   containerStyle?: object;
   length?: number;
+  selected?: string;
   icon?: React.ComponentType<IconBaseProps>;
   disabled?: boolean;
 }
@@ -27,6 +28,7 @@ const Input: React.FC<InputProps> = ({
   containerStyle = {},
   length,
   disabled,
+  selected,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,6 +53,7 @@ const Input: React.FC<InputProps> = ({
       isFocused={isFocused}
       isDisabled={!!disabled}
       data-testid="input-container"
+      className={selected}
     >
       {label && isFilled && <InputLabel>{label}</InputLabel>}
 
