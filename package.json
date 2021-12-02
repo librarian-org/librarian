@@ -86,7 +86,6 @@
     "ts-node": "^10.4.0",
     "typeorm": "^0.2.41",
     "update-electron-app": "^2.0.1",
-    "uuid": "^8.3.2",
-    "yarn.lock": "^0.0.1-security"
+    "uuid": "^8.3.2"
   }
 }
