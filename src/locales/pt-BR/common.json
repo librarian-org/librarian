@@ -69,7 +69,7 @@
     "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo"
   },
   "publisher": {
-    "label": "Editor",
+    "label": "Editora",
     "selectPublisherOrCreate": "Selecione uma editora ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma editora criada até o momento"
   }
