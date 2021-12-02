@@ -35,7 +35,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           onClick={(e: React.MouseEvent) => item.action.onClick(e)}
           onKeyDown={keyPress}
           tabIndex={order}
-          icon={FiPlus}
+          icon={item.iconAction}
           color="secondary"
         />
       </li>
