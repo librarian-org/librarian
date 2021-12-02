@@ -11,6 +11,7 @@ export const Container = styled.div<ContainerProps>`
   padding: 16px;
   margin-top: -2px !important;
   height: calc(100vh - (40px + 2rem));
+  overflow-y: auto;
 
   ${props =>
     props.isActive &&

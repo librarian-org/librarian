@@ -98,7 +98,8 @@ export const Container = styled.div<ContainerProps>`
   }
 
   svg {
-    margin-right: 16px;
+    margin-right: 10px;
+    margin-left: 10px;
   }
 `;
 
