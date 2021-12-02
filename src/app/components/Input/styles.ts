@@ -14,6 +14,7 @@ export const Container = styled.div<ContainerProps>`
   background: ${props => props.theme.colors.input.background};
   border-radius: 8px;
   width: 100%;
+  height: 46px;
   display: flex;
   align-items: center;
   padding: 0 16px 0 16px;

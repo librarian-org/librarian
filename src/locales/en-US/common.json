@@ -67,5 +67,10 @@
     "warning": "Warning",
     "noNewNotifications": "No new notifications",
     "restartFullEffect": "You'll need restart app for this changes take full effect"
+  },
+  "publisher": {
+    "label": "Publisher",
+    "selectPublisherOrCreate": "Select a publisher or type a name to create it",
+    "selectEmpty": "No publisher created so far"
   }
 }
