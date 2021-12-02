@@ -67,5 +67,10 @@
     "warning": "Aviso",
     "noNewNotifications": "Sem novas notificações",
     "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo"
+  },
+  "publisher": {
+    "label": "Editor",
+    "selectPublisherOrCreate": "Selecione uma editora ou digite um nome para criá-la",
+    "selectEmpty": "Nenhuma editora criada até o momento"
   }
 }
