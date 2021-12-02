@@ -70,7 +70,12 @@
   },
   "publisher": {
     "label": "Editora",
-    "selectPublisherOrCreate": "Selecione uma editora ou digite um nome para criá-la",
+    "selectOrCreate": "Selecione uma editora ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma editora criada até o momento"
+  },
+  "author": {
+    "label": "Autor",
+    "selectOrCreate": "Selecione uma autor ou digite um nome para criá-lo",
+    "selectEmpty": "Nenhuma autor criado até o momento"
   }
 }
