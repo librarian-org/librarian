@@ -13,7 +13,8 @@ import Person from '../Person';
 import Settings from '../Settings';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import update from 'immutability-helper'
+import update from 'immutability-helper';
+import SearchMenu from '../SearchMenu';
 
 interface Event {
   event: string;
@@ -23,6 +24,7 @@ interface Event {
 const Tabs: React.FC = () => {
   const [tabItems, setTabItems] = useState<Tab[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(null);
+  const [isOpen, setOpen] = useState(false);
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -40,10 +42,13 @@ const Tabs: React.FC = () => {
     setActiveTab(tab);
   }, []);
 
-  const addTab = useCallback((tab: Tab): void => {
-    setTabItems(previousState => [...previousState, tab]);
-    handleClick(tab);
-  }, [handleClick]);
+  const addTab = useCallback(
+    (tab: Tab): void => {
+      setTabItems((previousState) => [...previousState, tab]);
+      handleClick(tab);
+    },
+    [handleClick]
+  );
 
   const nextTab = useCallback((): void => {
     if (activeTab == lastTab()) {
@@ -61,38 +66,43 @@ const Tabs: React.FC = () => {
     }
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
-  const handleCreateTab = useCallback((type: string) => {
-    const hash = v4();
+  const handleCreateTab = useCallback(
+    (type: string) => {
+      const hash = v4();
 
-    const alreadyOpened = tabItems.filter(t => t.type === type);
-    if (alreadyOpened.length > 0) {
-      setActiveTab(alreadyOpened[0]);
-      return;
-    }
-
-    const tab: Tab = {
-      id: hash,
-      type: type,
-      title: `${type}.label`,
-    };
-
-    addTab(tab);
-  }, [addTab, tabItems]);
-
-
-  const close = useCallback((tab: Tab): void => {
-    if (activeTab === tab) {
-      if (tab === lastTab()) {
-        previousTab();
-      } else {
-        nextTab();
+      const alreadyOpened = tabItems.filter((t) => t.type === type);
+      if (alreadyOpened.length > 0) {
+        setActiveTab(alreadyOpened[0]);
+        return;
       }
-    }
 
-    const tabs = tabItems.filter(t => t !== tab);
+      const tab: Tab = {
+        id: hash,
+        type: type,
+        title: `${type}.label`,
+      };
 
-    setTabItems(tabs);
-  }, [activeTab, lastTab, nextTab, previousTab, tabItems]);
+      addTab(tab);
+    },
+    [addTab, tabItems]
+  );
+
+  const close = useCallback(
+    (tab: Tab): void => {
+      if (activeTab === tab) {
+        if (tab === lastTab()) {
+          previousTab();
+        } else {
+          nextTab();
+        }
+      }
+
+      const tabs = tabItems.filter((t) => t !== tab);
+
+      setTabItems(tabs);
+    },
+    [activeTab, lastTab, nextTab, previousTab, tabItems]
+  );
 
   const closeCurrentTab = useCallback((): void => {
     if (activeTab) {
@@ -116,40 +126,48 @@ const Tabs: React.FC = () => {
     handleCreateTab('settings');
   }, [handleCreateTab]);
 
-  const registerEvents: Event[] = useMemo(() => [
-    { event: 'closeCurrentTab', handler: closeCurrentTab },
-    { event: 'borrowTab', handler: borrowTab },
-    { event: 'personTab', handler: personTab },
-    { event: 'titleTab', handler: titleTab },
-    { event: 'settingsTab', handler: settingsTab },
-  ], [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab]);
+  const quickSearch = useCallback(() => {
+    setOpen((oldState) => !oldState);
+  }, []);
+
+  const registerEvents: Event[] = useMemo(
+    () => [
+      { event: 'closeCurrentTab', handler: closeCurrentTab },
+      { event: 'borrowTab', handler: borrowTab },
+      { event: 'personTab', handler: personTab },
+      { event: 'titleTab', handler: titleTab },
+      { event: 'settingsTab', handler: settingsTab },
+      { event: 'quickSearch', handler: quickSearch },
+    ],
+    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab]
+  );
 
   useEffect(() => {
     registerEvents.forEach(({ event, handler }) => {
       on(event, handler);
     });
 
-    return function cleanup () {
+    return function cleanup() {
       registerEvents.forEach(({ event, handler }) => {
         off(event, handler);
       });
-    }
+    };
   }, [registerEvents]);
 
   const moveTab = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const dragCard = tabItems[dragIndex]
+      const dragCard = tabItems[dragIndex];
       setTabItems(
         update(tabItems, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragCard],
           ],
-        }),
-      )
+        })
+      );
     },
-    [tabItems],
-  )
+    [tabItems]
+  );
 
   const rendererTabs = (tab: Tab, index: number, isActive: boolean) => {
     return (
@@ -164,32 +182,35 @@ const Tabs: React.FC = () => {
         close={close}
         id={tab.id}
       />
-    )
-  }
+    );
+  };
 
   return (
     <>
+      <SearchMenu isOpen={isOpen} setOpen={quickSearch} />
       <DndProvider backend={HTML5Backend}>
         <Container>
-          {tabItems && tabItems.map((tab, i) => (
-            rendererTabs(tab, i, activeTab === tab)
-          ))}
+          {tabItems &&
+            tabItems.map((tab, i) => rendererTabs(tab, i, activeTab === tab))}
         </Container>
       </DndProvider>
       <TabContents>
-        {tabItems.length === 0 && (<Shortcuts />)}
-        {tabItems && tabItems.map(tab =>
-          tab === activeTab && (
-            <TabContent
-              isActive={activeTab === tab}
-              key={`tab-content-${tab.id}`}
-            >
-              {tab.type === 'borrow' && (<Borrow />)}
-              {tab.type === 'person' && (<Person />)}
-              {tab.type === 'title' && (<Title />)}
-              {tab.type === 'settings' && (<Settings />)}
-            </TabContent>
-        ))}
+        {tabItems.length === 0 && <Shortcuts />}
+        {tabItems &&
+          tabItems.map(
+            (tab) =>
+              tab === activeTab && (
+                <TabContent
+                  isActive={activeTab === tab}
+                  key={`tab-content-${tab.id}`}
+                >
+                  {tab.type === 'borrow' && <Borrow />}
+                  {tab.type === 'person' && <Person />}
+                  {tab.type === 'title' && <Title />}
+                  {tab.type === 'settings' && <Settings />}
+                </TabContent>
+              )
+          )}
       </TabContents>
     </>
   );
