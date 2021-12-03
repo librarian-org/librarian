@@ -9,7 +9,6 @@ interface Message {
 }
 
 export default class {
-  globalSearch: any;
   constructor(
     private language: i18n,
   ) {

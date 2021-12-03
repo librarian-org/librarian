@@ -80,8 +80,6 @@ export default createGlobalStyle`
     ul{
       li{
         list-style: none;
-        border-bottom: 0px solid ${(props) =>
-          rgba(props.theme.colors.text, 0.4)};
         padding: 10px;
         &:first-child {
           padding-top: 16px;
