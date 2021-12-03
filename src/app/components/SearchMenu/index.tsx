@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
-import { FiPlus, FiSearch } from 'react-icons/fi';
+import { FaHandshake } from 'react-icons/fa';
+import { FiBook, FiPlus, FiSearch, FiUser } from 'react-icons/fi';
 import i18n from '../../i18n';
 import Input from '../Input/index';
 import Modal from '../Modal';
@@ -14,6 +15,7 @@ interface SearchMenuProps {
 export interface SearchSource {
   label: string;
   icon?: React.ComponentType<IconBaseProps>;
+  iconAction: React.ComponentType<IconBaseProps>;
   handler: {
     onClick(e: React.MouseEvent): void;
     onPress(e: React.KeyboardEvent, item?: SearchSource): void;
@@ -33,8 +35,9 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   const searchSourceMemo: SearchSource[] = useMemo(() => {
     return [
       {
-        label: 'Emprestimo',
-        icon: FiPlus,
+        label: i18n.t('borrow.label'),
+        icon: FaHandshake,
+        iconAction: FiPlus,
         handler: {
           onClick: () => console.log('emprestimo list click'),
           onPress: () => console.log('emprestimo list press'),
@@ -45,8 +48,9 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
         },
       },
       {
-        label: 'Pessoa',
-        icon: FiPlus,
+        label: i18n.t('person.label'),
+        icon: FiUser,
+        iconAction: FiPlus,
         handler: {
           onClick: () => console.log('pessoa list click'),
           onPress: () => console.log('pessoa list press'),
@@ -57,8 +61,9 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
         },
       },
       {
-        label: 'Titulo',
-        icon: FiPlus,
+        label: i18n.t('title.label'),
+        icon: FiBook,
+        iconAction: FiPlus,
         handler: {
           onClick: () => console.log('titulo list click'),
           onPress: () => console.log('titulo list press'),
@@ -179,7 +184,6 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   return (
     isOpen && (
       <>
-        {selectedItem}
         <Modal isOpen={isOpen} setIsOpen={setOpen} customClass="quick-search">
           <div>
             <Input
