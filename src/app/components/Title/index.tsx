@@ -28,7 +28,7 @@ interface Publisher {
   published_at: Date;
 }
 
-const TitleCreate: React.FC = () => {
+const Title: React.FC = () => {
   const { addToast } = useToast();
 
   const [title, setTitle] = useState('');
@@ -389,4 +389,4 @@ const TitleCreate: React.FC = () => {
   );
 };
 
-export default TitleCreate;
+export default Title;
