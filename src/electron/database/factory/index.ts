@@ -1,11 +1,12 @@
+import { Connection } from 'typeorm';
 import RepositoryBase from '../repository/RepositoryBase';
 
-class Maker {
-  static make(connection: any, model: string) {
+class Factory {
+  static make(connection: Connection, model: string): RepositoryBase {
     const typeOrmRepository = connection.getRepository(model);
     const dynamicRepository = new RepositoryBase(typeOrmRepository);
     return dynamicRepository;
   }
 }
 
-export default Maker;
+export default Factory;

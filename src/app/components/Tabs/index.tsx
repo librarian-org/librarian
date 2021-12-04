@@ -8,7 +8,7 @@ import TabContent from './TabContent';
 import { Tab } from './Tab';
 import Shortcuts from '../Shortcuts';
 import Borrow from '../Borrow';
-import Title from '../Title';
+import TitleCreate from '../Title';
 import Person from '../Person';
 import Settings from '../Settings';
 import { DndProvider } from 'react-dnd';
@@ -206,7 +206,7 @@ const Tabs: React.FC = () => {
                 >
                   {tab.type === 'borrow' && <Borrow />}
                   {tab.type === 'person' && <Person />}
-                  {tab.type === 'title' && <Title />}
+                  {tab.type === 'title' && <TitleCreate />}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
               )

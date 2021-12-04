@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { GroupBase, StylesConfig } from 'react-select';
 import CreatableSelect, { CreatableProps } from 'react-select/creatable';
+import i18n from '../../i18n';
 import { ThemeContext } from 'styled-components';
 
 import { Container, InputLabel } from './styles';
@@ -24,6 +25,11 @@ interface ColourOption {
   isSelected: boolean;
   isFocused: boolean
 }
+export interface SelectHandles {
+  getValue<T>(): T;
+  clear(): void;
+}
+
 const CreatableSelectInput: React.FC<CreatableSelectInputProps> = ({ label, ...rest }) => {
   const { colors } = useContext(ThemeContext);
 
@@ -52,7 +58,7 @@ const CreatableSelectInput: React.FC<CreatableSelectInputProps> = ({ label, ...r
       border: `2px solid ${colors.input.background}`,
       margin: 0,
       height: '46px',
-      marginBottom: '20px',
+      // marginBottom: '20px',
       borderRadius: '8px',
       outline: 0,
       ':hover': {
@@ -98,6 +104,7 @@ const CreatableSelectInput: React.FC<CreatableSelectInputProps> = ({ label, ...r
 
       <CreatableSelect
         styles={customStyles}
+        formatCreateLabel={(newValue) => `${i18n.t('button.create')} ${newValue}`}
         { ...rest }
       />
     </Container>

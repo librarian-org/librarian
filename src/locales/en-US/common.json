@@ -43,7 +43,11 @@
     "language": "&Language"
   },
   "button": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "save": "Save",
+    "remove": "Remove",
+    "add": "Add",
+    "create": "Create"
   },
   "home": {
     "message": "Hello World!"
@@ -55,7 +59,27 @@
     "label": "Borrow"
   },
   "title": {
-    "label": "Title"
+    "label": "Title",
+    "editions": "Editions",
+    "authors": "Authors",
+    "categories": "Categories",
+    "name": "Name",
+    "classification": "Classification",
+    "edition": "Edition",
+    "published_at": "Published At",
+    "informErrorsEdition": "Check #errors# of edition to add",
+    "hasBeenAdd": "has been added to this title already",
+    "selectAuthorToAdd": "Select an author to add",
+    "selectCategoryToAdd": "Select a category to add",
+
+    "typeTitleName": "Type the name of the Title",
+    "typeISBN": "Type the ISBN of the Title",
+    "typeClassification": "Type the classification",
+    "typeEdition": "Type the edition",
+    "typePublicationDate": "Type the edition date",
+    "removeEditionInformation": "Remove edition information from list",
+    "removeAuthorInformation": "Remove author from list",
+    "removeCategoryInformation": "Remove category from list"
   },
   "settings": {
     "label": "Settings"
