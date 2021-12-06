@@ -94,6 +94,10 @@ export default class Main {
       event.returnValue = await this.getRepository(entity).list(value);
     });
 
+    ipcMain.on('globalSearch', async (event, content: Event[]) => {
+      event.returnValue = [];
+    });
+
     const mainWindow = new BrowserWindow({
       icon: this.getIcon(),
       minWidth: 800,

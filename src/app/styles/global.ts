@@ -90,8 +90,6 @@ export default createGlobalStyle`
     ul{
       li{
         list-style: none;
-        border-bottom: 1px solid ${(props) =>
-          rgba(props.theme.colors.text, 0.4)};
         padding: 10px;
         &:first-child {
           padding-top: 16px;
@@ -128,5 +126,9 @@ export default createGlobalStyle`
   .selected {
     box-shadow: 0 0 10px ${(props) => rgba(props.theme.colors.text, 0.9)};
     border-radius: 10px;
+  }
+
+  .li-selected{
+    background-color: ${(props) => props.theme.colors.background};
   }
 `;
