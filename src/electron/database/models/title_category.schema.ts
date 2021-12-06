@@ -3,7 +3,7 @@ import { Category } from './category.schema';
 import { Title } from './title.schema';
 
 @Entity()
-export class UserProfile
+export class TitleCategory
 {
   @PrimaryGeneratedColumn()
   id: number;

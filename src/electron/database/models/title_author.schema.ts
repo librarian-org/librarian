@@ -3,7 +3,7 @@ import { Author } from './author.schema';
 import { Title } from './title.schema';
 
 @Entity()
-export class UserProfile
+export class TitleAuthor
 {
   @PrimaryGeneratedColumn()
   id: number;
