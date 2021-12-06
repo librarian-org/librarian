@@ -4,6 +4,7 @@ export enum AppEvent {
   personTab = 'personTab',
   titleTab = 'titleTab',
   quickSearch = 'quickSearch',
+  globalSearch = 'globalSearch',
   closeCurrentTab = 'closeCurrentTab',
   settingsTab = 'settingsTab',
   setTheme = 'setTheme',

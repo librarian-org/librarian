@@ -1,29 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { IconBaseProps } from 'react-icons';
-import { FaHandshake } from 'react-icons/fa';
-import { FiBook, FiPlus, FiSearch, FiUser } from 'react-icons/fi';
+import { SearchSource, entities } from '../../util/DefaultEntities';
 import i18n from '../../i18n';
 import Input from '../Input/index';
 import Modal from '../Modal';
 import MenuItem from './MenuItem';
+import { FiSearch } from 'react-icons/fi';
+import { on, off } from '../../util/EventHandler';
 
 interface SearchMenuProps {
   setOpen(): void;
   isOpen: boolean;
-}
-
-export interface SearchSource {
-  label: string;
-  icon?: React.ComponentType<IconBaseProps>;
-  iconAction: React.ComponentType<IconBaseProps>;
-  handler: {
-    onClick(e: React.MouseEvent): void;
-    onPress(e: React.KeyboardEvent, item?: SearchSource): void;
-  };
-  action: {
-    onClick(e: React.MouseEvent): void;
-    onPress(e: React.KeyboardEvent, item?: SearchSource): void;
-  };
 }
 
 const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
@@ -33,54 +19,23 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   const [inputSearch, setInputSearch] = useState('');
 
   const searchSourceMemo: SearchSource[] = useMemo(() => {
-    return [
-      {
-        label: i18n.t('borrow.label'),
-        icon: FaHandshake,
-        iconAction: FiPlus,
-        handler: {
-          onClick: () => console.log('emprestimo list click'),
-          onPress: () => console.log('emprestimo list press'),
-        },
-        action: {
-          onClick: () => console.log('emprestimo action click'),
-          onPress: () => console.log('emprestimo action press'),
-        },
-      },
-      {
-        label: i18n.t('person.label'),
-        icon: FiUser,
-        iconAction: FiPlus,
-        handler: {
-          onClick: () => console.log('pessoa list click'),
-          onPress: () => console.log('pessoa list press'),
-        },
-        action: {
-          onClick: () => console.log('pessoa action click'),
-          onPress: () => console.log('pessoa action press'),
-        },
-      },
-      {
-        label: i18n.t('title.label'),
-        icon: FiBook,
-        iconAction: FiPlus,
-        handler: {
-          onClick: () => console.log('titulo list click'),
-          onPress: () => console.log('titulo list press'),
-        },
-        action: {
-          onClick: () => console.log('titulo action click'),
-          onPress: () => console.log('titulo action press'),
-        },
-      },
-    ];
+    return entities;
   }, []);
 
   useEffect(() => {
     setSelectedItem(-1);
     setSearchResult(searchSourceMemo);
+
     setMaxItems(searchSourceMemo.length * 2);
   }, [isOpen, searchSourceMemo]);
+
+  useEffect(() => {
+    on('globalSearch', globalSearchHandler);
+
+    return function cleanup() {
+      off('globalSearch', globalSearchHandler);
+    };
+  });
 
   const handleSetSelectedItem = useCallback(
     (position: number): void => {
@@ -129,14 +84,17 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputSearch(e.target.value);
+      const value = e.target.value;
+      setInputSearch(value);
       const results = searchSourceMemo.filter((item) =>
-        item.label
-          .toLocaleLowerCase()
-          .startsWith(e.target.value.toLocaleLowerCase())
+        item.label.toLocaleLowerCase().startsWith(value.toLocaleLowerCase())
       );
-      const resultsDb: SearchSource[] = [];
-      results.push(...resultsDb);
+
+      if (value.length > 3) {
+        const resultsDb: SearchSource[] = globalSearchHandler(value);
+        results.push(...resultsDb);
+      }
+
       const finalResult: SearchSource[] = results.sort((a, b) =>
         a.label < b.label ? -1 : 1
       );
@@ -146,6 +104,14 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
     },
     [searchSourceMemo]
   );
+
+  const globalSearchHandler = useCallback((search) => {
+    const retorno: any = window.api.sendSync('globalSearch', {
+      entity: 'Any',
+      value: search,
+    });
+    return retorno;
+  }, []);
 
   const handleKeys = useCallback(
     (event, clicked): void => {
@@ -202,9 +168,9 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
             {searchResult.map((item, index) => (
               <MenuItem
                 key={`menu-${index}`}
+                index={index}
                 order={(index + 1) * 2}
                 item={item}
-                //  mouseInterraction={handleClick}
                 keyPress={handleKeyPress}
                 selectedItem={selectedItem}
               />

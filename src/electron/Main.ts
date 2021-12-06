@@ -78,7 +78,7 @@ export default class Main {
         Contact,
         Settings,
         Borrow,
-        BorrowRenovation
+        BorrowRenovation,
       ],
     });
   }
@@ -127,6 +127,10 @@ export default class Main {
       event.returnValue = await repository.list(content[0].value);
     });
 
+    ipcMain.on('globalSearch', async (event, content: Event[]) => {
+      event.returnValue = [];
+    });
+
     const mainWindow = new BrowserWindow({
       icon: this.getIcon(),
       minWidth: 800,
@@ -170,14 +174,16 @@ export default class Main {
     try {
       const rawdata = fs.readFileSync('./selected-language.json');
       const language: { language: string } = JSON.parse(rawdata.toString());
-        return language.language;
-      } catch (err) {
-        return 'en-US';
-      }
+      return language.language;
+    } catch (err) {
+      return 'en-US';
+    }
   }
 
   protected async handleTranslations(window: BrowserWindow): Promise<void> {
-    this.translations = await this.bootstrap.startI18n(this.getSelectedLanguage());
+    this.translations = await this.bootstrap.startI18n(
+      this.getSelectedLanguage()
+    );
 
     Menu.setApplicationMenu(
       Menu.buildFromTemplate(
