@@ -1,5 +1,5 @@
-import { rgba, shade } from 'polished';
-import { createGlobalStyle } from 'styled-components';
+import { rgba, shade, tint } from 'polished';
+import { createGlobalStyle, css } from 'styled-components';
 
 export default createGlobalStyle`
   * {
@@ -36,7 +36,12 @@ export default createGlobalStyle`
     color: ${(props) => props.theme.colors.primary.light};
 
     &:hover {
-      background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
+      ${(props) => props.theme.title == 'light' && css`
+        background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
+      `}
+      ${(props) => props.theme.title == 'dark' && css`
+        background: ${(props) => tint(0.2, props.theme.colors.primary.dark)};
+      `}
     }
   }
 
@@ -45,7 +50,12 @@ export default createGlobalStyle`
     color: ${(props) => props.theme.colors.secondary.light};
 
     &:hover {
-      background: ${(props) => shade(0.2, props.theme.colors.secondary.dark)};
+      ${(props) => props.theme.title == 'light' && css`
+        background: ${(props) => shade(0.2, props.theme.colors.secondary.dark)};
+      `}
+      ${(props) => props.theme.title == 'dark' && css`
+        background: ${(props) => tint(0.2, props.theme.colors.secondary.dark)};
+      `}
     }
   }
 
@@ -87,7 +97,7 @@ export default createGlobalStyle`
         &:last-child {
           border-bottom: 0;
         }
-        
+
         span{
           svg{
             margin-right: 7px;

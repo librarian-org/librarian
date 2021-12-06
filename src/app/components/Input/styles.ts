@@ -13,7 +13,7 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   background: ${props => props.theme.colors.input.background};
   border-radius: 8px;
-  width: 100%;
+  /* width: 100%; */
   height: 46px;
   display: flex;
   align-items: center;
@@ -24,9 +24,10 @@ export const Container = styled.div<ContainerProps>`
 
   transition: none;
 
-  & + div {
+  /* & + div {
     margin-top: 20px;
-  }
+  } */
+  /* margin-top: 10px; */
 
   &:hover {
     border: 2px solid ${props => props.theme.colors.primary.dark};

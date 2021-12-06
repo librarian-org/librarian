@@ -43,7 +43,11 @@
     "language": "&Idioma"
   },
   "button": {
-    "loading": "Carregando..."
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "remove": "Remover",
+    "add": "Adicionar",
+    "create": "Criar"
   },
   "home": {
     "message": "Olá Mundo!"
@@ -55,7 +59,27 @@
     "label": "Empréstimo"
   },
   "title": {
-    "label": "Título"
+    "label": "Título",
+    "editions": "Edições",
+    "authors": "Autores",
+    "categories": "Categorias",
+    "name": "Nome",
+    "classification": "Classificação (Tombo)",
+    "edition": "Edição",
+    "published_at": "Publicado Em",
+    "informErrorsEdition": "Informe #errors# da edição para continuar",
+    "hasBeenAdd": "já foi adicionado(a) a esse título",
+    "selectAuthorToAdd": "Selecione um autor para adicionar",
+    "selectCategoryToAdd": "Selecione uma categori para adicionar",
+
+    "typeTitleName": "Digite o nome do título",
+    "typeISBN": "Digite a ISBN do Título",
+    "typeClassification": "Digite a classificação",
+    "typeEdition": "Digite a edição",
+    "typePublicationDate": "Digite a data de publicação",
+    "removeEditionInformation": "Remover informações de edição da lista",
+    "removeAuthorInformation": "Remover autor da lista",
+    "removeCategoryInformation": "Remover categoria da lista"
   },
   "settings": {
     "label": "Configurações"

@@ -1,8 +1,9 @@
 import { shade } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.button`
-  background: #D7D7DD;
+  display: flex;
+  background: ${(props) => props.theme.colors.background};
   border-radius: 10px;
   border: 0;
   height: 40px;
@@ -17,6 +18,9 @@ export const Container = styled.button`
   font-weight: bold;
 
   &:hover {
-    background: ${() => shade(0.2, '#D7D7DD')};
+    background-color: ${(props) => shade(0.2, props.theme.colors.background)};
+    ${(props) => props.theme.title == 'dark' && css`
+      background-color: ${(props) => shade(0.8, props.theme.colors.background)};
+    `}
   }
 `;
