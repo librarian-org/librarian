@@ -9,10 +9,10 @@ export class TitleAuthor
   id: number;
 
   @Column()
-  title_id: number;
+  titleId: number;
 
   @Column()
-  author_id: number;
+  authorId: number;
 
   @ManyToOne(() => Title, title => title.authors)
   title: Title;

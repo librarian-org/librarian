@@ -17,13 +17,13 @@ export class Address {
   neighborhood: string;
 
   @Column()
-  public_place: string;
+  publicPlace: string;
 
   @Column()
-  city_id: number;
+  cityId: number;
 
   @Column()
-  user_id: number;
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.addresses)
   user: User;

@@ -4,7 +4,7 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "title_category",
+            name: "titleCategory",
             columns: [
                 {
                     name: "id", 
@@ -12,25 +12,25 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
                     isPrimary: true
                 },
                 {
-                    name: "title_id", 
+                    name: "titleId", 
                     type: "int",
                 },
                 {
-                    name: "category_id", 
+                    name: "categoryId", 
                     type: "int",
                 },
             ]
         }), true)
 
-        await queryRunner.createForeignKey("title_category", new TableForeignKey({
-            columnNames: ["title_id"],
+        await queryRunner.createForeignKey("titleCategory", new TableForeignKey({
+            columnNames: ["titleId"],
             referencedColumnNames: ["id"],
             referencedTableName: "title",
             onDelete: "CASCADE"
         }));
 
-        await queryRunner.createForeignKey("title_category", new TableForeignKey({
-            columnNames: ["category_id"],
+        await queryRunner.createForeignKey("titleCategory", new TableForeignKey({
+            columnNames: ["categoryId"],
             referencedColumnNames: ["id"],
             referencedTableName: "category",
             onDelete: "CASCADE"
@@ -38,14 +38,14 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("title_category");
+        const table = await queryRunner.getTable("titleCategory");
         
-        const categoryId = table.foreignKeys.find(fk => fk.columnNames.indexOf("category_id") !== -1);
-        await queryRunner.dropForeignKey("title_category", categoryId);
+        const categoryId = table.foreignKeys.find(fk => fk.columnNames.indexOf("categoryId") !== -1);
+        await queryRunner.dropForeignKey("titleCategory", categoryId);
         
-        const titleId = table.foreignKeys.find(fk => fk.columnNames.indexOf("title_id") !== -1);
-        await queryRunner.dropForeignKey("title_category", titleId);
+        const titleId = table.foreignKeys.find(fk => fk.columnNames.indexOf("titleId") !== -1);
+        await queryRunner.dropForeignKey("titleCategory", titleId);
 
-        await queryRunner.dropTable("title_category");
+        await queryRunner.dropTable("titleCategory");
     }
 }

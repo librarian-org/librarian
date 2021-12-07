@@ -7,16 +7,16 @@ export class BorrowRenovation {
   id: number;
 
   @Column({type: 'date'})
-  borrowed_at: string;
+  borrowedAt: string;
   
   @Column({type: 'date'})
-  renewed_at: string;
+  renewedAt: string;
   
   @Column({type: 'date' , nullable: true})
-  returned_at: string;
+  returnedAt: string;
   
   @Column()
-  borrow_id: number;
+  borrowId: number;
 
   @ManyToOne(() => Borrow, (borrow) => borrow.renovations)
   borrow: Borrow;

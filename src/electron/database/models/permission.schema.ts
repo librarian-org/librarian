@@ -17,10 +17,10 @@ export class Permission {
   read: boolean;
 
   @Column()
-  program_id: number;
+  programId: number;
 
   @Column()
-  profile_id: number;
+  profileId: number;
 
   @ManyToOne(() => Profile, (profile) => profile.permissions)
   profile: Profile;

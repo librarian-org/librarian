@@ -9,7 +9,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'title_publisher',
+        name: 'titlePublisher',
         columns: [
           {
             name: 'id',
@@ -26,15 +26,15 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'published_at',
+            name: 'publishedAt',
             type: 'varchar',
           },
           {
-            name: 'title_id',
+            name: 'titleId',
             type: 'int',
           },
           {
-            name: 'publisher_id',
+            name: 'publisherId',
             type: 'int',
           },
         ],
@@ -43,9 +43,9 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'title_publisher',
+      'titlePublisher',
       new TableForeignKey({
-        columnNames: ['title_id'],
+        columnNames: ['titleId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'title',
         onDelete: 'CASCADE',
@@ -53,9 +53,9 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
     );
 
     await queryRunner.createForeignKey(
-      'title_publisher',
+      'titlePublisher',
       new TableForeignKey({
-        columnNames: ['publisher_id'],
+        columnNames: ['publisherId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'publisher',
         onDelete: 'CASCADE',
@@ -64,18 +64,18 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    const table = await queryRunner.getTable('title_publisher');
+    const table = await queryRunner.getTable('titlePublisher');
 
     const titleId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('title_id') !== -1
+      (fk) => fk.columnNames.indexOf('titleId') !== -1
     );
-    await queryRunner.dropForeignKey('title_publisher', titleId);
+    await queryRunner.dropForeignKey('titlePublisher', titleId);
 
     const publisherId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('publisher_id') !== -1
+      (fk) => fk.columnNames.indexOf('publisherId') !== -1
     );
-    await queryRunner.dropForeignKey('title_publisher', publisherId);
+    await queryRunner.dropForeignKey('titlePublisher', publisherId);
 
-    await queryRunner.dropTable('title_publisher');
+    await queryRunner.dropTable('titlePublisher');
   }
 }

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Borrow } from './borrow.schema';
-import { TitlePublisher } from './title_publisher.schema';
+import { TitlePublisher } from './titlePublisher.schema';
 
 @Entity()
 export class Publisher

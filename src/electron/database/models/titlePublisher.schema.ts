@@ -15,13 +15,13 @@ export class TitlePublisher
   classification: string;
 
   @Column({ type: 'date' })
-  published_at: string;
+  publishedAt: string;
 
   @Column()
-  title_id: number;
+  titleId: number;
 
   @Column()
-  publisher_id: number;
+  publisherId: number;
 
   @ManyToOne(() => Title, title => title.titlePublishers)
   title: Title;

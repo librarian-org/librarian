@@ -12,7 +12,7 @@ export class Region
   name: string;
 
   @Column()
-  country_id: number;
+  countryId: number;
 
   @ManyToOne(() => Country, country => country.regions)
   country: Country[];

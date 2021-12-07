@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Category } from './category.schema';
 import { Author } from './author.schema';
-import { TitlePublisher } from './title_publisher.schema';
+import { TitlePublisher } from './titlePublisher.schema';
 
 @Entity()
 export class Title

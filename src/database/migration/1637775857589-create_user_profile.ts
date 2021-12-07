@@ -4,7 +4,7 @@ export class createUserProfile1637775857589 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "user_profile",
+            name: "userProfile",
             columns: [
                 {
                     name: "id", 
@@ -12,25 +12,25 @@ export class createUserProfile1637775857589 implements MigrationInterface {
                     isPrimary: true
                 },
                 {
-                    name: "user_id", 
+                    name: "userId", 
                     type: "int",
                 },
                 {
-                    name: "profile_id", 
+                    name: "profileId", 
                     type: "int",
                 },
             ]
         }), true)
 
-        await queryRunner.createForeignKey("user_profile", new TableForeignKey({
-            columnNames: ["user_id"],
+        await queryRunner.createForeignKey("userProfile", new TableForeignKey({
+            columnNames: ["userId"],
             referencedColumnNames: ["id"],
             referencedTableName: "user",
             onDelete: "CASCADE"
         }));
 
-        await queryRunner.createForeignKey("user_profile", new TableForeignKey({
-            columnNames: ["profile_id"],
+        await queryRunner.createForeignKey("userProfile", new TableForeignKey({
+            columnNames: ["profileId"],
             referencedColumnNames: ["id"],
             referencedTableName: "profile",
             onDelete: "CASCADE"
@@ -38,14 +38,14 @@ export class createUserProfile1637775857589 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("user_profile");
+        const table = await queryRunner.getTable("userProfile");
         
-        const profileId = table.foreignKeys.find(fk => fk.columnNames.indexOf("profile_id") !== -1);
-        await queryRunner.dropForeignKey("user_profile", profileId);
+        const profileId = table.foreignKeys.find(fk => fk.columnNames.indexOf("profileId") !== -1);
+        await queryRunner.dropForeignKey("userProfile", profileId);
         
-        const userId = table.foreignKeys.find(fk => fk.columnNames.indexOf("user_id") !== -1);
-        await queryRunner.dropForeignKey("user_profile", userId);
+        const userId = table.foreignKeys.find(fk => fk.columnNames.indexOf("userId") !== -1);
+        await queryRunner.dropForeignKey("userProfile", userId);
 
-        await queryRunner.dropTable("user_profile");
+        await queryRunner.dropTable("userProfile");
     }
 }

@@ -5,7 +5,7 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
           new Table({
-            name: 'borrow_renovation',
+            name: 'borrowRenovation',
             columns: [
               {
                 name: 'id',
@@ -13,20 +13,20 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
                 isPrimary: true,
               },
               {
-                name: 'borrowed_at',
+                name: 'borrowedAt',
                 type: 'varchar',
               },
               {
-                name: 'renewed_at',
+                name: 'renewedAt',
                 type: 'varchar',
               },
               {
-                name: 'returned_at',
+                name: 'returnedAt',
                 type: 'varchar',
                 isNullable: true,
               },
               {
-                name: 'borrow_id',
+                name: 'borrowId',
                 type: 'int',
               },
             ],
@@ -35,9 +35,9 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
         );
     
         await queryRunner.createForeignKey(
-          'borrow_renovation',
+          'borrowRenovation',
           new TableForeignKey({
-            columnNames: ['borrow_id'],
+            columnNames: ['borrowId'],
             referencedColumnNames: ['id'],
             referencedTableName: 'borrow',
             onDelete: 'CASCADE',
@@ -46,13 +46,13 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
       }
     
       public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable('borrow_renovation');
+        const table = await queryRunner.getTable('borrowRenovation');
     
         const borrowId = table.foreignKeys.find(
-          (fk) => fk.columnNames.indexOf('borrow_id') !== -1
+          (fk) => fk.columnNames.indexOf('borrowId') !== -1
         );
-        await queryRunner.dropForeignKey('borrow_renovation', borrowId);
+        await queryRunner.dropForeignKey('borrowRenovation', borrowId);
       
-        await queryRunner.dropTable('borrow_renovation');
+        await queryRunner.dropTable('borrowRenovation');
       }
 }
