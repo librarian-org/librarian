@@ -4,7 +4,7 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
-            name: "titleCategory",
+            name: "title_category",
             columns: [
                 {
                     name: "id", 
@@ -22,14 +22,14 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
             ]
         }), true)
 
-        await queryRunner.createForeignKey("titleCategory", new TableForeignKey({
+        await queryRunner.createForeignKey("title_category", new TableForeignKey({
             columnNames: ["titleId"],
             referencedColumnNames: ["id"],
             referencedTableName: "title",
             onDelete: "CASCADE"
         }));
 
-        await queryRunner.createForeignKey("titleCategory", new TableForeignKey({
+        await queryRunner.createForeignKey("title_category", new TableForeignKey({
             columnNames: ["categoryId"],
             referencedColumnNames: ["id"],
             referencedTableName: "category",
@@ -38,14 +38,14 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("titleCategory");
+        const table = await queryRunner.getTable("title_category");
         
         const categoryId = table.foreignKeys.find(fk => fk.columnNames.indexOf("categoryId") !== -1);
-        await queryRunner.dropForeignKey("titleCategory", categoryId);
+        await queryRunner.dropForeignKey("title_category", categoryId);
         
         const titleId = table.foreignKeys.find(fk => fk.columnNames.indexOf("titleId") !== -1);
-        await queryRunner.dropForeignKey("titleCategory", titleId);
+        await queryRunner.dropForeignKey("title_category", titleId);
 
-        await queryRunner.dropTable("titleCategory");
+        await queryRunner.dropTable("title_category");
     }
 }

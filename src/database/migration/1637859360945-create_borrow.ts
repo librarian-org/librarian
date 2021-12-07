@@ -56,7 +56,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
       new TableForeignKey({
         columnNames: ['titlePublisherId'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'titlePublisher',
+        referencedTableName: 'title_publisher',
         onDelete: 'CASCADE',
       })
     );

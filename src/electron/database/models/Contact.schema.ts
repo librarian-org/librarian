@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { ContactType } from './contactType.schema';
-import { User } from './user.schema';
+import { ContactType } from './ContactType.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Contact

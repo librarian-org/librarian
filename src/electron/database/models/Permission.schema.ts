@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Profile } from './profile.schema';
-import { Program } from './program.schema';
+import { Profile } from './Profile.schema';
+import { Program } from './Program.schema';
 
 @Entity()
 export class Permission {

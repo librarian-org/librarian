@@ -31,7 +31,7 @@ export class createContact1637781284674 implements MigrationInterface {
         await queryRunner.createForeignKey("contact", new TableForeignKey({
             columnNames: ["contactTypeId"],
             referencedColumnNames: ["id"],
-            referencedTableName: "contactType",
+            referencedTableName: "contact_type",
             onDelete: "CASCADE"
         }));
 

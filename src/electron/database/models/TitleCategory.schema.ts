@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Category } from './category.schema';
-import { Title } from './title.schema';
+import { Category } from './Category.schema';
+import { Title } from './Title.schema';
 
 @Entity()
 export class TitleCategory

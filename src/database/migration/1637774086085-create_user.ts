@@ -48,7 +48,7 @@ export class createUser1637774086085 implements MigrationInterface {
         await queryRunner.createForeignKey("user", new TableForeignKey({
             columnNames: ["userTypeId"],
             referencedColumnNames: ["id"],
-            referencedTableName: "userType",
+            referencedTableName: "user_type",
             onDelete: "CASCADE"
         }));
     }

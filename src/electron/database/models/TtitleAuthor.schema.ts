@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Author } from './author.schema';
-import { Title } from './title.schema';
+import { Author } from './Author.schema';
+import { Title } from './Title.schema';
 
 @Entity()
 export class TitleAuthor

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { City } from './city.schema';
-import { User } from './user.schema';
+import { City } from './City.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Address {

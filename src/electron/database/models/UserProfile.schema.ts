@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Profile } from './profile.schema';
-import { User } from './user.schema';
+import { Profile } from './Profile.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class UserProfile

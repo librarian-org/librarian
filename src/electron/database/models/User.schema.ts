@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Profile } from './profile.schema';
-import { Contact } from './contact.schema';
-import { UserType } from './userType.schema';
-import { Borrow } from './borrow.schema';
-import { Address } from './address.schema';
+import { Profile } from './Profile.schema';
+import { Contact } from './Contact.schema';
+import { UserType } from './UserType.schema';
+import { Borrow } from './Borrow.schema';
+import { Address } from './Address.schema';
 
 @Entity()
 export class User {

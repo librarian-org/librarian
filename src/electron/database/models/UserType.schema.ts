@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Title } from './title.schema';
+import { User } from './User.schema';
 
 @Entity()
-export class Author
+export class UserType
 {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,6 +10,7 @@ export class Author
   @Column()
   name: string;
 
-  @OneToMany(() => Title, title => title.authors)
-  titles: Title[];
+  @OneToMany(() => User, user => user.type)
+  users: User[];
+
 }

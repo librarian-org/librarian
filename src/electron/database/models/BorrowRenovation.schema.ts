@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Borrow } from './borrow.schema';
+import { Borrow } from './Borrow.schema';
 
 @Entity()
 export class BorrowRenovation {

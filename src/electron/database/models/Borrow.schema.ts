@@ -5,9 +5,9 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { BorrowRenovation } from './borrowRenovation.schema';
-import { Publisher } from './publisher.schema';
-import { User } from './user.schema';
+import { BorrowRenovation } from './BorrowRenovation.schema';
+import { Publisher } from './Publisher.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Borrow {
