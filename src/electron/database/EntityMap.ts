@@ -1,0 +1,45 @@
+import { Address } from './models/address.schema';
+import { Author } from './models/author.schema';
+import { Borrow } from './models/borrow.schema';
+import { BorrowRenovation } from './models/borrow_renovation.schema';
+import { Category } from './models/category.schema';
+import { City } from './models/city.schema';
+import { Contact } from './models/contact.schema';
+import { ContactType } from './models/contact_type.schema';
+import { Country } from './models/country.schema';
+import { Permission } from './models/permission.schema';
+import { Profile } from './models/profile.schema';
+import { Program } from './models/program.schema';
+import { Publisher } from './models/publisher.schema';
+import { Region } from './models/region.schema';
+import { Settings } from './models/settings.schema';
+import { Title } from './models/title.schema';
+import { TitleAuthor } from './models/title_author.schema';
+import { TitleCategory } from './models/title_category.schema';
+import { TitlePublisher } from './models/title_publisher.schema';
+import { TypeUser } from './models/type_user.schema';
+import { User } from './models/user.schema';
+
+export const entityMap = [
+  { key: 'Permission', value: Permission },
+  { key: 'Title', value: Title },
+  { key: 'TitlePublisher', value: TitlePublisher },
+  { key: 'User', value: User },
+  { key: 'Author', value: Author },
+  { key: 'Program', value: Program },
+  { key: 'Category', value: Category },
+  { key: 'Publisher', value: Publisher },
+  { key: 'Region', value: Region },
+  { key: 'City', value: City },
+  { key: 'Address', value: Address },
+  { key: 'Country', value: Country },
+  { key: 'Profile', value: Profile },
+  { key: 'TypeUser', value: TypeUser },
+  { key: 'ContactType', value: ContactType },
+  { key: 'Contact', value: Contact },
+  { key: 'Settings', value: Settings },
+  { key: 'Borrow', value: Borrow },
+  { key: 'BorrowRenovation', value: BorrowRenovation },
+  { key: 'TitleCategory', value: TitleCategory },
+  { key: 'TitleAuthor', value: TitleAuthor },
+];

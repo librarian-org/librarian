@@ -1,6 +1,5 @@
 import React from 'react';
-import { FiPlus } from 'react-icons/fi';
-import { SearchSource } from '..';
+import { SearchSource } from '../../../util/DefaultEntities';
 import RoundedButton from '../../RoundedButton';
 
 interface MenuItemProps {
@@ -8,6 +7,7 @@ interface MenuItemProps {
   selectedItem: number;
   order: number;
   item: SearchSource;
+  index: number;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -15,29 +15,36 @@ const MenuItem: React.FC<MenuItemProps> = ({
   keyPress,
   order,
   item,
+  index,
 }) => {
   return (
     <>
-      <li>
+      <li
+        className={
+          index ===
+          (selectedItem % 2 ? (selectedItem - 1) / 2 : selectedItem / 2 - 1)
+            ? 'li-selected'
+            : ''
+        }
+      >
         <span
           tabIndex={order - 1}
           className={selectedItem === order - 1 ? 'selected' : ''}
           onClick={(e: React.MouseEvent) => item.handler.onClick(e)}
           onKeyDown={keyPress}
         >
-          {<item.icon size={20} />}
+          {<item.icon size={20} style={{ color: item.iconColor }} />}
           {item.label}
         </span>
-        <RoundedButton
-          className={
-            selectedItem === order ? 'secondary selected' : 'secondary'
-          }
-          onClick={(e: React.MouseEvent) => item.action.onClick(e)}
-          onKeyDown={keyPress}
-          tabIndex={order}
-          icon={item.iconAction}
-          color="secondary"
-        />
+        {item.iconAction && (
+          <RoundedButton
+            className={selectedItem === order ? 'primary selected' : 'primary'}
+            onClick={(e: React.MouseEvent) => item.action.onClick(e)}
+            onKeyDown={keyPress}
+            tabIndex={order}
+            icon={item.iconAction}
+          />
+        )}
       </li>
     </>
   );

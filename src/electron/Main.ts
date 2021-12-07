@@ -13,29 +13,12 @@ import Bootstrap from './Bootstrap';
 import createMenuTemplate from './Menu';
 
 import { Connection, createConnection } from 'typeorm';
-import { Title } from './database/models/title.schema';
-import { User } from './database/models/user.schema';
 import { Event } from '../electron/contracts/Event';
-import Maker from './database/factory/maker';
-import { Program } from './database/models/program.schema';
-import { Settings } from './database/models/settings.schema';
-import { ContactType } from './database/models/contact_type.schema';
-import { TypeUser } from './database/models/type_user.schema';
-import { Profile } from './database/models/profile.schema';
-import { Country } from './database/models/country.schema';
-import { Publisher } from './database/models/publisher.schema';
-import { Category } from './database/models/category.schema';
-import { Author } from './database/models/author.schema';
-import { TitlePublisher } from './database/models/title_publisher.schema';
-import { Contact } from './database/models/contact.schema';
-import { Region } from './database/models/region.schema';
-import { Permission } from './database/models/permission.schema';
-import { Borrow } from './database/models/borrow.schema';
-import { BorrowRenovation } from './database/models/borrow_renovation.schema';
-import { City } from './database/models/city.schema';
-import { Address } from './database/models/address.schema';
+import Factory from './database/factory';
 import { AppEvent } from '../common/AppEvent';
 import fs from 'fs';
+import { entityMap } from './database/EntityMap';
+import RepositoryBase from './database/repository/RepositoryBase';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -59,27 +42,7 @@ export default class Main {
       logging: true,
       logger: 'simple-console',
       database: './src/database/database.sqlite',
-      entities: [
-        Permission,
-        Title,
-        TitlePublisher,
-        User,
-        Author,
-        Program,
-        Category,
-        Publisher,
-        Region,
-        City,
-        Address,
-        Country,
-        Profile,
-        TypeUser,
-        ContactType,
-        Contact,
-        Settings,
-        Borrow,
-        BorrowRenovation
-      ],
+      entities: entityMap.map((entity) => entity.value),
     });
   }
 
@@ -101,30 +64,38 @@ export default class Main {
     });
   }
 
+  private getRepository(entity: string): RepositoryBase {
+    return Factory.make(this.connection, entity);
+  }
+
   protected async createWindow(): Promise<void> {
     ipcMain.on('create', async (event, content: Event[]) => {
-      const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.create(content[0].value);
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).create(value);
     });
 
     ipcMain.on('update', async (event, content: Event[]) => {
-      const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.update(content[0].value);
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).update(value);
     });
 
     ipcMain.on('delete', async (event, content: Event[]) => {
-      const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.delete(content[0].value);
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).delete(value);
     });
 
     ipcMain.on('read', async (event, content: Event[]) => {
-      const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.read(content[0].value);
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).read(value);
     });
 
     ipcMain.on('list', async (event, content: Event[]) => {
-      const repository = Maker.make(this.connection, content[0].entity);
-      event.returnValue = await repository.list(content[0].value);
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).list(value);
+    });
+
+    ipcMain.on('globalSearch', async (event, content: Event[]) => {
+      event.returnValue = [];
     });
 
     const mainWindow = new BrowserWindow({
@@ -170,14 +141,16 @@ export default class Main {
     try {
       const rawdata = fs.readFileSync('./selected-language.json');
       const language: { language: string } = JSON.parse(rawdata.toString());
-        return language.language;
-      } catch (err) {
-        return 'en-US';
-      }
+      return language.language;
+    } catch (err) {
+      return 'en-US';
+    }
   }
 
   protected async handleTranslations(window: BrowserWindow): Promise<void> {
-    this.translations = await this.bootstrap.startI18n(this.getSelectedLanguage());
+    this.translations = await this.bootstrap.startI18n(
+      this.getSelectedLanguage()
+    );
 
     Menu.setApplicationMenu(
       Menu.buildFromTemplate(
@@ -205,6 +178,7 @@ export default class Main {
 
   protected setIpcMainListeners(): void {
     ipcMain.on(AppEvent.getInitialTranslations, async (event) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let initial: any;
       await Promise.all(
         this.bootstrap.getLanguages().map(async (item) => {
