@@ -81,7 +81,7 @@ const Title: React.FC = () => {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: `${publisher.name} ${i18n.t('hasBeenAdd')}`,
+        description: `${publisher.name} ${i18n.t('title.hasBeenAdd')}`,
       });
       return;
     }
@@ -114,7 +114,7 @@ const Title: React.FC = () => {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: i18n.t('selectAuthorToAdd'),
+        description: i18n.t('title.selectAuthorToAdd'),
       });
       return;
     }
@@ -123,7 +123,7 @@ const Title: React.FC = () => {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: `${author.name} ${i18n.t('hasBeenAdd')}`,
+        description: `${author.name} ${i18n.t('title.hasBeenAdd')}`,
       });
       return;
     }
@@ -147,7 +147,7 @@ const Title: React.FC = () => {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: i18n.t('selectCategoryToAdd'),
+        description: i18n.t('title.selectCategoryToAdd'),
       });
       return;
     }
@@ -156,7 +156,7 @@ const Title: React.FC = () => {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: `${category.name} ${i18n.t('hasBeenAdd')}`,
+        description: `${category.name} ${i18n.t('title.hasBeenAdd')}`,
       });
       return;
     }
@@ -246,19 +246,6 @@ const Title: React.FC = () => {
           placeholder={i18n.t('title.typeISBN')}
         />
       </div>
-      <ButtonContainer>
-        {/* <Button title={i18n.t('button.remove')}>
-          <FiTrash2 size={20} />
-        </Button>
-        &nbsp;&nbsp; */}
-        <Button
-          color="primary"
-          title={i18n.t('button.save')}
-          onClick={handleSave}
-        >
-          <FiSave size={20} />
-        </Button>
-      </ButtonContainer>
       <SectionHeader>
         {sections.map((section) => (
           <a
@@ -385,6 +372,19 @@ const Title: React.FC = () => {
           </Row>
         </SectionContent>
       </div>
+      <ButtonContainer>
+        {/* <Button title={i18n.t('button.remove')}>
+          <FiTrash2 size={20} />
+        </Button>
+        &nbsp;&nbsp; */}
+        <Button
+          color="primary"
+          title={i18n.t('button.save')}
+          onClick={handleSave}
+        >
+          <FiSave size={20} />
+        </Button>
+      </ButtonContainer>
     </Container>
   );
 };
