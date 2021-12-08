@@ -5,9 +5,9 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { BorrowRenovation } from './borrow_renovation.schema';
-import { Publisher } from './publisher.schema';
-import { User } from './user.schema';
+import { BorrowRenovation } from './BorrowRenovation.schema';
+import { Publisher } from './Publisher.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Borrow {
@@ -21,22 +21,22 @@ export class Borrow {
   borrow: string;
 
   @Column({ type: 'date' })
-  estimated_return: string;
+  estimatedReturn: string;
 
   @Column({ type: 'date', nullable: true })
-  returned_at: string;
+  returnedAt: string;
 
   @Column()
   status: number;
 
   @Column({ default: false })
-  is_reserva: boolean;
+  isReserva: boolean;
 
   @Column()
-  title_publisher_id: number;
+  titlePublisherId: number;
 
   @Column()
-  user_id: number;
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.borrows)
   user: User;

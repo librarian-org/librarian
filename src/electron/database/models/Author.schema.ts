@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Contact } from './contact.schema';
+import { Title } from './Title.schema';
 
 @Entity()
-export class ContactType
+export class Author
 {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,6 +10,6 @@ export class ContactType
   @Column()
   name: string;
 
-  @OneToMany(() => Contact, contact => contact.type)
-  contacts: Contact[];
+  @OneToMany(() => Title, title => title.authors)
+  titles: Title[];
 }

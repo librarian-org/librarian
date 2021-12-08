@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Permission } from './permission.schema';
+import { Permission } from './Permission.schema';
 
 @Entity()
 export class Program

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { ContactType } from './contact_type.schema';
-import { User } from './user.schema';
+import { ContactType } from './ContactType.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Contact
@@ -12,10 +12,10 @@ export class Contact
   info: string;
 
   @Column()
-  user_id: number;
+  userId: number;
 
   @Column()
-  content_type_id: number;
+  contentTypeId: number;
 
   @ManyToOne(() => User, user => user.contacts)
   user: User;

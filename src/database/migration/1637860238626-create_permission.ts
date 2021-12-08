@@ -28,11 +28,11 @@ export class createPermission1637860238626 implements MigrationInterface {
                 default: false,
               },
               {
-                name: 'program_id',
+                name: 'programId',
                 type: 'int',
               },
               {
-                name: 'profile_id',
+                name: 'profileId',
                 type: 'int',
               },
             ],
@@ -43,7 +43,7 @@ export class createPermission1637860238626 implements MigrationInterface {
         await queryRunner.createForeignKey(
           'permission',
           new TableForeignKey({
-            columnNames: ['program_id'],
+            columnNames: ['programId'],
             referencedColumnNames: ['id'],
             referencedTableName: 'program',
             onDelete: 'CASCADE',
@@ -53,7 +53,7 @@ export class createPermission1637860238626 implements MigrationInterface {
         await queryRunner.createForeignKey(
           'permission',
           new TableForeignKey({
-            columnNames: ['profile_id'],
+            columnNames: ['profileId'],
             referencedColumnNames: ['id'],
             referencedTableName: 'profile',
             onDelete: 'CASCADE',
@@ -65,12 +65,12 @@ export class createPermission1637860238626 implements MigrationInterface {
         const table = await queryRunner.getTable('permission');
     
         const profileId = table.foreignKeys.find(
-          (fk) => fk.columnNames.indexOf('profile_id') !== -1
+          (fk) => fk.columnNames.indexOf('profileId') !== -1
         );
         await queryRunner.dropForeignKey('permission', profileId);
     
         const programId = table.foreignKeys.find(
-          (fk) => fk.columnNames.indexOf('program_id') !== -1
+          (fk) => fk.columnNames.indexOf('programId') !== -1
         );
         await queryRunner.dropForeignKey('permission', programId);
     

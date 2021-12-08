@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Region } from './region.schema';
+import { Region } from './Region.schema';
 
 @Entity()
 export class Country

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Profile } from './profile.schema';
-import { User } from './user.schema';
+import { Profile } from './Profile.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class UserProfile
@@ -9,10 +9,10 @@ export class UserProfile
   id: number;
 
   @Column()
-  user_id: number;
+  userId: number;
 
   @Column()
-  profile_id: number;
+  profileId: number;
 
   @ManyToOne(() => User, user => user.profiles)
   user: User;

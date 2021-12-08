@@ -17,11 +17,11 @@ export class createContact1637781284674 implements MigrationInterface {
                     type: "varchar",
                 },
                 {
-                    name: "contact_type_id", 
+                    name: "contactTypeId", 
                     type: "int",
                 },
                 {
-                    name: "user_id", 
+                    name: "userId", 
                     type: "int",
                 },
 
@@ -29,14 +29,14 @@ export class createContact1637781284674 implements MigrationInterface {
         }), true)
 
         await queryRunner.createForeignKey("contact", new TableForeignKey({
-            columnNames: ["contact_type_id"],
+            columnNames: ["contactTypeId"],
             referencedColumnNames: ["id"],
             referencedTableName: "contact_type",
             onDelete: "CASCADE"
         }));
 
         await queryRunner.createForeignKey("contact", new TableForeignKey({
-            columnNames: ["user_id"],
+            columnNames: ["userId"],
             referencedColumnNames: ["id"],
             referencedTableName: "user",
             onDelete: "CASCADE"
@@ -47,10 +47,10 @@ export class createContact1637781284674 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("contact");
 
-        const contactTypeId = table.foreignKeys.find(fk => fk.columnNames.indexOf("contact_type_id") !== -1);
+        const contactTypeId = table.foreignKeys.find(fk => fk.columnNames.indexOf("contactTypeId") !== -1);
         await queryRunner.dropForeignKey("contact", contactTypeId);
 
-        const userId = table.foreignKeys.find(fk => fk.columnNames.indexOf("user_id") !== -1);
+        const userId = table.foreignKeys.find(fk => fk.columnNames.indexOf("userId") !== -1);
         await queryRunner.dropForeignKey("contact", userId);
 
         await queryRunner.dropTable("contact");

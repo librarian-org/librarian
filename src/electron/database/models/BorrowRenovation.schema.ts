@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Borrow } from './borrow.schema';
+import { Borrow } from './Borrow.schema';
 
 @Entity()
 export class BorrowRenovation {
@@ -7,16 +7,16 @@ export class BorrowRenovation {
   id: number;
 
   @Column({type: 'date'})
-  borrowed_at: string;
+  borrowedAt: string;
   
   @Column({type: 'date'})
-  renewed_at: string;
+  renewedAt: string;
   
   @Column({type: 'date' , nullable: true})
-  returned_at: string;
+  returnedAt: string;
   
   @Column()
-  borrow_id: number;
+  borrowId: number;
 
   @ManyToOne(() => Borrow, (borrow) => borrow.renovations)
   borrow: Borrow;

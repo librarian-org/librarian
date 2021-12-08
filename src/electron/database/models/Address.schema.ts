@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { City } from './city.schema';
-import { User } from './user.schema';
+import { City } from './City.schema';
+import { User } from './User.schema';
 
 @Entity()
 export class Address {
@@ -17,13 +17,13 @@ export class Address {
   neighborhood: string;
 
   @Column()
-  public_place: string;
+  publicPlace: string;
 
   @Column()
-  city_id: number;
+  cityId: number;
 
   @Column()
-  user_id: number;
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.addresses)
   user: User;
