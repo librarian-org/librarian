@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Category } from './category.schema';
-import { Title } from './title.schema';
+import { Category } from './Category.schema';
+import { Title } from './Title.schema';
 
 @Entity()
 export class TitleCategory
@@ -9,10 +9,10 @@ export class TitleCategory
   id: number;
 
   @Column()
-  title_id: number;
+  titleId: number;
 
   @Column()
-  category_id: number;
+  categoryId: number;
 
   @ManyToOne(() => Title, title => title.categories)
   title: Title;

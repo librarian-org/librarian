@@ -16,7 +16,7 @@ export class createRegion1637780395265 implements MigrationInterface {
                     type: "varchar",
                 },
                 {
-                    name: "country_id", 
+                    name: "countryId", 
                     type: "int",
                 },
 
@@ -24,7 +24,7 @@ export class createRegion1637780395265 implements MigrationInterface {
         }), true)
 
         await queryRunner.createForeignKey("region", new TableForeignKey({
-            columnNames: ["country_id"],
+            columnNames: ["countryId"],
             referencedColumnNames: ["id"],
             referencedTableName: "country",
             onDelete: "CASCADE"
@@ -35,7 +35,7 @@ export class createRegion1637780395265 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("region");
 
-        const countryID = table.foreignKeys.find(fk => fk.columnNames.indexOf("country_id") !== -1);
+        const countryID = table.foreignKeys.find(fk => fk.columnNames.indexOf("countryId") !== -1);
         await queryRunner.dropForeignKey("region", countryID);
 
         await queryRunner.dropTable("region");

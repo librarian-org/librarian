@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Author } from './author.schema';
-import { Title } from './title.schema';
+import { Author } from './Author.schema';
+import { Title } from './Title.schema';
 
 @Entity()
 export class TitleAuthor
@@ -9,10 +9,10 @@ export class TitleAuthor
   id: number;
 
   @Column()
-  title_id: number;
+  titleId: number;
 
   @Column()
-  author_id: number;
+  authorId: number;
 
   @ManyToOne(() => Title, title => title.authors)
   title: Title;

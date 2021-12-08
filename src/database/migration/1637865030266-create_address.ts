@@ -30,15 +30,15 @@ export class createAddress1637865030266 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'public_place',
+            name: 'publicPlace',
             type: 'varchar',
           },
           {
-            name: 'city_id',
+            name: 'cityId',
             type: 'int',
           },
           {
-            name: 'user_id',
+            name: 'userId',
             type: 'int',
           },
         ],
@@ -49,7 +49,7 @@ export class createAddress1637865030266 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'address',
       new TableForeignKey({
-        columnNames: ['city_id'],
+        columnNames: ['cityId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'city',
         onDelete: 'CASCADE',
@@ -59,7 +59,7 @@ export class createAddress1637865030266 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'address',
       new TableForeignKey({
-        columnNames: ['user_id'],
+        columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
         onDelete: 'CASCADE',
@@ -71,12 +71,12 @@ export class createAddress1637865030266 implements MigrationInterface {
     const table = await queryRunner.getTable('address');
 
     const userId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('user_id') !== -1
+      (fk) => fk.columnNames.indexOf('userId') !== -1
     );
     await queryRunner.dropForeignKey('address', userId);
 
     const cityId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('city_id') !== -1
+      (fk) => fk.columnNames.indexOf('cityId') !== -1
     );
     await queryRunner.dropForeignKey('address', cityId);
 

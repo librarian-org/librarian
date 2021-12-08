@@ -16,7 +16,7 @@ export class createCity1637862771380 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'region_id',
+            name: 'regionId',
             type: 'int',
           },
         ],
@@ -27,7 +27,7 @@ export class createCity1637862771380 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'city',
       new TableForeignKey({
-        columnNames: ['region_id'],
+        columnNames: ['regionId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'region',
         onDelete: 'CASCADE',
@@ -39,7 +39,7 @@ export class createCity1637862771380 implements MigrationInterface {
     const table = await queryRunner.getTable('city');
 
     const regionId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('region_id') !== -1
+      (fk) => fk.columnNames.indexOf('regionId') !== -1
     );
     await queryRunner.dropForeignKey('city', regionId);
 

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Address } from './address.schema';
-import { Region } from './region.schema';
+import { Address } from './Address.schema';
+import { Region } from './Region.schema';
 
 @Entity()
 export class City
@@ -12,7 +12,7 @@ export class City
   name: string;
 
   @Column()
-  region_id: number;
+  regionId: number;
 
   @ManyToOne(() => Region, region => region.cities)
   region: Region;

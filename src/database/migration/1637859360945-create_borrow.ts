@@ -21,11 +21,11 @@ export class createBorrow1637859360945 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'estimated_return',
+            name: 'estimatedReturn',
             type: 'varchar',
           },
           {
-            name: 'returned_at',
+            name: 'returnedAt',
             type: 'varchar',
             isNullable: true,
           },
@@ -34,16 +34,16 @@ export class createBorrow1637859360945 implements MigrationInterface {
             type: 'int',
           },
           {
-            name: 'is_reserva',
+            name: 'isReserva',
             type: 'boolean',
             default: false,
           },
           {
-            name: 'title_publisher_id',
+            name: 'titlePublisherId',
             type: 'int',
           },
           {
-            name: 'user_id',
+            name: 'userId',
             type: 'int',
           },
         ],
@@ -54,7 +54,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'borrow',
       new TableForeignKey({
-        columnNames: ['title_publisher_id'],
+        columnNames: ['titlePublisherId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'title_publisher',
         onDelete: 'CASCADE',
@@ -64,7 +64,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'borrow',
       new TableForeignKey({
-        columnNames: ['user_id'],
+        columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
         onDelete: 'CASCADE',
@@ -76,12 +76,12 @@ export class createBorrow1637859360945 implements MigrationInterface {
     const table = await queryRunner.getTable('borrow');
 
     const userId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('user_id') !== -1
+      (fk) => fk.columnNames.indexOf('userId') !== -1
     );
     await queryRunner.dropForeignKey('borrow', userId);
 
     const titlePublisherId = table.foreignKeys.find(
-      (fk) => fk.columnNames.indexOf('title_publisher_id') !== -1
+      (fk) => fk.columnNames.indexOf('titlePublisherId') !== -1
     );
     await queryRunner.dropForeignKey('borrow', titlePublisherId);
 
