@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Profile } from './profile.schema';
-import { Contact } from './contact.schema';
-import { TypeUser } from './type_user.schema';
-import { Borrow } from './borrow.schema';
-import { Address } from './address.schema';
+import { Profile } from './Profile.schema';
+import { Contact } from './Contact.schema';
+import { UserType } from './UserType.schema';
+import { Borrow } from './Borrow.schema';
+import { Address } from './Address.schema';
 
 @Entity()
 export class User {
@@ -29,10 +29,10 @@ export class User {
   document: string;
 
   @Column()
-  user_type_id: number;
+  userTypeId: number;
 
-  @ManyToOne(() => TypeUser, type => type.users)
-  type: TypeUser;
+  @ManyToOne(() => UserType, type => type.users)
+  type: UserType;
 
   @OneToMany(() => Contact, contact => contact.user)
   contacts: Contact[];

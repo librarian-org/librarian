@@ -25,7 +25,7 @@ interface Publisher {
   publisher: SelectType;
   classification: string;
   edition: string;
-  published_at: Date;
+  publishedAt: Date;
 }
 
 const Title: React.FC = () => {
@@ -39,7 +39,7 @@ const Title: React.FC = () => {
 
   const [classification, setClassification] = useState('');
   const [edition, setEdition] = useState('');
-  const [published_at, setPublished_At] = useState('');
+  const [publishedAt, setPublishedAt] = useState('');
   const [publishers, setPublishers] = useState<Publisher[]>([]);
   const refPublisher = useRef<SelectHandles>(null);
 
@@ -61,8 +61,8 @@ const Title: React.FC = () => {
     if (!edition) {
       errors.push(i18n.t('title.edition'));
     }
-    if (!published_at) {
-      errors.push(i18n.t('title.published_at'));
+    if (!publishedAt) {
+      errors.push(i18n.t('title.publishedAt'));
     }
     if (errors.length > 0) {
       addToast({
@@ -89,7 +89,7 @@ const Title: React.FC = () => {
     const pub = {
       classification,
       edition,
-      published_at: parseISO(published_at),
+      publishedAt: parseISO(publishedAt),
       publisher,
     };
     setPublishers((oldState) => [...oldState, pub]);
@@ -97,8 +97,8 @@ const Title: React.FC = () => {
     refPublisher.current.clear();
     setClassification('');
     setEdition('');
-    setPublished_At('');
-  }, [addToast, classification, edition, published_at, publishers]);
+    setPublishedAt('');
+  }, [addToast, classification, edition, publishedAt, publishers]);
 
   const handleRemovePublisher = useCallback(
     (publisher: Publisher) => {
@@ -186,8 +186,8 @@ const Title: React.FC = () => {
       window.api.sendSync('create', {
         entity: 'TitleCategory',
         value: {
-          title_id: result.id,
-          category_id: category.id,
+          titleId: result.id,
+          categoryId: category.id,
         },
       });
     });
@@ -196,8 +196,8 @@ const Title: React.FC = () => {
       window.api.sendSync('create', {
         entity: 'TitleAuthor',
         value: {
-          title_id: result.id,
-          author_id: author.id,
+          titleId: result.id,
+          authorId: author.id,
         },
       });
     });
@@ -206,11 +206,11 @@ const Title: React.FC = () => {
       window.api.sendSync('create', {
         entity: 'TitlePublisher',
         value: {
-          title_id: result.id,
-          publisher_id: edition.publisher.id,
+          titleId: result.id,
+          publisherId: edition.publisher.id,
           edition: edition.edition,
           classification: edition.classification,
-          published_at: edition.published_at,
+          publishedAt: edition.publishedAt,
         },
       });
     });
@@ -294,11 +294,11 @@ const Title: React.FC = () => {
             <Input
               type="date"
               name="edition_date"
-              label={i18n.t('title.published_at')}
+              label={i18n.t('title.publishedAt')}
               placeholder={i18n.t('title.typePublicationDate')}
               alt={i18n.t('title.typePublicationDate')}
-              value={published_at}
-              onChange={(e) => setPublished_At(e.target.value)}
+              value={publishedAt}
+              onChange={(e) => setPublishedAt(e.target.value)}
             />
             &nbsp;
             <PublisherSelect
@@ -317,8 +317,8 @@ const Title: React.FC = () => {
                   <span>{publisher.classification}</span>
                   <span>{publisher.edition}</span>
                   <span>
-                    {/* {format(parseISO(publisher.published_at), "dd/MM/yyyy HH:mm'h'")} */}
-                    {format(publisher.published_at, 'dd/MM/yyyy')}
+                    {/* {format(parseISO(publisher.publishedAt), "dd/MM/yyyy HH:mm'h'")} */}
+                    {format(publisher.publishedAt, 'dd/MM/yyyy')}
                   </span>
                   <span>{publisher.publisher.name}</span>
                   <FiTrash2

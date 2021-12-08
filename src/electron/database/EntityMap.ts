@@ -1,24 +1,24 @@
-import { Address } from './models/address.schema';
-import { Author } from './models/author.schema';
-import { Borrow } from './models/borrow.schema';
-import { BorrowRenovation } from './models/borrow_renovation.schema';
-import { Category } from './models/category.schema';
-import { City } from './models/city.schema';
-import { Contact } from './models/contact.schema';
-import { ContactType } from './models/contact_type.schema';
-import { Country } from './models/country.schema';
-import { Permission } from './models/permission.schema';
-import { Profile } from './models/profile.schema';
-import { Program } from './models/program.schema';
-import { Publisher } from './models/publisher.schema';
-import { Region } from './models/region.schema';
-import { Settings } from './models/settings.schema';
-import { Title } from './models/title.schema';
-import { TitleAuthor } from './models/title_author.schema';
-import { TitleCategory } from './models/title_category.schema';
-import { TitlePublisher } from './models/title_publisher.schema';
-import { TypeUser } from './models/type_user.schema';
-import { User } from './models/user.schema';
+import { Address } from './models/Address.schema';
+import { Author } from './models/Author.schema';
+import { Borrow } from './models/Borrow.schema';
+import { BorrowRenovation } from './models/BorrowRenovation.schema';
+import { Category } from './models/Category.schema';
+import { City } from './models/City.schema';
+import { Contact } from './models/Contact.schema';
+import { ContactType } from './models/ContactType.schema';
+import { Country } from './models/Country.schema';
+import { Permission } from './models/Permission.schema';
+import { Profile } from './models/Profile.schema';
+import { Program } from './models/Program.schema';
+import { Publisher } from './models/Publisher.schema';
+import { Region } from './models/Region.schema';
+import { Settings } from './models/Settings.schema';
+import { Title } from './models/Title.schema';
+import { TitleAuthor } from './models/TtitleAuthor.schema';
+import { TitleCategory } from './models/TitleCategory.schema';
+import { TitlePublisher } from './models/TitlePublisher.schema';
+import { UserType } from './models/UserType.schema';
+import { User } from './models/User.schema';
 
 export const entityMap = [
   { key: 'Permission', value: Permission },
@@ -34,7 +34,7 @@ export const entityMap = [
   { key: 'Address', value: Address },
   { key: 'Country', value: Country },
   { key: 'Profile', value: Profile },
-  { key: 'TypeUser', value: TypeUser },
+  { key: 'UserType', value: UserType },
   { key: 'ContactType', value: ContactType },
   { key: 'Contact', value: Contact },
   { key: 'Settings', value: Settings },

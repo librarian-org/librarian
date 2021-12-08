@@ -39,14 +39,14 @@ export class createUser1637774086085 implements MigrationInterface {
                     type: "varchar",
                 },
                 {
-                    name: "user_type_id",
+                    name: "userTypeId",
                     type: "int",
                 },
             ]
         }), true)
 
         await queryRunner.createForeignKey("user", new TableForeignKey({
-            columnNames: ["user_type_id"],
+            columnNames: ["userTypeId"],
             referencedColumnNames: ["id"],
             referencedTableName: "user_type",
             onDelete: "CASCADE"
@@ -56,7 +56,7 @@ export class createUser1637774086085 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("user");
 
-        const userTypeId = table.foreignKeys.find(fk => fk.columnNames.indexOf("user_type_id") !== -1);
+        const userTypeId = table.foreignKeys.find(fk => fk.columnNames.indexOf("userTypeId") !== -1);
         await queryRunner.dropForeignKey("user", userTypeId);
 
         await queryRunner.dropTable("user");

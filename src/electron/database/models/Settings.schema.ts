@@ -6,8 +6,8 @@ export class Settings {
   id: number;
 
   @Column()
-  days_return_date: number;
+  daysReturnDate: number;
 
   @Column()
-  backup_path: string;
+  backupPath: string;
 }

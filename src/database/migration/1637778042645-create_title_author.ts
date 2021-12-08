@@ -12,25 +12,25 @@ export class createTitleAuthor1637778042645 implements MigrationInterface {
                     isPrimary: true
                 },
                 {
-                    name: "title_id", 
+                    name: "titleId", 
                     type: "int",
                 },
                 {
-                    name: "author_id", 
+                    name: "authorId", 
                     type: "int",
                 },
             ]
         }), true)
 
         await queryRunner.createForeignKey("title_author", new TableForeignKey({
-            columnNames: ["title_id"],
+            columnNames: ["titleId"],
             referencedColumnNames: ["id"],
             referencedTableName: "title",
             onDelete: "CASCADE"
         }));
 
         await queryRunner.createForeignKey("title_author", new TableForeignKey({
-            columnNames: ["author_id"],
+            columnNames: ["authorId"],
             referencedColumnNames: ["id"],
             referencedTableName: "category",
             onDelete: "CASCADE"
@@ -40,10 +40,10 @@ export class createTitleAuthor1637778042645 implements MigrationInterface {
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("title_author");
 
-        const categoryId = table.foreignKeys.find(fk => fk.columnNames.indexOf("author_id") !== -1);
+        const categoryId = table.foreignKeys.find(fk => fk.columnNames.indexOf("authorId") !== -1);
         await queryRunner.dropForeignKey("title_author", categoryId);
 
-        const titleId = table.foreignKeys.find(fk => fk.columnNames.indexOf("title_id") !== -1);
+        const titleId = table.foreignKeys.find(fk => fk.columnNames.indexOf("titleId") !== -1);
         await queryRunner.dropForeignKey("title_author", titleId);
 
         await queryRunner.dropTable("title_author");

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Publisher } from './publisher.schema';
-import { Title } from './title.schema';
+import { Publisher } from './Publisher.schema';
+import { Title } from './Title.schema';
 
 @Entity()
 export class TitlePublisher
@@ -15,13 +15,13 @@ export class TitlePublisher
   classification: string;
 
   @Column({ type: 'date' })
-  published_at: string;
+  publishedAt: string;
 
   @Column()
-  title_id: number;
+  titleId: number;
 
   @Column()
-  publisher_id: number;
+  publisherId: number;
 
   @ManyToOne(() => Title, title => title.titlePublishers)
   title: Title;

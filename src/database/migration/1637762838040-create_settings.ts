@@ -12,11 +12,11 @@ export class createSettings1637762838040 implements MigrationInterface {
                 isPrimary: true
               },
               {
-                  name: "days_return_date",
+                  name: "daysReturnDate",
                   type: "int",
               },
               {
-                  name: "backup_path",
+                  name: "backupPath",
                   type: "varchar",
               }
             ]
