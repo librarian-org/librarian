@@ -92,7 +92,7 @@ const createMenuTemplate = async (
           accelerator: process.platform === 'darwin' ? 'Cmd+T' : 'Ctrl+T',
           click: async() => {
             if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.titleTab);
+              mainWindow.webContents.send(AppEvent.titleTab, { teste: 'oi'});
             }
           }
         },

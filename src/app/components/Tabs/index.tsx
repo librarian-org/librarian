@@ -8,7 +8,7 @@ import TabContent from './TabContent';
 import { Tab } from './Tab';
 import Shortcuts from '../Shortcuts';
 import Borrow from '../Borrow';
-import TitleCreate from '../Title';
+import Title from '../Title';
 import Person from '../Person';
 import Settings from '../Settings';
 import { DndProvider } from 'react-dnd';
@@ -72,6 +72,10 @@ const Tabs: React.FC = () => {
 
       const alreadyOpened = tabItems.filter((t) => t.type === type);
       if (alreadyOpened.length > 0) {
+        alreadyOpened[0].action = 'new';
+        console.log('alreadyOpened[0]', alreadyOpened[0]);
+        console.log('tabItems', tabItems);
+        setTabItems(tabItems);
         setActiveTab(alreadyOpened[0]);
         return;
       }
@@ -80,6 +84,7 @@ const Tabs: React.FC = () => {
         id: hash,
         type: type,
         title: `${type}.label`,
+        action: 'list',
       };
 
       addTab(tab);
@@ -118,7 +123,8 @@ const Tabs: React.FC = () => {
     handleCreateTab('person');
   }, [handleCreateTab]);
 
-  const titleTab = useCallback(() => {
+  const titleTab = useCallback((params: CustomEvent<unknown>) => {
+    const { detail } = params;
     handleCreateTab('title');
   }, [handleCreateTab]);
 
@@ -139,7 +145,7 @@ const Tabs: React.FC = () => {
       { event: 'settingsTab', handler: settingsTab },
       { event: 'quickSearch', handler: quickSearch },
     ],
-    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab]
+    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab, quickSearch]
   );
 
   useEffect(() => {
@@ -206,7 +212,7 @@ const Tabs: React.FC = () => {
                 >
                   {tab.type === 'borrow' && <Borrow />}
                   {tab.type === 'person' && <Person />}
-                  {tab.type === 'title' && <TitleCreate />}
+                  {tab.type === 'title' && <Title action={tab.action} />}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
               )
