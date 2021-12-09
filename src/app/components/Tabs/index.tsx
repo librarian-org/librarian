@@ -69,14 +69,14 @@ const Tabs: React.FC = () => {
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
   const handleCreateTab = useCallback(
-    (type: string, action: string, value: any ) => {
+    (type: string, action: string, item: any ) => {
       const hash = v4();
 
       const alreadyOpened = tabItems.filter((t) => t.type === type);
       if (alreadyOpened.length > 0) {
         setAction(action);
         alreadyOpened[0].action = action;
-        alreadyOpened[0].value = value;
+        alreadyOpened[0].item = item;
         setTabItems(tabItems);
         setActiveTab(alreadyOpened[0]);
         return;
@@ -87,7 +87,7 @@ const Tabs: React.FC = () => {
         type: type,
         title: `${type}.label`,
         action: action,
-        value: undefined
+        item: undefined
       };
 
       addTab(tab);
@@ -215,7 +215,7 @@ const Tabs: React.FC = () => {
                 >
                   {tab.type === 'borrow' && <Borrow />}
                   {tab.type === 'person' && <Person />}
-                  {tab.type === 'title' && <Title action={tab.action} item={tab.value} />}
+                  {tab.type === 'title' && <Title action={tab.action} item={tab.item} />}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
               )

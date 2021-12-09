@@ -1,27 +1,10 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { format, parseISO } from 'date-fns';
-import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
-import { v4 } from 'uuid';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FiSave } from 'react-icons/fi';
 import { useToast } from '../../hooks/toast';
 import i18n from '../../i18n';
-import AuthorSelect from '../AuthorSelect';
 import Button from '../Button';
-import CategorySelect from '../CategorySelect';
-import { SelectHandles } from '../CreatableSelectInput';
-
 import Input from '../Input';
-import PublisherSelect from '../PublisherSelect';
-import SectionContent from '../Sections/SectionContent';
-import SectionHeader from '../Sections/SectionHeader';
-
-import { ButtonContainer, Container, List, ListItem, Row } from './styles';
-import it from 'date-fns/esm/locale/it/index.js';
+import { ButtonContainer, Container } from './styles';
 interface Settings {
   id?: number;
   daysReturnDate: string;
@@ -30,7 +13,7 @@ interface Settings {
 const Settings: React.FC = () => {
   const { addToast } = useToast();
 
-  const [settings, setSettings] = useState<Settings>(null);
+  const [settings, setSettings] = useState(null);
   const [daysReturnDate, setDaysReturnDate] = useState('7');
   const [backupPath, setBackupPath] = useState('');
 
@@ -62,8 +45,15 @@ const Settings: React.FC = () => {
             backupPath: backupPath,
           },
     }) as { id: string };
-    console.log(result);
-  }, []);
+
+    addToast({
+      title: i18n.t('notifications.success'),
+      type: 'success',
+      description: i18n.t('settings.saved'),
+    });
+
+    return;
+  }, [backupPath, daysReturnDate, settings]);
 
   return (
     <Container>

@@ -22,10 +22,19 @@ const ListTitle: React.FC = () => {
   }, []);
 
   const handleUpdate = (item: Title): void => {
-    trigger(AppEvent.titleTab, {action: 'update', value: item});
+    trigger(AppEvent.titleTab, { action: 'update', value: item });
   };
+  
   const handleRead = (item: Title): void => {
-    trigger(AppEvent.titleTab, {action: 'read', value: item});
+    trigger(AppEvent.titleTab, { action: 'read', value: item });
+  };
+
+  const handleDelete = (item: Title): void => {
+    const result = window.api.sendSync('delete', {
+      entity: 'Title',
+      value: item,
+    }) as Title[];
+    setItems(result);
   };
 
   return (
@@ -48,6 +57,7 @@ const ListTitle: React.FC = () => {
                   <td>
                     <Button onClick={() => handleRead(item)}> Ver </Button>
                     <Button onClick={() => handleUpdate(item)}> Editar </Button>
+                    <Button onClick={() => handleDelete(item)}> Delete </Button>
                   </td>
                 </tr>
               );

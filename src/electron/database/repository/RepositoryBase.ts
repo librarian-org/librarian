@@ -28,10 +28,21 @@ export default class RepositoryBase implements Repository {
     }
   }
 
-  public async delete(content: unknown): Promise<unknown | unknown[]> {
+  public async softDelete(content: unknown): Promise<unknown | unknown[]> {
     try {
       const item = await this.repository.create(content);
       await this.repository.softRemove(item);
+      return this.repository.find();
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  public async delete(content: unknown): Promise<unknown | unknown[]> {
+    try {
+      const item = await this.repository.create(content);
+      await this.repository.delete(item);
       return this.repository.find();
     } catch (err) {
       console.log(err);

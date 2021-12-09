@@ -84,7 +84,8 @@
   "settings": {
     "label": "Settings",
     "time": "Amount of days since borrow that reader must return book",
-    "path": "Path where backup will be done"
+    "path": "Path where backup will be done",
+    "saved": "Your settings have been saved"
   },
   "notifications": {
     "information": "Information",

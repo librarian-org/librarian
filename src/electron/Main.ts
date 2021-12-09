@@ -84,6 +84,11 @@ export default class Main {
       event.returnValue = await this.getRepository(entity).update(value);
     });
 
+    ipcMain.on('softDelete', async (event, content: Event[]) => {
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).softDelete(value);
+    });
+
     ipcMain.on('delete', async (event, content: Event[]) => {
       const { value, entity } = content[0];
       event.returnValue = await this.getRepository(entity).delete(value);
