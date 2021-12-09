@@ -61,8 +61,14 @@ export const entities: SearchSource[] = [
       },
     },
     action: {
-      onClick: () => console.log('pessoa action click'),
-      onPress: () => console.log('pessoa action press'),
+      onClick: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.personTab);
+      },
+      onPress: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.personTab);
+      },
     },
   },
   {
@@ -74,16 +80,22 @@ export const entities: SearchSource[] = [
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.titleTab);
+        trigger(AppEvent.titleTab, {action: 'list'});
       },
       onPress: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.titleTab);
+        trigger(AppEvent.titleTab, {action: 'list'});
       },
     },
     action: {
-      onClick: () => console.log('titulo action click'),
-      onPress: () => console.log('titulo action press'),
+      onClick: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.titleTab, {action: 'create'});
+      },
+      onPress: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.titleTab, {action: 'create'});
+      },
     },
   },
   {

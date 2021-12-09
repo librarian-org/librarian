@@ -82,7 +82,9 @@
     "removeCategoryInformation": "Remove category from list"
   },
   "settings": {
-    "label": "Settings"
+    "label": "Settings",
+    "time": "Amount of days since borrow that reader must return book",
+    "path": "Path where backup will be done"
   },
   "notifications": {
     "information": "Information",

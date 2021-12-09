@@ -2,7 +2,7 @@ import { Repository } from '../../contracts/Repository';
 import typeORM from 'typeorm';
 
 export default class RepositoryBase implements Repository {
-  private repository;
+  protected repository;
 
   constructor(typeOrm: typeORM.Repository<unknown>) {
     this.repository = typeOrm;

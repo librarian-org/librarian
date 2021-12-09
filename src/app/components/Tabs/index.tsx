@@ -25,6 +25,8 @@ const Tabs: React.FC = () => {
   const [tabItems, setTabItems] = useState<Tab[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(null);
   const [isOpen, setOpen] = useState(false);
+  const [action, setAction] = useState('list');
+  const [item, setItem] = useState(undefined);
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -67,14 +69,14 @@ const Tabs: React.FC = () => {
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
   const handleCreateTab = useCallback(
-    (type: string) => {
+    (type: string, action: string, value: any ) => {
       const hash = v4();
 
       const alreadyOpened = tabItems.filter((t) => t.type === type);
       if (alreadyOpened.length > 0) {
-        alreadyOpened[0].action = 'new';
-        console.log('alreadyOpened[0]', alreadyOpened[0]);
-        console.log('tabItems', tabItems);
+        setAction(action);
+        alreadyOpened[0].action = action;
+        alreadyOpened[0].value = value;
         setTabItems(tabItems);
         setActiveTab(alreadyOpened[0]);
         return;
@@ -84,12 +86,13 @@ const Tabs: React.FC = () => {
         id: hash,
         type: type,
         title: `${type}.label`,
-        action: 'list',
+        action: action,
+        value: undefined
       };
 
       addTab(tab);
     },
-    [addTab, tabItems]
+    [addTab, tabItems, action]
   );
 
   const close = useCallback(
@@ -116,20 +119,20 @@ const Tabs: React.FC = () => {
   }, [activeTab, close]);
 
   const borrowTab = useCallback(() => {
-    handleCreateTab('borrow');
+    handleCreateTab('borrow', 'list', undefined);
   }, [handleCreateTab]);
 
   const personTab = useCallback(() => {
-    handleCreateTab('person');
+    handleCreateTab('person', 'list', undefined);
   }, [handleCreateTab]);
 
-  const titleTab = useCallback((params: CustomEvent<unknown>) => {
+  const titleTab = useCallback((params: CustomEvent<any>) => {
     const { detail } = params;
-    handleCreateTab('title');
+    handleCreateTab('title', detail.action ?? 'list', detail.value ?? undefined);
   }, [handleCreateTab]);
 
   const settingsTab = useCallback(() => {
-    handleCreateTab('settings');
+    handleCreateTab('settings' , 'update', undefined);
   }, [handleCreateTab]);
 
   const quickSearch = useCallback(() => {
@@ -212,7 +215,7 @@ const Tabs: React.FC = () => {
                 >
                   {tab.type === 'borrow' && <Borrow />}
                   {tab.type === 'person' && <Person />}
-                  {tab.type === 'title' && <Title action={tab.action} />}
+                  {tab.type === 'title' && <Title action={tab.action} item={tab.value} />}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
               )

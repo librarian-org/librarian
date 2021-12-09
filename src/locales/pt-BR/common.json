@@ -82,7 +82,9 @@
     "removeCategoryInformation": "Remover categoria da lista"
   },
   "settings": {
-    "label": "Configurações"
+    "label": "Configurações",
+    "time": "Quantidade de dias a partir do emprestimo em que o leitor deve devolver o livro",
+    "path": "Local onde será feito o backup das informações do sistema"
   },
   "notifications": {
     "information": "Informação",
