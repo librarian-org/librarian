@@ -99,11 +99,14 @@ export default createGlobalStyle`
         }
 
         span{
+          padding: 7px  10px;
+          cursor: pointer;
+
           svg{
             margin-right: 7px;
             margin-bottom: -5px;
+            cursor: pointer;
           }
-          padding: 7px  10px;
         }
 
         button{

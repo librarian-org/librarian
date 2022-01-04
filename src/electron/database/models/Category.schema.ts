@@ -10,6 +10,6 @@ export class Category
   @Column()
   name: string;
 
-  @OneToMany(() => Title, title => title.categories)
+  @OneToMany(() => Title, title => title.titleCategories)
   titles: Title[];
 }

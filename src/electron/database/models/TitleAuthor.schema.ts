@@ -14,7 +14,7 @@ export class TitleAuthor
   @Column()
   authorId: number;
 
-  @ManyToOne(() => Title, title => title.authors)
+  @ManyToOne(() => Title, title => title.titleAuthors)
   title: Title;
 
   @ManyToOne(() => Author, author => author.titles)

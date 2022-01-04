@@ -2,17 +2,9 @@ import { shade, tint } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
+  padding: 8px;
+  width: 100%;
 `;
-
- export const ButtonContainer = styled.div`
-  position: relative,;
-  padding: 0 24px;
-  display: flex;
-  justify-content: end;
- `;
 
 export const List = styled.div`
   display: flex;
@@ -45,6 +37,10 @@ export const ListItem = styled.div`
     &:hover {
       color: ${props => tint(0.2, props.theme.colors.secondary.dark)}
     }
+  }
+
+  span {
+    width: 40%;
   }
 `;
 

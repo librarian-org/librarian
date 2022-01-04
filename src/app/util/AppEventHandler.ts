@@ -29,8 +29,8 @@ export default class {
   }
 
   forward(event: string): void {
-    const emit = () => {
-      trigger(event);
+    const emit = (_ev: never, params: unknown) => {
+      trigger(event, params);
     }
     window.api.on(event, emit.bind(this));
   }
