@@ -1,6 +1,6 @@
 import { FaHandshake, FaPen, FaPlus } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
-import { FiBook, FiEdit, FiEdit2, FiEdit3, FiPlus, FiSettings, FiUser } from 'react-icons/fi';
+import { FiBook, FiSettings, FiUser } from 'react-icons/fi';
 import i18n from '../i18n';
 import { trigger } from './EventHandler';
 import { AppEvent } from '../../common/AppEvent';
