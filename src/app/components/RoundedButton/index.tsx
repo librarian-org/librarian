@@ -17,7 +17,7 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
 }) => {
   return (
     <Container className={color} style={buttonStyle} {...rest}>
-      {<Icon size={20} />}
+      {<Icon size={16} />}
     </Container>
   );
 };
