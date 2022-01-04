@@ -424,10 +424,6 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
           </SectionContent>
         </div>
         <ButtonContainer>
-          {/* <Button title={i18n.t('button.remove')}>
-          <FiTrash2 size={20} />
-        </Button>
-        &nbsp;&nbsp; */}
           <Button
             color="primary"
             title={i18n.t('button.save')}
