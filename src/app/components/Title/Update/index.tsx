@@ -8,49 +8,41 @@ import React, {
 import { format, parseISO } from 'date-fns';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import { v4 } from 'uuid';
-import { useToast } from '../../hooks/toast';
-import i18n from '../../i18n';
-import AuthorSelect from '../AuthorSelect';
-import Button from '../Button';
-import CategorySelect from '../CategorySelect';
-import { SelectHandles } from '../CreatableSelectInput';
+import { useToast } from '../../../hooks/toast';
+import i18n from '../../../i18n';
+import AuthorSelect from '../../AuthorSelect';
+import Button from '../../Button';
+import CategorySelect from '../../CategorySelect';
+import { SelectHandles } from '../../CreatableSelectInput';
 
-import Input from '../Input';
-import PublisherSelect from '../PublisherSelect';
-import SectionContent from '../Sections/SectionContent';
-import SectionHeader from '../Sections/SectionHeader';
+import Input from '../../Input';
+import PublisherSelect from '../../PublisherSelect';
+import SectionContent from '../../Sections/SectionContent';
+import SectionHeader from '../../Sections/SectionHeader';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
-import { Title } from './list';
-import it from 'date-fns/esm/locale/it/index.js';
+import { Title } from '../Title';
+
 interface SelectType {
   id: string;
   name: string;
 }
 
 interface Publisher {
+  id?: string;
   publisher: SelectType;
   classification: string;
   edition: string;
   publishedAt: Date;
 }
 
-const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
+const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
   const { addToast } = useToast();
 
   const [title, setTitle] = useState('');
   const [isbn, setIsbn] = useState('');
-  const [initialItem, setInitialItem] = useState({});
 
   const [selectedSection, setSelectedSection] = useState('editions');
-
-  useEffect(() => {
-    if (item !== undefined) {
-      setTitle(item.name);
-      setIsbn(item.ISBN);
-      setInitialItem(item);
-    }
-  }, [item]);
 
   const sections = useMemo(() => ['editions', 'authors', 'categories'], []);
 
@@ -65,6 +57,34 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
 
   const [categories, setCategories] = useState<SelectType[]>([]);
   const refCategory = useRef<SelectHandles>(null);
+
+  useEffect(() => {
+    if (item !== undefined) {
+      setTitle(item.name);
+      setIsbn(item.ISBN);
+
+      const publishersAux: Publisher[] = item.titlePublishers.map((item) => ({
+        id: item.id,
+        publisher: item.publisher,
+        classification: item.classification,
+        edition: item.edition,
+        publishedAt: parseISO(item.publishedAt.toString()),
+      }));
+      setPublishers(publishersAux);
+
+      const authorsAux: SelectType[] = item.titleAuthors.map((item) => ({
+        id: item.authorId.toString(),
+        name: item.author.name
+      }));
+      setAuthors(authorsAux);
+
+      const categoriesAux: SelectType[] = item.titleCategories.map((item) => ({
+        id: item.categoryId.toString(),
+        name: item.category.name,
+      }))
+      setCategories(categoriesAux);
+    }
+  }, [item]);
 
   const handleAddPublisher = useCallback(() => {
     const publisher = refPublisher.current.getValue<SelectType>();
@@ -192,25 +212,30 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
 
   const handleSave = useCallback(() => {
     console.log(item);
-    const result = window.api.sendSync(item.id ? 'update' : 'create', {
+
+    window.api.sendSync('update', {
       entity: 'Title',
-      value: item.id
-        ? {
-            id: item.id,
-            name: title,
-            ISBN: isbn,
-          }
-        : {
-            name: title,
-            ISBN: isbn,
-          },
-    }) as { id: string };
+      value: {
+        id: item.id,
+        name: title,
+        ISBN: isbn,
+      },
+    });
+
+    ['TitleCategory', 'TitleAuthor', 'TitlePublisher'].map(tableName => {
+      window.api.sendSync('delete', {
+        entity: tableName,
+        value: {
+          titleId: item.id,
+        },
+      });
+    });
 
     categories.map((category) => {
       window.api.sendSync('create', {
         entity: 'TitleCategory',
         value: {
-          titleId: result.id,
+          titleId: item.id,
           categoryId: category.id,
         },
       });
@@ -220,7 +245,7 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
       window.api.sendSync('create', {
         entity: 'TitleAuthor',
         value: {
-          titleId: result.id,
+          titleId: item.id,
           authorId: author.id,
         },
       });
@@ -230,7 +255,7 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
       window.api.sendSync('create', {
         entity: 'TitlePublisher',
         value: {
-          titleId: result.id,
+          titleId: item.id,
           publisherId: edition.publisher.id,
           edition: edition.edition,
           classification: edition.classification,
@@ -238,7 +263,7 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
         },
       });
     });
-  }, [authors, categories, isbn, publishers, title]);
+  }, [authors, categories, isbn, item, publishers, title]);
 
   return (
     <Container>
@@ -329,15 +354,16 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
                     <span>{publisher.classification}</span>
                     <span>{publisher.edition}</span>
                     <span>
-                      {/* {format(parseISO(publisher.publishedAt), "dd/MM/yyyy HH:mm'h'")} */}
                       {format(publisher.publishedAt, 'dd/MM/yyyy')}
                     </span>
                     <span>{publisher.publisher.name}</span>
-                    <FiTrash2
-                      size={20}
-                      onClick={() => handleRemovePublisher(publisher)}
-                      title={i18n.t('title.removeEditionInformation')}
-                    />
+                    <span style={{ width: '10%', textAlign: 'right' }}>
+                      <FiTrash2
+                        size={20}
+                        onClick={() => handleRemovePublisher(publisher)}
+                        title={i18n.t('title.removeEditionInformation')}
+                      />
+                    </span>
                   </ListItem>
                 ))}
               </List>
@@ -415,4 +441,4 @@ const FormTitle: React.FC<{ item?: Title }> = ({ item }) => {
   );
 };
 
-export default FormTitle;
+export default TitleUpdate;

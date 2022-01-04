@@ -15,7 +15,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import SearchMenu from '../SearchMenu';
+import { Actions } from '../../../common/Actions';
 
+interface ActionParameter {
+  action: Actions;
+  value?: unknown;
+}
 interface Event {
   event: string;
   handler: (...args: any[]) => any;
@@ -26,7 +31,7 @@ const Tabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(null);
   const [isOpen, setOpen] = useState(false);
   const [action, setAction] = useState('list');
-  const [item, setItem] = useState(undefined);
+  // const [item, setItem] = useState(undefined);
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -69,16 +74,16 @@ const Tabs: React.FC = () => {
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
   const handleCreateTab = useCallback(
-    (type: string, action: string, item: any ) => {
+    (type: string, action: Actions, item: unknown) => {
       const hash = v4();
 
-      const alreadyOpened = tabItems.filter((t) => t.type === type);
-      if (alreadyOpened.length > 0) {
+      const tabAlreadyOpened = tabItems.filter((t) => t.type === type);
+      if (tabAlreadyOpened.length > 0) {
         setAction(action);
-        alreadyOpened[0].action = action;
-        alreadyOpened[0].item = item;
+        tabAlreadyOpened[0].action = action;
+        tabAlreadyOpened[0].item = item;
         setTabItems(tabItems);
-        setActiveTab(alreadyOpened[0]);
+        setActiveTab(tabAlreadyOpened[0]);
         return;
       }
 
@@ -92,7 +97,7 @@ const Tabs: React.FC = () => {
 
       addTab(tab);
     },
-    [addTab, tabItems, action]
+    [addTab, tabItems]
   );
 
   const close = useCallback(
@@ -118,21 +123,23 @@ const Tabs: React.FC = () => {
     }
   }, [activeTab, close]);
 
-  const borrowTab = useCallback(() => {
-    handleCreateTab('borrow', 'list', undefined);
+  const borrowTab = useCallback((params: CustomEvent<ActionParameter>) => {
+    const { action, value } = params.detail;
+    handleCreateTab('borrow', action, value);
   }, [handleCreateTab]);
 
-  const personTab = useCallback(() => {
-    handleCreateTab('person', 'list', undefined);
+  const personTab = useCallback((params: CustomEvent<ActionParameter>) => {
+    const { action, value } = params.detail;
+    handleCreateTab('person', action, value);
   }, [handleCreateTab]);
 
-  const titleTab = useCallback((params: CustomEvent<any>) => {
-    const { detail } = params;
-    handleCreateTab('title', detail.action ?? 'list', detail.value ?? undefined);
+  const titleTab = useCallback((params: CustomEvent<ActionParameter>) => {
+    const { action, value } = params.detail;
+    handleCreateTab('title', action, value);
   }, [handleCreateTab]);
 
   const settingsTab = useCallback(() => {
-    handleCreateTab('settings' , 'update', undefined);
+    handleCreateTab('settings', Actions.update, {});
   }, [handleCreateTab]);
 
   const quickSearch = useCallback(() => {

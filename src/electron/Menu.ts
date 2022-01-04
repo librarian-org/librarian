@@ -3,6 +3,7 @@ import { i18n } from 'i18next';
 import path from 'path';
 import { AppEvent } from '../common/AppEvent';
 import fs from 'fs';
+import { Actions } from '../common/Actions';
 
 type Language = {
   code: string;
@@ -66,6 +67,10 @@ const createMenuTemplate = async (
     submenu: languageMenu
   };
 
+  const actionCreate = {
+    action: Actions.create
+  }
+
   template.push({
       label: i18n.t('menu.file.label'),
       submenu: [
@@ -74,7 +79,7 @@ const createMenuTemplate = async (
           accelerator: process.platform === 'darwin' ? 'Cmd+B' : 'Ctrl+B',
           click: async() => {
             if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.borrowTab);
+              mainWindow.webContents.send(AppEvent.borrowTab, actionCreate);
             }
           }
         },
@@ -83,7 +88,7 @@ const createMenuTemplate = async (
           accelerator: process.platform === 'darwin' ? 'Cmd+P' : 'Ctrl+P',
           click: async() => {
             if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.personTab);
+              mainWindow.webContents.send(AppEvent.personTab, actionCreate);
             }
           }
         },
@@ -92,7 +97,7 @@ const createMenuTemplate = async (
           accelerator: process.platform === 'darwin' ? 'Cmd+T' : 'Ctrl+T',
           click: async() => {
             if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.titleTab, 'list');
+              mainWindow.webContents.send(AppEvent.titleTab, actionCreate);
             }
           }
         },

@@ -39,11 +39,9 @@ export default class RepositoryBase implements Repository {
     }
   }
 
-  public async delete(content: unknown): Promise<unknown | unknown[]> {
+  public async delete(condition: unknown): Promise<typeORM.DeleteResult> {
     try {
-      const item = await this.repository.create(content);
-      await this.repository.delete(item);
-      return this.repository.find();
+      return await this.repository.delete(condition);
     } catch (err) {
       console.log(err);
       throw err;

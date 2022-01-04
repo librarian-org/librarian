@@ -5,5 +5,5 @@ export interface Tab {
   unsavedChanges?: boolean;
   titleScope?: string;
   action: string;
-  item: any;
+  item: unknown;
 }

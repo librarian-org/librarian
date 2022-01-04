@@ -106,7 +106,7 @@ export default class Main {
 
     ipcMain.on('listTitle', async (event, content: Event[]) => {
       const { value, entity } = content[0];
-      event.returnValue = await this.getCustomRepository(entity, TitleRepository).list(value);
+      event.returnValue = await this.getCustomRepository(entity, TitleRepository).listTitle(value);
     });
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {
