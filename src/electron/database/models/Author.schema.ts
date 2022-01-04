@@ -10,6 +10,6 @@ export class Author
   @Column()
   name: string;
 
-  @OneToMany(() => Title, title => title.authors)
+  @OneToMany(() => Title, title => title.titleAuthors)
   titles: Title[];
 }

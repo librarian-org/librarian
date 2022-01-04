@@ -5,6 +5,7 @@ import i18n from '../i18n';
 import { trigger } from './EventHandler';
 import { AppEvent } from '../../common/AppEvent';
 import Borrow from '../components/Borrow';
+import { Actions } from '../../common/Actions';
 
 export interface SearchSource {
   name: string;
@@ -21,6 +22,15 @@ export interface SearchSource {
     onPress(e: React.KeyboardEvent, item?: SearchSource): void;
   };
 }
+
+const actionCreate = {
+  action: Actions.create
+}
+
+const actionList = {
+  action: Actions.list
+}
+
 
 export const entities: SearchSource[] = [
   {
@@ -61,8 +71,14 @@ export const entities: SearchSource[] = [
       },
     },
     action: {
-      onClick: () => console.log('pessoa action click'),
-      onPress: () => console.log('pessoa action press'),
+      onClick: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.personTab);
+      },
+      onPress: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.personTab);
+      },
     },
   },
   {
@@ -74,16 +90,22 @@ export const entities: SearchSource[] = [
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.titleTab);
+        trigger(AppEvent.titleTab, actionList);
       },
       onPress: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.titleTab);
+        trigger(AppEvent.titleTab, actionList);
       },
     },
     action: {
-      onClick: () => console.log('titulo action click'),
-      onPress: () => console.log('titulo action press'),
+      onClick: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.titleTab, actionCreate);
+      },
+      onPress: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.titleTab, actionCreate);
+      },
     },
   },
   {
