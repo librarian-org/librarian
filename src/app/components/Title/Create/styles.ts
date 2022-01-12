@@ -46,6 +46,10 @@ export const ListItem = styled.div`
       color: ${props => tint(0.2, props.theme.colors.secondary.dark)}
     }
   }
+
+  span {
+    width: 40%;
+  }
 `;
 
 export const Row = styled.div`

@@ -4,4 +4,6 @@ export interface Tab {
   title: string;
   unsavedChanges?: boolean;
   titleScope?: string;
+  action: string;
+  item: unknown;
 }

@@ -82,6 +82,14 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
     [searchResult, selectedItem]
   );
 
+  const globalSearchHandler = useCallback((search) => {
+    const retorno: any = window.api.sendSync('globalSearch', {
+      entity: 'Any',
+      value: search,
+    });
+    return retorno;
+  }, []);
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -102,16 +110,8 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
       setMaxItems(finalResult.length * 2);
       setSelectedItem(-1);
     },
-    [searchSourceMemo]
+    [globalSearchHandler, searchSourceMemo]
   );
-
-  const globalSearchHandler = useCallback((search) => {
-    const retorno: any = window.api.sendSync('globalSearch', {
-      entity: 'Any',
-      value: search,
-    });
-    return retorno;
-  }, []);
 
   const handleKeys = useCallback(
     (event, clicked): void => {

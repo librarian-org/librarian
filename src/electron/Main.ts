@@ -19,6 +19,7 @@ import { AppEvent } from '../common/AppEvent';
 import fs from 'fs';
 import { entityMap } from './database/EntityMap';
 import RepositoryBase from './database/repository/RepositoryBase';
+import TitleRepository from './database/repository/TitleRepository';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -68,6 +69,10 @@ export default class Main {
     return Factory.make(this.connection, entity);
   }
 
+  private getCustomRepository(entity: string, repository: any): any {
+    return Factory.customMake(this.connection, entity, repository);
+  }
+
   protected async createWindow(): Promise<void> {
     ipcMain.on('create', async (event, content: Event[]) => {
       const { value, entity } = content[0];
@@ -77,6 +82,11 @@ export default class Main {
     ipcMain.on('update', async (event, content: Event[]) => {
       const { value, entity } = content[0];
       event.returnValue = await this.getRepository(entity).update(value);
+    });
+
+    ipcMain.on('softDelete', async (event, content: Event[]) => {
+      const { value, entity } = content[0];
+      event.returnValue = await this.getRepository(entity).softDelete(value);
     });
 
     ipcMain.on('delete', async (event, content: Event[]) => {
@@ -92,6 +102,11 @@ export default class Main {
     ipcMain.on('list', async (event, content: Event[]) => {
       const { value, entity } = content[0];
       event.returnValue = await this.getRepository(entity).list(value);
+    });
+
+    ipcMain.on('listTitle', async (event, content: Event[]) => {
+      const { value, entity } = content[0];
+      event.returnValue = await this.getCustomRepository(entity, TitleRepository).listTitle(value);
     });
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {

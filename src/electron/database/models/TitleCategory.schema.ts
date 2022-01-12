@@ -14,7 +14,7 @@ export class TitleCategory
   @Column()
   categoryId: number;
 
-  @ManyToOne(() => Title, title => title.categories)
+  @ManyToOne(() => Title, title => title.titleCategories)
   title: Title;
 
   @ManyToOne(() => Category, category => category.titles)

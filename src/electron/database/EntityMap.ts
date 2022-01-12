@@ -14,7 +14,7 @@ import { Publisher } from './models/Publisher.schema';
 import { Region } from './models/Region.schema';
 import { Settings } from './models/Settings.schema';
 import { Title } from './models/Title.schema';
-import { TitleAuthor } from './models/TtitleAuthor.schema';
+import { TitleAuthor } from './models/TitleAuthor.schema';
 import { TitleCategory } from './models/TitleCategory.schema';
 import { TitlePublisher } from './models/TitlePublisher.schema';
 import { UserType } from './models/UserType.schema';

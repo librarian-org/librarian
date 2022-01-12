@@ -46,6 +46,14 @@ export const ListItem = styled.div`
       color: ${props => tint(0.2, props.theme.colors.secondary.dark)}
     }
   }
+
+  span {
+    width: 40%;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 export const Row = styled.div`
