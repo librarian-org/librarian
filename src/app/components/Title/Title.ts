@@ -34,7 +34,7 @@ interface TitlePublisher {
   publisher: Publisher;
 }
 
-export interface Title {
+export type Title = {
   id: string;
   name: string;
   ISBN: string;

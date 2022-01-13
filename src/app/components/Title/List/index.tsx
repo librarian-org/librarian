@@ -1,56 +1,114 @@
-import React, { useEffect, useState } from 'react';
-import Button from '../../Button';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Container } from './styles';
-import { trigger } from '../../../util/EventHandler';
-import { AppEvent } from '../../../../common/AppEvent';
+import { PaginatedSearch, Table } from '../../../components/Table';
 import { Title } from '../Title';
+import i18n from '../../../i18n';
+import { Cell, Column } from 'react-table';
+import { Search } from '../../Table/TablePagination';
+import { useToast } from '../../../hooks/toast';
+import { AppEvent } from '../../../../common/AppEvent';
+import { trigger } from '../../../util/EventHandler';
+import { Actions } from '../../../../common/Actions';
+import { FaPen } from 'react-icons/fa';
 
 const TitleList: React.FC = () => {
-  const [items, setItems] = useState([]);
+  const { addToast } = useToast();
+  const [list, setList] = useState<Title[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [pageCount, setPageCount] = React.useState(0);
 
   useEffect(() => {
-    const result = window.api.sendSync('listTitle', {
+    setLoading(true);
+    const response = window.api.sendSync('listTitle', {
       entity: 'Title',
-    }) as Title[];
-    setItems(result);
-  }, []);
+      value: {
+        where: null,
+        pageStart: 0,
+        pageSize: rowsPerPage,
+      },
+    }) as PaginatedSearch<Title>;
+    setList(response.data);
+    setLoading(false);
+  }, [rowsPerPage]);
 
   const handleUpdate = (item: Title): void => {
-    trigger(AppEvent.titleTab, { action: 'update', value: item });
+    trigger(AppEvent.titleTab, { action: Actions.update, value: item});
   };
 
-  const handleRead = (item: Title): void => {
-    trigger(AppEvent.titleTab, { action: 'read', value: item });
+  const handleRowClick = (item: Title) => {
+    trigger(AppEvent.titleTab, { action: Actions.read, value: item });
   };
+
+  const columns: Array<Column<Title>> = useMemo(
+    () => [
+      {
+        Header: i18n.t('title.label'),
+        accessor: 'name',
+      },
+      {
+        Header: 'ISBN',
+        accessor: 'ISBN',
+      },
+      {
+        Header: () => null,
+        id: 'edit',
+        Cell: (row: Cell<Title>) => {
+          return (
+          <>
+            <FaPen size={20} onClick={(event) => { event.stopPropagation(); handleUpdate(row.row.original)}} />
+          </>)
+        }
+      }
+    ],
+    [],
+  );
+
+
+  const handleSubmit = useCallback(
+    async ({ pageIndex = 0 }: Search) => {
+      try {
+        setLoading(true);
+        const response = window.api.sendSync('listTitle', {
+          entity: 'Title',
+          value: {
+            where: null,
+            pageStart: rowsPerPage * pageIndex,
+            pageSize: rowsPerPage,
+          },
+        }) as PaginatedSearch<Title>;
+        setList(response.data);
+        setPageCount(Math.ceil(response.count / rowsPerPage));
+
+        setLoading(false);
+
+        setList(response.data);
+      } catch (err) {
+        addToast({
+          type: 'error',
+          title: 'Erro ao listar os endereços',
+          description:
+            'Ocorreu um erro ao listar os endereços, tente novamente.',
+        });
+      }
+    },
+    [addToast, rowsPerPage],
+  );
 
   return (
     <Container>
-      <>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>ISBN</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.ISBN}</td>
-                  <td>
-                    <Button onClick={() => handleRead(item)}>Ver</Button>
-                    <Button onClick={() => handleUpdate(item)}>Editar</Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </>
+      <Table<Title>
+        name="title"
+        columns={columns}
+        onRowClick={handleRowClick}
+        data={list}
+        fetchData={handleSubmit}
+        loading={loading}
+        pageCount={pageCount}
+        setRowsPerPage={setRowsPerPage}
+      />
     </Container>
   );
 };
