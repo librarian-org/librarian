@@ -67,6 +67,7 @@
     "classification": "Classification",
     "edition": "Edition",
     "publishedAt": "Published At",
+    "informErrorsTitle": "Check #errors# of title to save",
     "informErrorsEdition": "Check #errors# of edition to add",
     "hasBeenAdd": "has been added to this title already",
     "selectAuthorToAdd": "Select an author to add",
