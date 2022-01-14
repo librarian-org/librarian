@@ -16,7 +16,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "librarian:publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "release": "standard-version",
