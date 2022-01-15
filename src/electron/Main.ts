@@ -7,6 +7,7 @@ import {
   NativeImage,
   Menu,
 } from 'electron';
+import 'update-electron-app';
 import { i18n } from 'i18next';
 import path from 'path';
 import Bootstrap from './Bootstrap';
