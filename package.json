@@ -9,7 +9,7 @@
     "url": "https://github.com/librarian-org/librarian/issues"
   },
   "productName": "librarian",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Librarian app is deal for schools libraries and for someone who have many books.",
   "main": ".webpack/main",
   "scripts": {
