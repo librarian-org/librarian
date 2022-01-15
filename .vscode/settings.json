@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///home/danilo/workspaces/js/librarian/.github/workflows/build.yml"
+    }
+}
