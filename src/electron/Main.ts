@@ -7,7 +7,8 @@ import {
   NativeImage,
   Menu,
 } from 'electron';
-import 'update-electron-app';
+import isDev from 'electron-is-dev';
+import updater from 'update-electron-app';
 import { i18n } from 'i18next';
 import path from 'path';
 import Bootstrap from './Bootstrap';
@@ -31,6 +32,9 @@ export default class Main {
   private connection: Connection;
 
   public async start(): Promise<void> {
+    if (!isDev) {
+      updater();
+    }
     this.handleWindowsShortcuts();
     await this.setListeners();
     await this.setConnection();
@@ -107,7 +111,10 @@ export default class Main {
 
     ipcMain.on('listTitle', async (event, content: Event[]) => {
       const { value, entity } = content[0];
-      event.returnValue = await this.getCustomRepository(entity, TitleRepository).listTitle(value);
+      event.returnValue = await this.getCustomRepository(
+        entity,
+        TitleRepository
+      ).listTitle(value);
     });
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {
