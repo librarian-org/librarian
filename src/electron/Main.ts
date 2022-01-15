@@ -7,6 +7,7 @@ import {
   NativeImage,
   Menu,
 } from 'electron';
+import log from 'electron-log';
 import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
 import { i18n } from 'i18next';
@@ -33,7 +34,10 @@ export default class Main {
 
   public async start(): Promise<void> {
     if (!isDev) {
-      updater();
+      log.info('Calling updater...');
+      updater({
+        logger: log
+      });
     }
     this.handleWindowsShortcuts();
     await this.setListeners();
