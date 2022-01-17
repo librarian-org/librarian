@@ -1,9 +1,10 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TablePatch } from '../TablePatch';
 
 export class createProgram1637764982139 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
+      new TablePatch({
         name: 'program',
         columns: [
           {

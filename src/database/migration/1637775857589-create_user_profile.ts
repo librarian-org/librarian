@@ -1,51 +1,65 @@
-import {MigrationInterface, QueryRunner, Table, TableForeignKey} from "typeorm";
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TableForeignKeyPatch } from '../TableForeignKeyPatch';
+import { TablePatch } from '../TablePatch';
 
 export class createUserProfile1637775857589 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new TablePatch({
+        name: 'user_profile',
+        columns: [
+          {
+            name: 'id',
+            type: 'int',
+            isPrimary: true,
+          },
+          {
+            name: 'userId',
+            type: 'int',
+          },
+          {
+            name: 'profileId',
+            type: 'int',
+          },
+        ],
+      }),
+      true
+    );
 
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.createTable(new Table({
-            name: "user_profile",
-            columns: [
-                {
-                    name: "id", 
-                    type: "int",
-                    isPrimary: true
-                },
-                {
-                    name: "userId", 
-                    type: "int",
-                },
-                {
-                    name: "profileId", 
-                    type: "int",
-                },
-            ]
-        }), true)
+    await queryRunner.createForeignKey(
+      'user_profile',
+      new TableForeignKeyPatch({
+        columnNames: ['userId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'user',
+        onDelete: 'CASCADE',
+      })
+    );
 
-        await queryRunner.createForeignKey("user_profile", new TableForeignKey({
-            columnNames: ["userId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "user",
-            onDelete: "CASCADE"
-        }));
+    await queryRunner.createForeignKey(
+      'user_profile',
+      new TableForeignKeyPatch({
+        columnNames: ['profileId'],
+        referencedColumnNames: ['id'],
+        referencedTableName: 'profile',
+        onDelete: 'CASCADE',
+      })
+    );
+  }
 
-        await queryRunner.createForeignKey("user_profile", new TableForeignKey({
-            columnNames: ["profileId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "profile",
-            onDelete: "CASCADE"
-        }));
-    }
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    const table = await queryRunner.getTable('user_profile');
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("user_profile");
-        
-        const profileId = table.foreignKeys.find(fk => fk.columnNames.indexOf("profileId") !== -1);
-        await queryRunner.dropForeignKey("user_profile", profileId);
-        
-        const userId = table.foreignKeys.find(fk => fk.columnNames.indexOf("userId") !== -1);
-        await queryRunner.dropForeignKey("user_profile", userId);
+    const profileId = table.foreignKeys.find(
+      (fk) => fk.columnNames.indexOf('profileId') !== -1
+    );
+    await queryRunner.dropForeignKey('user_profile', profileId);
 
-        await queryRunner.dropTable("user_profile");
-    }
+    const userId = table.foreignKeys.find(
+      (fk) => fk.columnNames.indexOf('userId') !== -1
+    );
+    await queryRunner.dropForeignKey('user_profile', userId);
+
+    await queryRunner.dropTable('user_profile');
+  }
 }

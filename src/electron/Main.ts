@@ -34,9 +34,8 @@ export default class Main {
 
   public async start(): Promise<void> {
     if (!isDev) {
-      log.info('Calling updater...');
       updater({
-        logger: log
+        logger: log,
       });
     }
     this.handleWindowsShortcuts();
@@ -46,14 +45,30 @@ export default class Main {
   }
 
   protected async setConnection(): Promise<void> {
-    this.connection = await createConnection({
-      type: 'sqlite',
-      synchronize: true,
-      logging: true,
-      logger: 'simple-console',
-      database: './src/database/database.sqlite',
-      entities: entityMap.map((entity) => entity.value),
-    });
+    try {
+      const migrationPath = path.resolve(
+        __dirname,
+        '..',
+        'renderer',
+        'main_window',
+        'database',
+        'migration',
+        '*.js'
+      )
+
+      this.connection = await createConnection({
+        type: 'sqlite',
+        migrationsRun: true,
+        migrations: [migrationPath],
+        logging: true,
+        logger: 'simple-console',
+        database: './src/database/database.sqlite',
+        entities: entityMap.map((entity) => entity.value),
+      });
+    } catch (err) {
+      log.error(err);
+      app.on('ready', () => app.quit());
+    }
   }
 
   protected async setListeners(): Promise<void> {
@@ -141,7 +156,9 @@ export default class Main {
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-    mainWindow.webContents.openDevTools();
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
 
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();
