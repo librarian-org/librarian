@@ -33,7 +33,7 @@ export default class Main {
   private connection: Connection;
 
   public async start(): Promise<void> {
-    if (!isDev) {
+    if (!isDev && process.platform !== 'linux') {
       updater({
         logger: log,
       });
@@ -44,25 +44,38 @@ export default class Main {
     this.setIpcMainListeners();
   }
 
+  private getDatabasePath(): string {
+    const devPath = './src/database/database.sqlite';
+    const prodPath = path.resolve(
+      app.getPath('appData'),
+      app.name,
+      'database.sqlite'
+    );
+    return isDev ? devPath : prodPath;
+  }
+
+  private getMigrationPath(): string[]
+  {
+    return [path.resolve(
+      __dirname,
+      '..',
+      'renderer',
+      'main_window',
+      'database',
+      'migration',
+      '*.js'
+    )];
+  }
+
   protected async setConnection(): Promise<void> {
     try {
-      const migrationPath = path.resolve(
-        __dirname,
-        '..',
-        'renderer',
-        'main_window',
-        'database',
-        'migration',
-        '*.js'
-      )
-
       this.connection = await createConnection({
         type: 'sqlite',
         migrationsRun: true,
-        migrations: [migrationPath],
-        logging: true,
+        migrations: this.getMigrationPath(),
+        logging: isDev,
         logger: 'simple-console',
-        database: './src/database/database.sqlite',
+        database: this.getDatabasePath(),
         entities: entityMap.map((entity) => entity.value),
       });
     } catch (err) {
