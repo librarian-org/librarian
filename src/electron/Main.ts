@@ -33,10 +33,9 @@ export default class Main {
   private connection: Connection;
 
   public async start(): Promise<void> {
-    if (!isDev) {
-      log.info('Calling updater...');
+    if (!isDev && process.platform !== 'linux') {
       updater({
-        logger: log
+        logger: log,
       });
     }
     this.handleWindowsShortcuts();
@@ -45,15 +44,30 @@ export default class Main {
     this.setIpcMainListeners();
   }
 
+  private getDatabasePath(): string {
+    const devPath = './src/database/database.sqlite';
+    const prodPath = path.resolve(
+      app.getPath('appData'),
+      app.name,
+      'database.sqlite'
+    );
+    return isDev ? devPath : prodPath;
+  }
+
   protected async setConnection(): Promise<void> {
-    this.connection = await createConnection({
-      type: 'sqlite',
-      synchronize: true,
-      logging: true,
-      logger: 'simple-console',
-      database: './src/database/database.sqlite',
-      entities: entityMap.map((entity) => entity.value),
-    });
+    try {
+      this.connection = await createConnection({
+        type: 'sqlite',
+        synchronize: isDev,
+        logging: isDev,
+        logger: 'simple-console',
+        database: this.getDatabasePath(),
+        entities: entityMap.map((entity) => entity.value),
+      });
+    } catch (err) {
+      log.error(err);
+      app.on('ready', () => app.quit());
+    }
   }
 
   protected async setListeners(): Promise<void> {
@@ -141,7 +155,9 @@ export default class Main {
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-    mainWindow.webContents.openDevTools();
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
 
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();

@@ -10,7 +10,7 @@
   },
   "productName": "librarian",
   "version": "1.0.0",
-  "description": "The Librarian app is deal for schools libraries and for someone who have many books.",
+  "description": "The Librarian app is ideal for schools libraries and for someone who have many books.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
