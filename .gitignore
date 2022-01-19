@@ -89,7 +89,8 @@ typings/
 out/
 
 # database
-database.sqlite
+*.sqlite
 
 # App files
 selected-language.json
+dist/
