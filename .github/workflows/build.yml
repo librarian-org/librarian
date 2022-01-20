@@ -1,5 +1,5 @@
 name: Build
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -7,14 +7,14 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-11]
+        os: [windows-latest, ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@master
       with:
         node-version: 14
-    - name: install dependencies
+    - name: Install node dependencies
       run: yarn
-    - name: build
+    - name: Build
       run: yarn make

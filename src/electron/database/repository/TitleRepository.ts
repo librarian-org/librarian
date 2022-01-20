@@ -1,7 +1,13 @@
 import RepositoryBase from './RepositoryBase';
 
+interface ListTitle {
+  where: unknown;
+  pageStart: number;
+  pageSize: number;
+}
+
 export default class TitleRepository extends RepositoryBase {
-  public async listTitle(content: unknown): Promise<unknown | unknown[]> {
+  public async listTitle(content: ListTitle): Promise<unknown | unknown[]> {
     try {
       let filter = {
         relations: [
@@ -12,13 +18,17 @@ export default class TitleRepository extends RepositoryBase {
           'titlePublishers',
           'titlePublishers.publisher',
         ],
+        skip: content.pageStart || 0,
+        take: content.pageSize || 10,
       };
 
-      if (content) {
+      if (content.where) {
         filter = { ...filter, ...{ where: content } };
       }
 
-      return await this.repository.find(filter);
+      const [data, count] = await this.repository.findAndCount(filter);
+
+      return { data, count };
     } catch (err) {
       console.log(err);
       throw err;

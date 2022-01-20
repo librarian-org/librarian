@@ -38,7 +38,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         </span>
         {item.iconAction && (
           <RoundedButton
-            className={selectedItem === order ? 'primary selected' : 'primary'}
+            className={selectedItem === order ? 'selected' : ''}
             onClick={(e: React.MouseEvent) => item.action.onClick(e)}
             onKeyDown={keyPress}
             tabIndex={order}

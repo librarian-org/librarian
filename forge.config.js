@@ -1,7 +1,7 @@
 module.exports = {
   packagerConfig: {
     icon: `${__dirname}/src/assets/images/librarian`,
-    appCopyright: "Danilo Lutz"
+    appCopyright: "Librarian Org"
   },
   makers: [
     {
@@ -49,7 +49,7 @@ module.exports = {
       name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: "danilolutz",
+          owner: "librarian-org",
           name: "librarian",
         },
         draft: true,
