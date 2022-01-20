@@ -10,7 +10,7 @@ export class createContact1637781284674 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -19,11 +19,11 @@ export class createContact1637781284674 implements MigrationInterface {
           },
           {
             name: 'contactTypeId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

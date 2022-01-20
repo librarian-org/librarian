@@ -9,7 +9,7 @@ export class createPublisher1637764570648 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

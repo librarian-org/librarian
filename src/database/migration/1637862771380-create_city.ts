@@ -10,7 +10,7 @@ export class createCity1637862771380 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -19,7 +19,7 @@ export class createCity1637862771380 implements MigrationInterface {
           },
           {
             name: 'regionId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

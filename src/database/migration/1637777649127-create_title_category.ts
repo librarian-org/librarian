@@ -10,16 +10,16 @@ export class createTitleCategory1637777649127 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
             name: 'titleId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'categoryId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

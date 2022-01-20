@@ -10,16 +10,16 @@ export class createUserProfile1637775857589 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'profileId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

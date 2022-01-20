@@ -9,7 +9,7 @@ export class createUserType1637763972852 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

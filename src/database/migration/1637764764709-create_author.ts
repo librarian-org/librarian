@@ -9,7 +9,7 @@ export class createAuthor1637764764709 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

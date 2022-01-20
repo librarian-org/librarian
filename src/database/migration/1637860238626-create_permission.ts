@@ -10,7 +10,7 @@ export class createPermission1637860238626 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -30,11 +30,11 @@ export class createPermission1637860238626 implements MigrationInterface {
           },
           {
             name: 'programId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'profileId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

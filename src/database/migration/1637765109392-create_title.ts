@@ -9,7 +9,7 @@ export class createTitle1637765109392 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

@@ -10,7 +10,7 @@ export class createAddress1637865030266 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -32,11 +32,11 @@ export class createAddress1637865030266 implements MigrationInterface {
           },
           {
             name: 'cityId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

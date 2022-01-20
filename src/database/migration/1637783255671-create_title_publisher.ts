@@ -10,7 +10,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -20,7 +20,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
           },
           {
             name: 'edition',
-            type: 'int',
+            type: 'varchar',
           },
           {
             name: 'publishedAt',
@@ -28,11 +28,11 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
           },
           {
             name: 'titleId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'publisherId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

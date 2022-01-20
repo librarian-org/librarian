@@ -9,7 +9,7 @@ export class createSettings1637762838040 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

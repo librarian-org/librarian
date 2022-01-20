@@ -10,16 +10,16 @@ export class createTitleAuthor1637778042645 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
             name: 'titleId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'authorId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

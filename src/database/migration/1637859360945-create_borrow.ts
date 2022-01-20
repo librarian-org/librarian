@@ -10,7 +10,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -28,7 +28,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'isReserva',
@@ -37,11 +37,11 @@ export class createBorrow1637859360945 implements MigrationInterface {
           },
           {
             name: 'titlePublisherId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

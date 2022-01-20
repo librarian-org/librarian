@@ -10,7 +10,7 @@ export class createUser1637774086085 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -42,7 +42,7 @@ export class createUser1637774086085 implements MigrationInterface {
           },
           {
             name: 'userTypeId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),

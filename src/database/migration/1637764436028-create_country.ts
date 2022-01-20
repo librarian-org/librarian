@@ -9,7 +9,7 @@ export class createCountry1637764436028 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

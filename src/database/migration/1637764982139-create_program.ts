@@ -9,7 +9,7 @@ export class createProgram1637764982139 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {

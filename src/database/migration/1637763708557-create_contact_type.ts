@@ -9,7 +9,7 @@ export class createContactType1637763708557 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
