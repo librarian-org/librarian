@@ -2,20 +2,33 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class createUserTypes1642602439500 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `INSERT INTO user_type (id, name) values(1, 'admin')`
-    );
-    await queryRunner.query(
-      `INSERT INTO user_type (id, name) values(2, 'librarian')`
-    );
-    await queryRunner.query(
-      `INSERT INTO user_type (id, name) values(3, 'person')`
-    );
+    await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into('user_type')
+      .values([
+        {
+          id: 1,
+          name: 'admin',
+        },
+        {
+          id: 2,
+          name: 'librarian',
+        },
+        {
+          id: 3,
+          name: 'person',
+        },
+      ])
+      .execute();
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DELETE FROM user_type WHERE id = 3`);
-    await queryRunner.query(`DELETE FROM user_type WHERE id = 2`);
-    await queryRunner.query(`DELETE FROM user_type WHERE id = 1`);
+    await queryRunner.manager
+      .createQueryBuilder()
+      .delete()
+      .from('user_type')
+      .where([{ id: 1 }, { id: 2 }, { id: 3 }])
+      .execute();
   }
 }
