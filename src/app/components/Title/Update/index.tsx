@@ -211,8 +211,6 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
   );
 
   const handleSave = useCallback(() => {
-    console.log(item);
-
     window.api.sendSync('update', {
       entity: 'Title',
       value: {

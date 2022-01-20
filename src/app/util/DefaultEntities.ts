@@ -63,21 +63,21 @@ export const entities: SearchSource[] = [
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.personTab);
+        trigger(AppEvent.personTab, actionList);
       },
       onPress: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.personTab);
+        trigger(AppEvent.personTab, actionList);
       },
     },
     action: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.personTab);
+        trigger(AppEvent.personTab, actionCreate);
       },
       onPress: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.personTab);
+        trigger(AppEvent.personTab, actionCreate);
       },
     },
   },
