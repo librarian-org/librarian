@@ -13,7 +13,7 @@
   "description": "The Librarian app is ideal for schools libraries and for someone who have many books.",
   "main": ".webpack/main",
   "scripts": {
-    "librarian:migration": "yarn tsc ./src/database/migration/*.ts --outDir ./dist/",
+    "librarian:migration": "yarn tsc src/database/migration/*.ts --outDir ./dist/",
     "start": "yarn librarian:migration && yarn electron-forge start",
     "package": "electron-forge package",
     "make": "yarn librarian:migration && yarn electron-forge make",
