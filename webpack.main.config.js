@@ -1,3 +1,5 @@
+const TerserPlugin = require('terser-webpack-plugin');
+
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -10,5 +12,17 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json']
+  },
+  optimization: {
+    minimize: false,
+    minimizer: [
+      new TerserPlugin({
+        exclude: [
+          /\/migration/,
+          /\/entities/
+        ],
+
+      }),
+    ],
   },
 };

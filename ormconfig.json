@@ -3,16 +3,16 @@
    "type": "sqlite",
    "synchronize": false,
    "logging": true,
-   "database": "./src/database/database.sqlite",
+   "database": "./database/database.sqlite",
    "logger": "simple-console",
    "entities": [
       "./electron/database/models/*.{ts,js}"
    ],
    "migrations": [
-      "./src/database/migration/*.{ts,js}"
+      "./database/migration/*.{ts,js}"
    ],
    "cli": {
       "entitiesDir": "./src/electron/database/models",
-      "migrationsDir": "./src/database/migration"
+      "migrationsDir": "./database/migration"
    }
 }

@@ -7,7 +7,15 @@ export default class createAdminUser1642602508651
     await queryRunner.manager
       .createQueryBuilder()
       .insert()
-      .into('user')
+      .into('user', [
+        'id',
+        'name',
+        'login',
+        'password',
+        'userTypeId',
+        'language',
+        'document',
+      ])
       .values({
         id: 1,
         name: 'Admin',

@@ -21,6 +21,7 @@ const TitleList: React.FC = () => {
   const [pageCount, setPageCount] = React.useState(0);
 
   useEffect(() => {
+    try {
     setLoading(true);
     const response = window.api.sendSync('listTitle', {
       entity: 'Title',
@@ -32,6 +33,10 @@ const TitleList: React.FC = () => {
     }) as PaginatedSearch<Title>;
     setList(response.data);
     setLoading(false);
+  } catch (err) {
+    console.error(err);
+  }
+
   }, [rowsPerPage]);
 
   const handleUpdate = (item: Title): void => {

@@ -1,19 +1,16 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TableForeignKeyPatch } from '../TableForeignKeyPatch';
+import { TablePatch } from '../TablePatch';
 
 export class createAddress1637865030266 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
+      new TablePatch({
         name: 'address',
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -35,11 +32,11 @@ export class createAddress1637865030266 implements MigrationInterface {
           },
           {
             name: 'cityId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),
@@ -48,7 +45,7 @@ export class createAddress1637865030266 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'address',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['cityId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'city',
@@ -58,7 +55,7 @@ export class createAddress1637865030266 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'address',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
