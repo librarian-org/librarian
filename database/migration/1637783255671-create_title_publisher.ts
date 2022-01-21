@@ -1,19 +1,16 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TableForeignKeyPatch } from '../TableForeignKeyPatch';
+import { TablePatch } from '../TablePatch';
 
 export class createTitlePublisher1637783255671 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
+      new TablePatch({
         name: 'title_publisher',
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -23,7 +20,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
           },
           {
             name: 'edition',
-            type: 'int',
+            type: 'varchar',
           },
           {
             name: 'publishedAt',
@@ -31,11 +28,11 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
           },
           {
             name: 'titleId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'publisherId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),
@@ -44,7 +41,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'title_publisher',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['titleId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'title',
@@ -54,7 +51,7 @@ export class createTitlePublisher1637783255671 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'title_publisher',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['publisherId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'publisher',

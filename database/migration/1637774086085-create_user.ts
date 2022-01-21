@@ -1,19 +1,16 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TableForeignKeyPatch } from '../TableForeignKeyPatch';
+import { TablePatch } from '../TablePatch';
 
 export class createUser1637774086085 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
+      new TablePatch({
         name: 'user',
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -23,7 +20,7 @@ export class createUser1637774086085 implements MigrationInterface {
           {
             name: 'login',
             type: 'varchar',
-            isUnique: true,
+            isNullable: true,
           },
           {
             name: 'password',
@@ -45,7 +42,7 @@ export class createUser1637774086085 implements MigrationInterface {
           },
           {
             name: 'userTypeId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),
@@ -54,7 +51,7 @@ export class createUser1637774086085 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'user',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['userTypeId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user_type',

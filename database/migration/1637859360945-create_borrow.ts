@@ -1,19 +1,16 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TableForeignKeyPatch } from '../TableForeignKeyPatch';
+import { TablePatch } from '../TablePatch';
 
 export class createBorrow1637859360945 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
+      new TablePatch({
         name: 'borrow',
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
@@ -31,7 +28,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'isReserva',
@@ -40,11 +37,11 @@ export class createBorrow1637859360945 implements MigrationInterface {
           },
           {
             name: 'titlePublisherId',
-            type: 'int',
+            type: 'integer',
           },
           {
             name: 'userId',
-            type: 'int',
+            type: 'integer',
           },
         ],
       }),
@@ -53,7 +50,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'borrow',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['titlePublisherId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'title_publisher',
@@ -63,7 +60,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
 
     await queryRunner.createForeignKey(
       'borrow',
-      new TableForeignKey({
+      new TableForeignKeyPatch({
         columnNames: ['userId'],
         referencedColumnNames: ['id'],
         referencedTableName: 'user',
