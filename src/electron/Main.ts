@@ -45,7 +45,7 @@ export default class Main {
   }
 
   private getDatabasePath(): string {
-    const devPath = './src/database/database.sqlite';
+    const devPath = './database/database.sqlite';
     const prodPath = path.resolve(
       app.getPath('appData'),
       app.name,
@@ -54,11 +54,26 @@ export default class Main {
     return isDev ? devPath : prodPath;
   }
 
+  private getMigrationPath(): string[] {
+    return [
+      path.resolve(
+        __dirname,
+        '..',
+        'renderer',
+        'main_window',
+        'database',
+        'migration',
+        '*.js'
+      ),
+    ];
+  }
+
   protected async setConnection(): Promise<void> {
     try {
       this.connection = await createConnection({
         type: 'sqlite',
-        synchronize: isDev,
+        migrationsRun: true,
+        migrations: this.getMigrationPath(),
         logging: isDev,
         logger: 'simple-console',
         database: this.getDatabasePath(),
@@ -98,45 +113,77 @@ export default class Main {
 
   protected async createWindow(): Promise<void> {
     ipcMain.on('create', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).create(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).create(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('update', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).update(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).update(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('softDelete', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).softDelete(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).softDelete(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('delete', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).delete(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).delete(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('read', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).read(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).read(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('list', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getRepository(entity).list(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getRepository(entity).list(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('listTitle', async (event, content: Event[]) => {
-      const { value, entity } = content[0];
-      event.returnValue = await this.getCustomRepository(
-        entity,
-        TitleRepository
-      ).listTitle(value);
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          TitleRepository
+        ).listTitle(value);
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {
-      event.returnValue = [];
+      try {
+        event.returnValue = [];
+      } catch (err) {
+        log.error(err);
+      }
     });
 
     const mainWindow = new BrowserWindow({

@@ -1,22 +1,19 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { TablePatch } from '../TablePatch';
 
-export class createProgram1637764982139 implements MigrationInterface {
+export class createCountry1637764436028 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new Table({
-        name: 'program',
+      new TablePatch({
+        name: 'country',
         columns: [
           {
             name: 'id',
-            type: 'int',
+            type: 'integer',
             isPrimary: true,
           },
           {
             name: 'name',
-            type: 'varchar',
-          },
-          {
-            name: 'screen',
             type: 'varchar',
           },
         ],
@@ -26,6 +23,6 @@ export class createProgram1637764982139 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('program');
+    await queryRunner.dropTable('country');
   }
 }
