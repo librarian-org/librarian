@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "rootDir": "./database",
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "src",
+  ]
+}
