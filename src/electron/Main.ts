@@ -45,7 +45,7 @@ export default class Main {
   }
 
   private getDatabasePath(): string {
-    const devPath = './src/database/database.sqlite';
+    const devPath = './database/database.sqlite';
     const prodPath = path.resolve(
       app.getPath('appData'),
       app.name,
