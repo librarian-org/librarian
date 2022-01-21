@@ -119,7 +119,7 @@
   },
   "city": {
     "label": "City",
-    "selectOrCreate": "Select a city or type a name to create it",
+    "selectOrCreate": "Select a city",
     "selectEmpty": "No city created so far"
   },
   "profile": {
@@ -141,7 +141,6 @@
     "borrows": "Borrows",
     "addresses": "Addresses",
     "removeProfile": "Remove Profile",
-    "removeBorrow": "Remove Borrow",
     "removeAddress": "Remove Address",
     "contactType": "Contact Type",
     "profile": "Profile",

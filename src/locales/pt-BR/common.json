@@ -52,9 +52,6 @@
   "home": {
     "message": "Olá Mundo!"
   },
-  "person": {
-    "label": "Pessoa"
-  },
   "borrow": {
     "label": "Empréstimo"
   },
@@ -110,6 +107,55 @@
     "label": "Categoria",
     "selectOrCreate": "Selecione uma categoria ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma categoria criada até o momento"
+  },
+  "contactType": {
+    "label": "Tipo de contato",
+    "selectOrCreate": "Selecione um tipo de contato ou escreva um nome para cria-lo",
+    "selectEmpty": "Nenhum tipo de contato criado"
+  },
+  "state": {
+    "label": "Estado",
+    "selectOrCreate": "Selecione um estado ou escreva um nome para cria-lo",
+    "selectEmpty": "Nenhum estado criado"
+  },
+  "city": {
+    "label": "Cidade",
+    "selectOrCreate": "Selecione uma cidade",
+    "selectEmpty": "Nenhuma cidade criada"
+  },
+  "profile": {
+    "label": "Perfil",
+    "selectOrCreate": "Selecione um perfil ou escreva um nome para cria-lo",
+    "selectEmpty": "Nenhum perfil criado"
+  },
+  "person": {
+    "label": "Pessoa",
+    "name": "Nome",
+    "login": "Login",
+    "password": "Senha",
+    "language": "Idioma",
+    "notes": "Obeservações",
+    "document": "Documento",
+    "userType": "Tipo usuário",
+    "contacts": "Contatos",
+    "profiles": "Perfis",
+    "borrows": "Emprestimos",
+    "addresses": "Endereços",
+    "removeProfile": "Excluir perfil",
+    "removeAddress": "Excluir endereço",
+    "contactType": "Tipo de contato",
+    "profile": "Perfil",
+    "contact": "Informação do contato",
+    "informErrorsContact": "Por favor forneça informação do contato",
+    "informErrorsProfile": "Por favor selecine um perfil",
+    "informErrorsAddress": "Por favor forneça informação de endereço",
+    "hasBeenAdd": "Este contato já foi adicionado"
+  },
+  "address":{
+    "complement": "Rua",
+    "zipcode": "CEP",
+    "neighborhood": "Bairro",
+    "publicPlace": "Referência"
   },
   "countries": {
     "AF": "Afeganistão",

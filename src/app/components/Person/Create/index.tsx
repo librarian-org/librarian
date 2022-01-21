@@ -1,5 +1,4 @@
 import React, {
-  useEffect,
   useState,
   useMemo,
   useCallback,
@@ -10,9 +9,6 @@ import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import i18n from '../../../i18n';
 import Input from '../../Input';
 import { useToast } from '../../../hooks/toast';
-import { trigger } from '../../../util/EventHandler';
-import { AppEvent } from '../../../../common/AppEvent';
-import { Person } from '../Person';
 import { SelectHandles } from '../../CreatableSelectInput';
 import SectionContent from '../../Sections/SectionContent';
 import SectionHeader from '../../Sections/SectionHeader';
