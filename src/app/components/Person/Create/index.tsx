@@ -79,30 +79,6 @@ const CreatePerson: React.FC = () => {
       });
       return;
     }
-
-    /* if (
-      contacts.filter((a) => a.info === contact).length > 0
-    ) {
-      addToast({
-        title: i18n.t('notifications.warning'),
-        type: 'error',
-        description: `${contact} ${i18n.t('person.hasBeenAdd')}`,
-      });
-      return;
-    }*/
-    /*
-    const pub = {
-      classification,
-      edition,
-      publishedAt: parseISO(publishedAt),
-      publisher,
-    };
-    setPublishers((oldState) => [...oldState, pub]);
-
-    refPublisher.current.clear();
-    setClassification('');
-    setEdition('');
-    setPublishedAt('');*/
   }, [contact]);
 
   const handleAddProfile = useCallback(() => {
@@ -122,34 +98,9 @@ const CreatePerson: React.FC = () => {
       });
       return;
     }
-
-    /* if (
-      contacts.filter((a) => a.info === contact).length > 0
-    ) {
-      addToast({
-        title: i18n.t('notifications.warning'),
-        type: 'error',
-        description: `${contact} ${i18n.t('person.hasBeenAdd')}`,
-      });
-      return;
-    }*/
-    /*
-    const pub = {
-      classification,
-      edition,
-      publishedAt: parseISO(publishedAt),
-      publisher,
-    };
-    setPublishers((oldState) => [...oldState, pub]);
-
-    refPublisher.current.clear();
-    setClassification('');
-    setEdition('');
-    setPublishedAt('');*/
   }, [profile]);
 
   const handleAddAddress = useCallback(() => {
-    //const contactType = refAddress.current.getValue<SelectType>();
     const errors: string[] = [];
     if (!complement) {
       errors.push(i18n.t('address.complement'));
@@ -174,30 +125,6 @@ const CreatePerson: React.FC = () => {
       });
       return;
     }
-
-    /* if (
-      contacts.filter((a) => a.info === contact).length > 0
-    ) {
-      addToast({
-        title: i18n.t('notifications.warning'),
-        type: 'error',
-        description: `${contact} ${i18n.t('person.hasBeenAdd')}`,
-      });
-      return;
-    }*/
-    /*
-    const pub = {
-      classification,
-      edition,
-      publishedAt: parseISO(publishedAt),
-      publisher,
-    };
-    setPublishers((oldState) => [...oldState, pub]);
-
-    refPublisher.current.clear();
-    setClassification('');
-    setEdition('');
-    setPublishedAt('');*/
   }, [complement, zipcode, neighborhood, publicPlace]);
 
   const handleSave = useCallback(() => {
@@ -212,40 +139,6 @@ const CreatePerson: React.FC = () => {
         notes,
       },
     }) as { id: string };
-
-    /*profiles.map((profile) => {
-      window.api.sendSync('create', {
-        entity: 'User',
-        value: {
-          titleId: result.id,
-          categoryId: profile.id,
-        },
-      });
-    });
-
-    contacts.map((contact) => {
-      window.api.sendSync('create', {
-        entity: 'TitleAuthor',
-        value: {
-          titleId: result.id,
-          authorId: contact.id,
-        },
-      });
-    });
-
-    adresses.map((address) => {
-      window.api.sendSync('create', {
-        entity: 'TitlePublisher',
-        value: {
-          titleId: result.id,
-          publisherId: edition.publisher.id,
-          edition: edition.edition,
-          classification: edition.classification,
-          publishedAt: edition.publishedAt,
-        },
-      });
-    });
-    */
   }, []);
   return (
     <Container>

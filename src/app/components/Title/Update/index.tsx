@@ -211,6 +211,25 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
   );
 
   const handleSave = useCallback(() => {
+
+    const errors: string[] = [];
+    if (!title) {
+      errors.push(i18n.t('title.label'));
+    }
+    if (!isbn) {
+      errors.push('ISBN');
+    }
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('title.informErrorsTitle')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
     window.api.sendSync('update', {
       entity: 'Title',
       value: {
@@ -261,7 +280,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
         },
       });
     });
-  }, [authors, categories, isbn, item, publishers, title]);
+  }, [addToast, authors, categories, isbn, item.id, publishers, title]);
 
   return (
     <Container>

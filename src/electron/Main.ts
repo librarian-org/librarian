@@ -7,6 +7,9 @@ import {
   NativeImage,
   Menu,
 } from 'electron';
+import log from 'electron-log';
+import isDev from 'electron-is-dev';
+import updater from 'update-electron-app';
 import { i18n } from 'i18next';
 import path from 'path';
 import Bootstrap from './Bootstrap';
@@ -30,21 +33,41 @@ export default class Main {
   private connection: Connection;
 
   public async start(): Promise<void> {
+    if (!isDev && process.platform !== 'linux') {
+      updater({
+        logger: log,
+      });
+    }
     this.handleWindowsShortcuts();
     await this.setListeners();
     await this.setConnection();
     this.setIpcMainListeners();
   }
 
+  private getDatabasePath(): string {
+    const devPath = './src/database/database.sqlite';
+    const prodPath = path.resolve(
+      app.getPath('appData'),
+      app.name,
+      'database.sqlite'
+    );
+    return isDev ? devPath : prodPath;
+  }
+
   protected async setConnection(): Promise<void> {
-    this.connection = await createConnection({
-      type: 'sqlite',
-      synchronize: true,
-      logging: true,
-      logger: 'simple-console',
-      database: './src/database/database.sqlite',
-      entities: entityMap.map((entity) => entity.value),
-    });
+    try {
+      this.connection = await createConnection({
+        type: 'sqlite',
+        synchronize: isDev,
+        logging: isDev,
+        logger: 'simple-console',
+        database: this.getDatabasePath(),
+        entities: entityMap.map((entity) => entity.value),
+      });
+    } catch (err) {
+      log.error(err);
+      app.on('ready', () => app.quit());
+    }
   }
 
   protected async setListeners(): Promise<void> {
@@ -106,7 +129,10 @@ export default class Main {
 
     ipcMain.on('listTitle', async (event, content: Event[]) => {
       const { value, entity } = content[0];
-      event.returnValue = await this.getCustomRepository(entity, TitleRepository).listTitle(value);
+      event.returnValue = await this.getCustomRepository(
+        entity,
+        TitleRepository
+      ).listTitle(value);
     });
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {
@@ -129,7 +155,9 @@ export default class Main {
 
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-    mainWindow.webContents.openDevTools();
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
 
     mainWindow.once('ready-to-show', () => {
       mainWindow.show();

@@ -1,6 +1,6 @@
-import { FaHandshake } from 'react-icons/fa';
+import { FaHandshake, FaPen, FaPlus } from 'react-icons/fa';
 import { IconBaseProps } from 'react-icons';
-import { FiBook, FiPlus, FiSettings, FiUser } from 'react-icons/fi';
+import { FiBook, FiSettings, FiUser } from 'react-icons/fi';
 import i18n from '../i18n';
 import { trigger } from './EventHandler';
 import { AppEvent } from '../../common/AppEvent';
@@ -38,7 +38,7 @@ export const entities: SearchSource[] = [
     label: i18n.t('borrow.label'),
     icon: FaHandshake,
     iconColor: '#50fa7b',
-    iconAction: FiPlus,
+    iconAction: FaPlus,
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
@@ -59,7 +59,7 @@ export const entities: SearchSource[] = [
     label: i18n.t('person.label'),
     icon: FiUser,
     iconColor: '#ff78f7',
-    iconAction: FiPlus,
+    iconAction: FaPlus,
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
@@ -86,7 +86,7 @@ export const entities: SearchSource[] = [
     label: i18n.t('title.label'),
     icon: FiBook,
     iconColor: '#4ad0ff',
-    iconAction: FiPlus,
+    iconAction: FaPlus,
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
@@ -113,7 +113,7 @@ export const entities: SearchSource[] = [
     label: i18n.t('settings.label'),
     icon: FiSettings,
     iconColor: '#e3bb06',
-    iconAction: FiSettings,
+    iconAction: FaPen,
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);

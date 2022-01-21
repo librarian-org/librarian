@@ -180,6 +180,24 @@ const TitleCreate: React.FC = () => {
   );
 
   const handleSave = useCallback(() => {
+    const errors: string[] = [];
+    if (!title) {
+      errors.push(i18n.t('title.label'));
+    }
+    if (!isbn) {
+      errors.push('ISBN');
+    }
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('title.informErrorsTitle')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
     const result = window.api.sendSync('create', {
       entity: 'Title',
       value: {
@@ -220,7 +238,7 @@ const TitleCreate: React.FC = () => {
         },
       });
     });
-  }, [authors, categories, isbn, publishers, title]);
+  }, [addToast, authors, categories, isbn, publishers, title]);
 
   return (
     <Container>

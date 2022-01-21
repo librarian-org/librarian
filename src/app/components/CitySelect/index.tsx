@@ -56,23 +56,7 @@ import React, {
     ) => {
       setValue(newValue);
     };
-  
-    const handleCreate = (inputValue: string) => {
-      setIsLoading(true);
-  
-      const result = window.api.sendSync('create', {
-        entity: 'City',
-        value: {
-          name: inputValue,
-        },
-      }) as City;
-  
-      const newOption = createOption(result.name, result.id.toString());
-      setOptions((options) => [...options, newOption]);
-      setValue(newOption);
-      setIsLoading(false);
-    };
-  
+   
     useImperativeHandle<unknown, SelectHandles>(selectRef, () => ({
       getValue<T>() {
         if (!value) {
@@ -96,7 +80,6 @@ import React, {
           isDisabled={isLoading}
           isLoading={isLoading}
           onChange={handleChange}
-          onCreateOption={handleCreate}
           options={options}
           value={value}
         />
