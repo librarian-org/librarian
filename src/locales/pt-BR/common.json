@@ -110,5 +110,10 @@
     "label": "Categoria",
     "selectOrCreate": "Selecione uma categoria ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma categoria criada até o momento"
+  },
+  "table": {
+    "page": "Página",
+    "of": "de",
+    "itemsPerPage": "Itens por página"
   }
 }
