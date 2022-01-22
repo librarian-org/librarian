@@ -110,5 +110,10 @@
     "label": "Category",
     "selectOrCreate": "Select a category or type a name to create it",
     "selectEmpty": "No category created so far"
+  },
+  "table": {
+    "page": "Page",
+    "of": "of",
+    "itemsPerPage": "Items per page"
   }
 }
