@@ -31,7 +31,7 @@ export class createBorrow1637859360945 implements MigrationInterface {
             type: 'integer',
           },
           {
-            name: 'isReserva',
+            name: 'isReservation',
             type: 'boolean',
             default: false,
           },
