@@ -57,7 +57,16 @@
     "label": "Person"
   },
   "borrow": {
-    "label": "Borrow"
+    "label": "Borrow",
+    "borrow": "Borrow",
+    "reservation": "Reservations",
+    "selectTitleToBorrow": "Select a title to borrow",
+    "classification": "Classification",
+    "title": "Title",
+    "borrowDate": "Borrow date",
+    "returnDate": "Return date",
+    "reserve": "Reserve",
+    "informErrors": "Check this #errors# before proceed"
   },
   "title": {
     "label": "Title",
@@ -81,7 +90,10 @@
     "typePublicationDate": "Type the edition date",
     "removeEditionInformation": "Remove edition information from list",
     "removeAuthorInformation": "Remove author from list",
-    "removeCategoryInformation": "Remove category from list"
+    "removeCategoryInformation": "Remove category from list",
+
+    "select": "Type or select a title",
+    "selectEmpty": "No title found"
   },
   "settings": {
     "label": "Settings",
@@ -116,5 +128,10 @@
     "page": "Page",
     "of": "of",
     "itemsPerPage": "Items per page"
+  },
+  "user": {
+    "select": "Select a person",
+    "label": "Person",
+    "selectEmpty": "No person created so far"
   }
 }

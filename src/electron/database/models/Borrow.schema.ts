@@ -7,7 +7,6 @@ import {
   OneToOne,
 } from 'typeorm';
 import { BorrowRenovation } from './BorrowRenovation.schema';
-import { Publisher } from './Publisher.schema';
 import { TitlePublisher } from './TitlePublisher.schema';
 import { User } from './User.schema';
 
@@ -15,9 +14,6 @@ import { User } from './User.schema';
 export class Borrow {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  edition: number;
 
   @Column({ type: 'date' })
   borrow: string;
@@ -43,12 +39,9 @@ export class Borrow {
   @ManyToOne(() => User, (user) => user.borrows)
   user: User;
 
-  @ManyToOne(() => Publisher, (publisher) => publisher.borrows)
-  publisher: Publisher;
-
   @OneToMany(() => BorrowRenovation, (renovation) => renovation.borrow)
   renovations: BorrowRenovation[];
 
-  @OneToOne(() => TitlePublisher, (titlePublisher) => titlePublisher.borrow)
+  @ManyToOne(() => TitlePublisher, (titlePublisher) => titlePublisher.borrow)
   titlePublisher: TitlePublisher;
 }

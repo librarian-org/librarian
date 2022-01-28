@@ -57,7 +57,16 @@
     "label": "Pessoa"
   },
   "borrow": {
-    "label": "Empréstimo"
+    "label": "Empréstimo",
+    "borrow": "Empréstimo",
+    "reservation": "Reservas",
+    "selectTitleToBorrow": "Selecione um título para emprestar",
+    "classification": "Classificação (Tombo)",
+    "title": "Título",
+    "borrowDate": "Data Empréstimo",
+    "returnDate": "Data Devolução",
+    "reserve": "Reservar",
+    "informErrors": "Verifique os erros: #errors# para prosseguir"
   },
   "title": {
     "label": "Título",
@@ -81,7 +90,11 @@
     "typePublicationDate": "Digite a data de publicação",
     "removeEditionInformation": "Remover informações de edição da lista",
     "removeAuthorInformation": "Remover autor da lista",
-    "removeCategoryInformation": "Remover categoria da lista"
+    "removeCategoryInformation": "Remover categoria da lista",
+
+
+    "select": "Digite ou selecione um título",
+    "selectEmpty": "Nenhum título encontrado"
   },
   "settings": {
     "label": "Configurações",
@@ -116,5 +129,10 @@
     "page": "Página",
     "of": "de",
     "itemsPerPage": "Itens por página"
+  },
+  "user": {
+    "select": "Selecione uma pessoa",
+    "label": "Pessoa",
+    "selectEmpty": "Nenhuma pessoa cadastrada"
   }
 }

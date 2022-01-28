@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Cell, Column } from 'react-table';
 import i18n from '../../i18n';
 import Input from '../Input';
@@ -11,15 +17,25 @@ import { useToast } from '../../hooks/toast';
 
 import { Container, Header, Row } from './styles';
 import Button from '../Button';
-import { FiPlus, FiRefreshCw, FiShare } from 'react-icons/fi';
+import { FiDownload, FiPlus, FiRefreshCw, FiShare } from 'react-icons/fi';
 import { SelectHandles } from '../CreatableSelectInput';
 import UserSelect from '../UserSelect';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+import TitleSelect from '../TitleSelect';
+
+interface SelectType {
+  id: string;
+  name: string;
+}
 
 const Borrow: React.FC = () => {
   const { addToast } = useToast();
 
   const refUser = useRef<SelectHandles>(null);
+  const refTitle = useRef<SelectHandles>(null);
+  const [borrowDate, setBorrowDate] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [isReservation, setIsReservation] = useState(false);
 
   const [selectedSection, setSelectedSection] = useState('borrow');
   const sections = useMemo(() => ['borrow', 'reservation'], []);
@@ -44,23 +60,41 @@ const Borrow: React.FC = () => {
     console.log('Borrow of reserved: ', item);
   };
 
+  const handleReturn = (item: Borrow): void => {
+    console.log('Return of title: ', item);
+  };
+
+  const handleIsReservation = (): void => {
+    setIsReservation(!isReservation);
+  };
+
   const borrowColumns: Array<Column<Borrow>> = useMemo(
     () => [
       {
         Header: i18n.t('borrow.classification'),
-        accessor: 'title1',
-        // accessor: (borrow: Borrow) => `${borrow.titlePublisher.classification}`,
+        id: 'classification',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.classification}</>;
+        },
       },
       {
         Header: i18n.t('borrow.title'),
-        accessor: 'title',
+        id: 'title',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.title.name}</>;
+        },
       },
       {
         Header: i18n.t('borrow.borrowDate'),
-        accessor: 'borrow',
+        id: 'borrowDate',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.borrow}</>;
+        },
+        // accessor: 'borrow',
+        // accessor: (b: Borrow) => `${format(b.borrow, 'dd/MM/yyyy')}`
       },
       {
-        Header: i18n.t('borrow.borrowDate'),
+        Header: i18n.t('borrow.returnDate'),
         accessor: 'estimatedReturn',
       },
       {
@@ -80,6 +114,23 @@ const Borrow: React.FC = () => {
           );
         },
       },
+      {
+        Header: () => null,
+        id: 'return',
+        Cell: (row: Cell<Borrow>) => {
+          return (
+            <>
+              <FiDownload
+                size={20}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleReturn(row.row.original);
+                }}
+              />
+            </>
+          );
+        },
+      },
     ],
     []
   );
@@ -88,19 +139,24 @@ const Borrow: React.FC = () => {
     () => [
       {
         Header: i18n.t('borrow.classification'),
-        accessor: 'title1',
-        // accessor: (borrow: Borrow) => `${borrow.titlePublisher.classification}`,
+        id: 'classificationReservation',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.classification}</>;
+        },
       },
       {
         Header: i18n.t('borrow.title'),
-        accessor: 'title',
+        id: 'titleReservation',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.title.name}</>;
+        },
       },
       {
         Header: i18n.t('borrow.borrowDate'),
         accessor: 'borrow',
       },
       {
-        Header: i18n.t('borrow.borrowDate'),
+        Header: i18n.t('borrow.returnDate'),
         accessor: 'estimatedReturn',
       },
       {
@@ -128,7 +184,7 @@ const Borrow: React.FC = () => {
     async ({ pageIndex = 0 }: Search) => {
       try {
         setLoading(true);
-        const response = { data: [{}] as Borrow[], count: 0 };
+        const response = { data: [] as Borrow[], count: 0 };
         // window.api.sendSync('listBorrow', {
         //   entity: 'Borrow',
         //   value: {
@@ -156,19 +212,20 @@ const Borrow: React.FC = () => {
   const handleBorrowSubmit = useCallback(
     async ({ pageIndex = 0 }: Search) => {
       try {
+        const user = refUser.current.getValue<SelectType>();
+        console.log('USER: ', refUser.current.getValue<SelectType>());
+        if (!user) {
+          return;
+        }
         setLoading(true);
-        const response = {
-          data: [{ borrow: format(new Date(), 'dd/MM/yyyy') }] as Borrow[],
-          count: 0,
-        };
-        // window.api.sendSync('listBorrow', {
-        //   entity: 'Borrow',
-        //   value: {
-        //     where: { isReservation: false },
-        //     pageStart: rowsPerPage * pageIndex,
-        //     pageSize: rowsPerPage,
-        //   },
-        // }) as PaginatedSearch<Borrow>;
+        const response = window.api.sendSync('listBorrow', {
+          entity: 'Borrow',
+          value: {
+            where: { isReservation: false, userId: user.id },
+            pageStart: rowsPerPage * pageIndex,
+            pageSize: rowsPerPage,
+          },
+        }) as PaginatedSearch<Borrow>;
         setBorrowList(response.data);
         setPageCount(Math.ceil(response.count / rowsPerPage));
 
@@ -182,25 +239,71 @@ const Borrow: React.FC = () => {
         });
       }
     },
-    [addToast, rowsPerPage]
+    [addToast, rowsPerPage, refUser]
   );
 
-  const handleAddBorrow = useCallback(() => {
-    return;
-  }, []);
+  useEffect(() => {
+    handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+    console.log('USER1: ', refUser.current.getValue<SelectType>());
+  }, [handleBorrowSubmit, refUser]);
+
+  const handleAddBorrow = useCallback(async () => {
+    const user = refUser.current.getValue<SelectType>();
+    const title = refTitle.current.getValue<SelectType>();
+    const errors: string[] = [];
+
+    if (!user) {
+      errors.push(i18n.t('user.label'));
+    }
+
+    if (!title) {
+      errors.push(i18n.t('borrow.title'));
+    }
+
+    if (!borrowDate) {
+      errors.push(i18n.t('borrow.borrowDate'));
+    }
+
+    if (!returnDate) {
+      errors.push(i18n.t('borrow.returnDate'));
+    }
+
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('borrow.informErrors')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
+    window.api.sendSync('create', {
+      entity: 'Borrow',
+      value: {
+        userId: user.id,
+        borrow: parseISO(borrowDate),
+        estimatedReturn: parseISO(returnDate),
+        status: 1,
+        isReservation: isReservation,
+        titlePublisherId: title.id,
+      },
+    });
+
+    setBorrowDate('');
+    setReturnDate('');
+    refTitle.current.clear();
+    setIsReservation(false);
+
+    await handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+  }, [addToast, borrowDate, handleBorrowSubmit, isReservation, returnDate]);
+
   return (
     <Container>
       <Header>
-        <UserSelect ref={refUser} />
-        {/* <Input
-          type="text"
-          name="name"
-          autoFocus
-          label={i18n.t('borrow.name')}
-          placeholder={i18n.t('borrow.typePersonName')}
-        /> */}
+        <UserSelect autoFocus ref={refUser} />
       </Header>
-      {/* <Sections> */}
       <SectionHeader>
         {sections.map((section) => (
           <a
@@ -214,30 +317,35 @@ const Borrow: React.FC = () => {
       </SectionHeader>
       <SectionContent isActive={selectedSection === 'borrow'}>
         <Row>
-          <Input
-            type="text"
-            name="title"
-            label={i18n.t('borrow.title')}
-            placeholder={i18n.t('borrow.typeTitleToBorrow')}
-          />
+          <TitleSelect ref={refTitle} />
           <Input
             type="date"
             name="borrowDate"
             label={i18n.t('borrow.borrowDate')}
             placeholder={i18n.t('borrow.typeBorrowDate')}
+            onChange={(e) => setBorrowDate(e.target.value)}
+            value={borrowDate}
           />
           <Input
             type="date"
             name="returnDate"
             label={i18n.t('borrow.retrunDate')}
             placeholder={i18n.t('borrow.typeReturnBorrow')}
+            onChange={(e) => setReturnDate(e.target.value)}
+            value={returnDate}
           />
           <label>
-            <input type="checkbox" name="reservation" />
-            {i18n.t('borrow.reservation')}
+            <input
+              type="checkbox"
+              name="reserve"
+              onChange={handleIsReservation}
+              checked={isReservation}
+            />
+            &nbsp;
+            {i18n.t('borrow.reserve')}
           </label>
 
-          <Button style={{}} color="primary" onClick={handleAddBorrow}>
+          <Button color="primary" onClick={handleAddBorrow}>
             <FiPlus size={20} />
           </Button>
         </Row>
@@ -262,7 +370,6 @@ const Borrow: React.FC = () => {
           setRowsPerPage={setReservationRowsPerPage}
         />
       </SectionContent>
-      {/* </Sections> */}
     </Container>
   );
 };

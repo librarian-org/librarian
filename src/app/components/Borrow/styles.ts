@@ -19,6 +19,13 @@ export const Row = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* flex-wrap: wrap; */
-  /* width: 100%; */
+
+  label {
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  input[type=date] {
+    width: 130px;
+  }
 `;

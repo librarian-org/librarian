@@ -24,17 +24,16 @@ interface User {
 }
 
 export type Borrow = {
+  id: number;
   userId: number;
   user: User;
-  borrow: string;
+  borrow: Date;
   estimatedReturn: Date;
-  returndAt: Date;
+  returnedAt: Date;
   status: number;
   isReservation: boolean;
   titlePublisherId: number;
   titlePublisher: TitlePublisher;
-  title: string;
-  title1: string;
 }
 
 export type Reservation = Borrow;

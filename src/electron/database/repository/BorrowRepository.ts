@@ -12,15 +12,14 @@ export default class BorrowRepository extends RepositoryBase {
       let filter = {
         relations: [
           'titlePublisher',
-          'titlePublisher.publisher',
-          'titlePublisher.publisher.title',
+          'titlePublisher.title',
         ],
         skip: content.pageStart || 0,
         take: content.pageSize || 10,
       };
 
       if (content.where) {
-        filter = { ...filter, ...{ where: content } };
+        filter = { ...filter, ...{ where: content.where } };
       }
 
       const [data, count] = await this.repository.findAndCount(filter);

@@ -23,7 +23,7 @@ export default class TitleRepository extends RepositoryBase {
       };
 
       if (content.where) {
-        filter = { ...filter, ...{ where: content } };
+        filter = { ...filter, ...{ where: content.where } };
       }
 
       const [data, count] = await this.repository.findAndCount(filter);
