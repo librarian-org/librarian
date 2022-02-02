@@ -221,7 +221,7 @@ const Tabs: React.FC = () => {
                   key={`tab-content-${tab.id}`}
                 >
                   {tab.type === 'borrow' && <Borrow />}
-                  {tab.type === 'person' && <Person />}
+                  {tab.type === 'person' && <Person action={tab.action} item={tab.item}/>}
                   {tab.type === 'title' && <Title action={tab.action} item={tab.item} />}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
