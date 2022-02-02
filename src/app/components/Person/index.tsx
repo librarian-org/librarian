@@ -1,12 +1,22 @@
 import React from 'react';
+import CreatePerson from './Create';
+import ListPerson from './List';
+import ReadPerson from './Read';
+import { Person } from './Person';
+import UpdatePerson from './Update';
+
 
 import { Container } from './styles';
 
-const Person: React.FC = () => {
+const Person: React.FC<{ action: string, item?: unknown }> = ({ action, item }) => {
+  const person = item as Person;
   return (
-    <Container>
-      Person
-    </Container>
+    <>
+      {action === 'create' && <CreatePerson />}
+      {action === 'list' && <ListPerson />}
+      {action === 'read' && <ReadPerson item={person} />}
+      {action === 'update' && <UpdatePerson item={person} />}
+    </>
   );
 };
 
