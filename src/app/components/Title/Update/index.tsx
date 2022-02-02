@@ -211,6 +211,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
   );
 
   const handleSave = useCallback(() => {
+
     const errors: string[] = [];
     if (!title) {
       errors.push(i18n.t('title.label'));
