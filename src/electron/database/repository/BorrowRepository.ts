@@ -16,6 +16,9 @@ export default class BorrowRepository extends RepositoryBase {
         ],
         skip: content.pageStart || 0,
         take: content.pageSize || 10,
+        order: {
+          estimatedReturn: 'ASC'
+        }
       };
 
       if (content.where) {

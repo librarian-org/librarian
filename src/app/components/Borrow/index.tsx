@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -20,8 +21,9 @@ import Button from '../Button';
 import { FiDownload, FiPlus, FiRefreshCw, FiShare } from 'react-icons/fi';
 import { SelectHandles } from '../CreatableSelectInput';
 import UserSelect from '../UserSelect';
-import { format, parseISO } from 'date-fns';
+import { format, isDate, parseISO } from 'date-fns';
 import TitleSelect from '../TitleSelect';
+import { ThemeContext } from 'styled-components';
 
 interface SelectType {
   id: string;
@@ -29,6 +31,7 @@ interface SelectType {
 }
 
 const Borrow: React.FC = () => {
+  const { colors } = useContext(ThemeContext);
   const { addToast } = useToast();
 
   const refUser = useRef<SelectHandles>(null);
@@ -88,14 +91,16 @@ const Borrow: React.FC = () => {
         Header: i18n.t('borrow.borrowDate'),
         id: 'borrowDate',
         Cell: (b: Cell<Borrow>) => {
-          return <>{b.row.original.borrow}</>;
+          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
         },
-        // accessor: 'borrow',
-        // accessor: (b: Borrow) => `${format(b.borrow, 'dd/MM/yyyy')}`
       },
       {
         Header: i18n.t('borrow.returnDate'),
-        accessor: 'estimatedReturn',
+        id: 'returnDate',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}</>;
+          // return <>{b.row.original.estimatedReturn}</>;
+        },
       },
       {
         Header: () => null,
@@ -124,6 +129,7 @@ const Borrow: React.FC = () => {
                 size={20}
                 onClick={(event) => {
                   event.stopPropagation();
+                  console.log(row.row);
                   handleReturn(row.row.original);
                 }}
               />
@@ -153,11 +159,19 @@ const Borrow: React.FC = () => {
       },
       {
         Header: i18n.t('borrow.borrowDate'),
-        accessor: 'borrow',
+        id: 'borrowDate',
+        Cell: (b: Cell<Borrow>) => {
+          // return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
+          return <>{b.row.original.borrow}</>;
+        },
       },
       {
         Header: i18n.t('borrow.returnDate'),
-        accessor: 'estimatedReturn',
+        id: 'returnDate',
+        Cell: (b: Cell<Borrow>) => {
+          // return <>{format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}</>;
+          return <>{b.row.original.estimatedReturn}</>;
+        },
       },
       {
         Header: () => null,
@@ -183,37 +197,40 @@ const Borrow: React.FC = () => {
   const handleReservationSubmit = useCallback(
     async ({ pageIndex = 0 }: Search) => {
       try {
-        setLoading(true);
-        const response = { data: [] as Borrow[], count: 0 };
-        // window.api.sendSync('listBorrow', {
-        //   entity: 'Borrow',
-        //   value: {
-        //     where: { isReservation: false },
-        //     pageStart: rowsPerPage * pageIndex,
-        //     pageSize: rowsPerPage,
-        //   },
-        // }) as PaginatedSearch<Borrow>;
+        const user = refUser.current.getValue<SelectType>();
+        if (!user) {
+          return;
+        }
+        setLoadingReservation(true);
+        const response = window.api.sendSync('listBorrow', {
+          entity: 'Borrow',
+          value: {
+            where: { isReservation: true, userId: user.id },
+            pageStart: reservationRowsPerPage * pageIndex,
+            pageSize: reservationRowsPerPage,
+          },
+        }) as PaginatedSearch<Borrow>;
         setReservationList(response.data);
-        setPageCount(Math.ceil(response.count / rowsPerPage));
+        setReservationPageCount(
+          Math.ceil(response.count / reservationRowsPerPage)
+        );
 
-        setLoading(false);
+        setLoadingReservation(false);
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro ao listar os endereços',
-          description:
-            'Ocorreu um erro ao listar os endereços, tente novamente.',
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          description: i18n.t('borrow.anErrorOnLoadReservations'),
         });
       }
     },
-    [addToast, rowsPerPage]
+    [addToast, reservationRowsPerPage]
   );
 
   const handleBorrowSubmit = useCallback(
     async ({ pageIndex = 0 }: Search) => {
       try {
         const user = refUser.current.getValue<SelectType>();
-        console.log('USER: ', refUser.current.getValue<SelectType>());
         if (!user) {
           return;
         }
@@ -233,19 +250,20 @@ const Borrow: React.FC = () => {
       } catch (err) {
         addToast({
           type: 'error',
-          title: 'Erro ao listar os endereços',
-          description:
-            'Ocorreu um erro ao listar os endereços, tente novamente.',
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          description: i18n.t('borrow.anErrorOnLoadBorrow'),
         });
       }
     },
     [addToast, rowsPerPage, refUser]
   );
 
-  useEffect(() => {
-    handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
-    console.log('USER1: ', refUser.current.getValue<SelectType>());
-  }, [handleBorrowSubmit, refUser]);
+  // useEffect(() => {
+  //   handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+  //   console.log('USER1: ', refUser.current.getValue<SelectType>());
+
+  //   handleReservationSubmit({ pageIndex: 0, pageSize: 10 });
+  // }, [handleBorrowSubmit, handleReservationSubmit, refUser]);
 
   const handleAddBorrow = useCallback(async () => {
     const user = refUser.current.getValue<SelectType>();
@@ -279,24 +297,32 @@ const Borrow: React.FC = () => {
       return;
     }
 
-    window.api.sendSync('create', {
-      entity: 'Borrow',
-      value: {
-        userId: user.id,
-        borrow: parseISO(borrowDate),
-        estimatedReturn: parseISO(returnDate),
-        status: 1,
-        isReservation: isReservation,
-        titlePublisherId: title.id,
-      },
-    });
+    try {
+      window.api.sendSync('create', {
+        entity: 'Borrow',
+        value: {
+          userId: user.id,
+          borrow: parseISO(borrowDate),
+          estimatedReturn: parseISO(returnDate),
+          status: 1,
+          isReservation: isReservation,
+          titlePublisherId: title.id,
+        },
+      });
 
-    setBorrowDate('');
-    setReturnDate('');
-    refTitle.current.clear();
-    setIsReservation(false);
+      setBorrowDate('');
+      setReturnDate('');
+      refTitle.current.clear();
+      setIsReservation(false);
 
-    await handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+      await handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+    } catch (err) {
+      addToast({
+        title: i18n.t('borrow.anErrorHasOccurred'),
+        type: 'error',
+        description: err,
+      });
+    }
   }, [addToast, borrowDate, handleBorrowSubmit, isReservation, returnDate]);
 
   return (
@@ -329,7 +355,7 @@ const Borrow: React.FC = () => {
           <Input
             type="date"
             name="returnDate"
-            label={i18n.t('borrow.retrunDate')}
+            label={i18n.t('borrow.returnDate')}
             placeholder={i18n.t('borrow.typeReturnBorrow')}
             onChange={(e) => setReturnDate(e.target.value)}
             value={returnDate}
@@ -357,6 +383,11 @@ const Borrow: React.FC = () => {
           pageCount={pageCount}
           fetchData={handleBorrowSubmit}
           setRowsPerPage={setRowsPerPage}
+          getRowProps={row => ({
+            style: {
+              color: row.original.estimatedReturn <= new Date() ? colors.error: colors.text,
+            },
+          })}
         />
       </SectionContent>
       <SectionContent isActive={selectedSection === 'reservation'}>

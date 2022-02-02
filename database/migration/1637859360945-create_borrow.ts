@@ -15,15 +15,15 @@ export class createBorrow1637859360945 implements MigrationInterface {
           },
           {
             name: 'borrow',
-            type: 'varchar',
+            type: 'date',
           },
           {
             name: 'estimatedReturn',
-            type: 'varchar',
+            type: 'date',
           },
           {
             name: 'returnedAt',
-            type: 'varchar',
+            type: 'date',
             isNullable: true,
           },
           {

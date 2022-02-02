@@ -66,7 +66,10 @@
     "borrowDate": "Data Empréstimo",
     "returnDate": "Data Devolução",
     "reserve": "Reservar",
-    "informErrors": "Verifique os erros: #errors# para prosseguir"
+    "informErrors": "Verifique os erros: #errors# para prosseguir",
+    "anErrorHasOccurred": "Ocorreu um erro",
+    "anErrorOnLoadBorrow": "Ocorreu um erro carregando os Empréstimos",
+    "anErrorOnLoadReservations": "Ocorreu um erro carregando as Reservas"
   },
   "title": {
     "label": "Título",

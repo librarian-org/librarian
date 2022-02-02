@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 
 import {
+  Row,
   TableOptions,
   usePagination,
   useRowSelect,
@@ -21,12 +22,15 @@ export interface PaginatedSearch<T> {
   data: T[];
 }
 
+// const defaultPropGetter = () => ({});
+
 export interface TableProperties<T extends Record<string, unknown>>
   extends TableOptions<T> {
   name: string;
   loading: boolean;
   fetchData(search: Search): Promise<void>;
   setRowsPerPage(size: number): void;
+  getRowProps?: (row: Row<T>) => unknown;
   onRowClick?: (item: T) => void;
 }
 
@@ -43,6 +47,7 @@ export function Table<T extends Record<string, unknown>>(
     fetchData,
     setRowsPerPage,
     onRowClick,
+    getRowProps,
   } = props;
 
   const initialState = {
@@ -90,7 +95,7 @@ export function Table<T extends Record<string, unknown>>(
             page.map(row => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps(getRowProps ? getRowProps(row) : {})}>
                   {row.cells.map(cell => (
                     <td {...cell.getCellProps()} onClick={(event) => { event.stopPropagation(); onRowClick(row.original)}}>{cell.render('Cell')}</td>
                   ))}

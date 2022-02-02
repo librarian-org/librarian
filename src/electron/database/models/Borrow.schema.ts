@@ -15,14 +15,14 @@ export class Borrow {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'date' })
-  borrow: string;
+  @Column()
+  borrow: Date;
 
-  @Column({ type: 'date' })
-  estimatedReturn: string;
+  @Column()
+  estimatedReturn: Date;
 
-  @Column({ type: 'date', nullable: true })
-  returnedAt: string;
+  @Column({ nullable: true })
+  returnedAt: Date;
 
   @Column()
   status: number;
