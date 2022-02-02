@@ -118,7 +118,12 @@
     "selectOrCreate": "Select a contact type or type a name to create it",
     "selectEmpty": "No contact type created so far"
   },
-  "state": {
+  "country": {
+    "label": "Country",
+    "select": "Select a country",
+    "selectEmpty": "No country found"
+  },
+  "region": {
     "label": "State",
     "selectOrCreate": "Select a state or type a name to create it",
     "selectEmpty": "No state created so far"

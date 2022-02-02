@@ -116,6 +116,43 @@ export default createGlobalStyle`
     }
   }
 
+  .city-modal{
+    background-color: ${(props) => props.theme.colors.card.background};
+    position: absolute;
+    top: 10%;
+    left: calc( 50% -  500px / 2 );
+    right: auto;
+    bottom: auto;
+
+    margin-right: -50%;
+    border-radius: 8px;
+    width: 500px;
+    z-index: 1000;
+    div {
+      padding: 5px;
+    }
+    button {
+      right: 0;
+    }
+  }
+
+  .region-modal{
+    background-color: ${(props) => props.theme.colors.card.background};
+    position: absolute;
+    top: 20%;
+    left: calc( 50% -  500px / 2 );
+    right: auto;
+    bottom: auto;
+
+    margin-right: -50%;
+    border-radius: 8px;
+    width: 500px;
+    z-index: 1010;
+    div {
+      padding: 5px;
+    }
+  }
+
   .modal-overlay{
     background-color: ${(props) => rgba(props.theme.colors.text, 0.4)};
     position: fixed;

@@ -119,7 +119,12 @@
     "selectOrCreate": "Selecione um tipo de contato ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum tipo de contato criado"
   },
-  "state": {
+  "country": {
+    "label": "País",
+    "select": "Selecione um país",
+    "selectEmpty": "País não encontrado"
+  },
+  "region": {
     "label": "Estado",
     "selectOrCreate": "Selecione um estado ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum estado criado"

@@ -16,7 +16,8 @@ import ContactTypeSelect from '../../ContactTypeSelect';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import ProfileSelect from '../../ProfileSelect';
-import CitySelect from '../../CitySelect';
+import CitySelect from '../../City/CitySelect';
+import CreateCity from '../../City';
 
 interface SelectType {
   id: string;
@@ -38,6 +39,7 @@ const CreatePerson: React.FC = () => {
   const [zipcode, setZipcode] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [publicPlace, setPublicPlace] = useState('');
+  const [addingCity, setAddingCity ] = useState(false);
 
   const [selectedSection, setSelectedSection] = useState('contacts');
 
@@ -122,6 +124,7 @@ const CreatePerson: React.FC = () => {
       return;
     }
   }, [complement, zipcode, neighborhood, publicPlace]);
+
 
   const handleSave = useCallback(() => {
     const result = window.api.sendSync('create', {
@@ -254,7 +257,12 @@ const CreatePerson: React.FC = () => {
                 containerStyle={{ flexGrow: 2 }}
               />
               &nbsp;
-              <Button style={{}} color="primary" onClick={handleAddContact}>
+              <CreateCity
+                isOpen={addingCity}
+                setOpen={() => setAddingCity}
+              >
+              </CreateCity>
+              <Button style={{}} color="primary" onClick={() => setAddingCity(true)}>
                 <FiPlus size={20} />
               </Button>
               &nbsp;
