@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+} from 'typeorm';
 import { Profile } from './Profile.schema';
 import { Contact } from './Contact.schema';
 import { UserType } from './UserType.schema';
@@ -13,16 +19,16 @@ export class User {
   @Column()
   name: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   login: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   password: string;
 
   @Column()
   language: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   notes: string;
 
   @Column()
@@ -31,19 +37,18 @@ export class User {
   @Column()
   userTypeId: number;
 
-  @ManyToOne(() => UserType, type => type.users)
-  type: UserType;
+  @ManyToOne(() => UserType, (type) => type.users)
+  userType: UserType;
 
-  @OneToMany(() => Contact, contact => contact.user)
+  @OneToMany(() => Contact, (contact) => contact.user)
   contacts: Contact[];
 
-  @OneToMany(() => Profile, profile => profile.users)
+  @OneToMany(() => Profile, (profile) => profile.users)
   profiles: Profile[];
 
-  @OneToMany(() => Borrow, borrow => borrow.user)
+  @OneToMany(() => Borrow, (borrow) => borrow.user)
   borrows: Borrow[];
 
-  @OneToMany(() => Address, address => address.user)
+  @OneToMany(() => Address, (address) => address.user)
   addresses: Address[];
-
 }

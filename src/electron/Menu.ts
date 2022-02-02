@@ -251,6 +251,12 @@ const createMenuTemplate = async (
             shell.openExternal('https://github.com/librarian-org/librarian/issues/new');
           },
         },
+        {
+          label: i18n.t('menu.help.website'),
+          click: async () => {
+            shell.openExternal('https://librarian-org.github.io/');
+          },
+        },
         { type: 'separator' },
         {
           id: 'about-menu',
