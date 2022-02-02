@@ -38,6 +38,7 @@
       "label": "&Help",
       "documentation": "&Documentation",
       "reportIssue": "Report an Issue",
+      "website": "Website",
       "about": "&About"
     },
     "language": "&Language"
@@ -51,6 +52,11 @@
   },
   "home": {
     "message": "Hello World!"
+  },
+  "table": {
+    "page": "Page",
+    "of": "of",
+    "itemsPerPage": "Items per page"
   },
   "borrow": {
     "label": "Borrow"

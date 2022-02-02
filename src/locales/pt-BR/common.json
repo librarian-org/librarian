@@ -38,6 +38,7 @@
       "label": "Aju&da",
       "documentation": "&Documentação",
       "reportIssue": "Reportar um problema",
+      "website": "Website",
       "about": "&Sobre"
     },
     "language": "&Idioma"
@@ -51,6 +52,11 @@
   },
   "home": {
     "message": "Olá Mundo!"
+  },
+  "table": {
+    "page": "Página",
+    "of": "de",
+    "itemsPerPage": "Itens por página"
   },
   "borrow": {
     "label": "Empréstimo"

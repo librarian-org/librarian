@@ -12,6 +12,7 @@ import {
   MdNavigateNext,
 } from 'react-icons/md';
 import { TableInstance } from 'react-table';
+import i18n from '../../../i18n';
 
 import { Container } from './styles';
 
@@ -64,7 +65,7 @@ export function TablePagination<T extends Record<string, unknown>>({
   return (
     <Container>
       <span>
-        Página
+        {i18n.t('table.page')}
         <select
           value={pageIndex}
           onBlur={gotoPageChange}
@@ -76,14 +77,14 @@ export function TablePagination<T extends Record<string, unknown>>({
             </option>
           ))}
         </select>
-        de
+        {i18n.t('table.of')}
         <strong>
           &nbsp;
           {pageCount}
         </strong>
       </span>
       <span />
-      &nbsp;&bull;&nbsp;Itens por página:&nbsp;
+      &nbsp;&bull;&nbsp;{i18n.t('table.itemsPerPage')}:&nbsp;
       <select
         value={pageSize}
         onBlur={pageSizeChange}
