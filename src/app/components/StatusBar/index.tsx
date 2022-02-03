@@ -7,26 +7,20 @@ import AlertsPanel from '../AlertsPanel';
 
 import { Container, StatusItem } from './styles';
 import i18n from '../../i18n';
-
-interface User {
-  name: string;
-}
+import { useAuth } from '../../hooks/auth';
 
 const StatusBar: React.FC = () => {
   const [alerts, setAlerts] = useState<ToastMessage[]>();
   const [alertsPanel, setAlertsPanel] = useState(false);
-  const [user, setUser] = useState<User>();
-
+  const { user } = useAuth();
   const { getAlerts, addToast } = useToast();
 
   useEffect(() => {
-    setUser({name: 'John Doe'});
-
     setAlerts(getAlerts());
   }, [getAlerts]);
 
   const handleAlertPanelClick = useCallback(() => {
-    setAlertsPanel(oldState => !oldState);
+    setAlertsPanel((oldState) => !oldState);
   }, []);
 
   const languageChangeHandler = () => {
@@ -38,27 +32,25 @@ const StatusBar: React.FC = () => {
   };
 
   useEffect(() => {
-      on('languageChange', languageChangeHandler);
+    on('languageChange', languageChangeHandler);
 
-    return function cleanup () {
-        off('languageChange', languageChangeHandler);
-    }
+    return function cleanup() {
+      off('languageChange', languageChangeHandler);
+    };
   });
 
   return (
     <Container>
       <StatusItem>
         <FiUser size={16} />
-        <span>
-          {user && (user.name)}
-        </span>
+        <span>{user && user.name}</span>
       </StatusItem>
       <StatusItem>
         <span onClick={handleAlertPanelClick}>
-          {alerts && alerts.length > 0 ? (<FaBell />) : (<FaRegBell />)}
+          {alerts && alerts.length > 0 ? <FaBell /> : <FaRegBell />}
         </span>
       </StatusItem>
-      {alertsPanel && (<AlertsPanel alerts={alerts} />)}
+      {alertsPanel && <AlertsPanel alerts={alerts} />}
     </Container>
   );
 };

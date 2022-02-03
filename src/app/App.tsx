@@ -5,10 +5,10 @@ import usePersistedState from './hooks/usePersistedState';
 import GlobalStyle from './styles/global';
 import light from './styles/themes/light';
 import dark from './styles/themes/dark';
-import Content from './components/Content';
-import Tabs from './components/Tabs';
 import { AppEvent } from '../common/AppEvent';
-import StatusBar from './components/StatusBar';
+import { HashRouter } from 'react-router-dom';
+import Router from './router';
+import { AuthProvider } from './hooks/auth';
 import { ToastProvider } from './hooks/toast';
 
 const App: React.FC = () => {
@@ -32,12 +32,13 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Content>
+      <HashRouter>
         <ToastProvider>
-          <Tabs />
-          <StatusBar />
+          <AuthProvider>
+            <Router />
+          </AuthProvider>
         </ToastProvider>
-      </Content>
+      </HashRouter>
       <GlobalStyle />
     </ThemeProvider>
   );

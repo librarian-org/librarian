@@ -117,6 +117,14 @@
     "allowedRenovations": "Renovações permitidas",
     "saved": "Suas configurações foram salvas"
   },
+  "login": {
+    "login": "Entrar",
+    "username": "Usuário",
+    "typeUsername": "Digite seu usuário",
+    "password": "Senha",
+    "typePassword": "Digite sua senha",
+    "invalid": "Login inválido"
+  },
   "notifications": {
     "information": "Informação",
     "error": "Erro",
