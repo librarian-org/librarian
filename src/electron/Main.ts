@@ -25,6 +25,7 @@ import RepositoryBase from './database/repository/RepositoryBase';
 import TitleRepository from './database/repository/TitleRepository';
 import BorrowRepository from './database/repository/BorrowRepository';
 import TitlePublisherRepository from './database/repository/TitlePublisherRepository';
+import UserRepository from './database/repository/UserRepository';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -247,6 +248,18 @@ export default class Main {
           entity,
           BorrowRepository
         ).borrowByReservation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('userLogin', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).login(value);
       } catch (err) {
         log.error(err);
       }

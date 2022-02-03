@@ -115,6 +115,14 @@
     "allowedRenovations": "Allowed renovations",
     "saved": "Your settings have been saved"
   },
+  "login": {
+    "login": "Log In",
+    "username": "Username",
+    "typeUsername": "Type your username",
+    "password": "Password",
+    "typePassword": "Type your password",
+    "invalid": "Invalid login"
+  },
   "notifications": {
     "information": "Information",
     "error": "Error",
