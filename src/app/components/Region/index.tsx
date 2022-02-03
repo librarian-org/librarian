@@ -5,14 +5,15 @@ import React, {
   ReactNode,
   useEffect,
 } from 'react';
+import ReactModal from 'react-modal';
 
 import Button from '../Button';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import i18n from '../../i18n';
 import Input from '../Input';
 import { SelectHandles } from '../CreatableSelectInput';
-import Modal from '../Modal';
 import CountrySelect from '../Country/CountrySelect';
+import { useToast } from '../../hooks/toast';
 
 interface ModalProps {
   isOpen: boolean;
@@ -25,34 +26,56 @@ interface SelectType {
 }
 
 const CreateRegion: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
-  const [modalStatus, setModalStatus] = useState(isOpen);
-  const [name, setName] = useState('');
-  const [addingState, setAddingState] = useState(false);
-  const [region, setRegion] = useState<SelectType[]>([]);
-  const refState = useRef<SelectHandles>(null);
+  const { addToast } = useToast();
 
-  useEffect(() => {
-    setModalStatus(isOpen);
-  }, [isOpen]);
+  const [name, setName] = useState('');
+  const refCountry = useRef<SelectHandles>(null);
 
   const handleSave = useCallback(() => {
+    const errors: string[] = [];
+    const country = refCountry.current.getValue<SelectType>();
+
+    if (!name) {
+      errors.push(i18n.t('region.name'));
+    }
+
+    if (!country) {
+      errors.push(i18n.t('region.country'));
+    }
+
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('region.informError')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
     const result = window.api.sendSync('create', {
       entity: 'Region',
       value: {
         name,
-        region: region,
+        countryId: country.id,
       },
     }) as { id: string };
-  }, []);
+    setOpen();
+    setName('');
+    return;
+  }, [addToast, name, setOpen]);
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setOpen} customClass="region-modal">
-      ESTADO
-      <CountrySelect ref={refState} containerStyle={{ flexGrow: 2 }} />
-      &nbsp;
-      <Button style={{}} color="primary" onClick={() => setAddingState(true)}>
-        <FiPlus size={20} />
-      </Button>
+    <ReactModal
+      shouldCloseOnOverlayClick={true}
+      onRequestClose={setOpen}
+      isOpen={isOpen}
+      ariaHideApp={false}
+      className={'region-modal'}
+      overlayClassName="modal-overlay"
+    >
+      <CountrySelect ref={refCountry} containerStyle={{ flexGrow: 2 }} />
       &nbsp;
       <Input
         containerStyle={{ flexGrow: 1, marginRight: '18px' }}
@@ -72,7 +95,7 @@ const CreateRegion: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
       >
         <FiSave size={20} />
       </Button>
-    </Modal>
+    </ReactModal>
   );
 };
 

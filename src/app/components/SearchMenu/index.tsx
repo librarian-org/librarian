@@ -150,7 +150,7 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   return (
     isOpen && (
       <>
-        <Modal isOpen={isOpen} setIsOpen={setOpen}>
+        <Modal isOpen={isOpen} setIsOpen={setOpen} customClass='quick-search'>
           <div>
             <Input
               name="search-menu"

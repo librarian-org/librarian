@@ -1,23 +1,15 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  ReactNode,
-  useEffect,
-} from 'react';
+import React, { useState, useCallback, useRef, ReactNode } from 'react';
 
 import Button from '../Button';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import i18n from '../../i18n';
 import Input from '../Input';
 import { SelectHandles } from '../CreatableSelectInput';
-import Modal from '../Modal';
+import ReactModal from 'react-modal';
 import RegionSelect from '../Region/RegionSelect';
 import CreateRegion from '../Region';
-import { Container } from './styles';
-
+import { useToast } from '../../hooks/toast';
 interface ModalProps {
-  children: ReactNode;
   isOpen: boolean;
   setOpen: () => void;
 }
@@ -28,65 +20,92 @@ interface SelectType {
 }
 
 const CreateCity: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
-  const [modalStatus, setModalStatus] = useState(isOpen);
-  const [name, setName] = useState('');
-  const [addingState, setAddingState] = useState(false);
-  const [region, setRegion] = useState<SelectType[]>([]);
-  const refState = useRef<SelectHandles>(null);
+  const { addToast } = useToast();
 
-  useEffect(() => {
-    setModalStatus(isOpen);
-  }, [isOpen]);
+  const [name, setName] = useState('');
+  const [addingRegion, setAddingRegion] = useState(false);
+  const refRegion = useRef<SelectHandles>(null);
 
   const handleSave = useCallback(() => {
+    const errors: string[] = [];
+    const region = refRegion.current.getValue<SelectType>();
+
+    if (!name) {
+      errors.push(i18n.t('city.name'));
+    }
+
+    if (!region) {
+      errors.push(i18n.t('city.region'));
+    }
+
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('city.informError')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
     const result = window.api.sendSync('create', {
       entity: 'City',
       value: {
         name,
-        region: region,
+        regionId: region.id,
       },
     }) as { id: string };
-  }, []);
+    setOpen();
+    setName('');
+    return;
+  }, [addToast, name, setOpen]);
 
-  return (
-    <>
-      <CreateRegion
-        isOpen={addingState}
-        setOpen={() => setAddingState}
-      ></CreateRegion>
-      <Modal isOpen={isOpen} setIsOpen={setOpen} customClass="city-modal">
-        <div>
-          <RegionSelect ref={refState} containerStyle={{ flexGrow: 2 }} />
-          &nbsp;
-          <Button
-            style={{}}
-            color="primary"
-            onClick={() => setAddingState(true)}
-          >
-            <FiPlus size={20} />
-          </Button>
-          &nbsp;
-          <Input
-            containerStyle={{ flexGrow: 1, marginRight: '18px' }}
-            type="text"
-            name="name"
-            label={i18n.t('city.label')}
-            autoFocus
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            placeholder={i18n.t('city.label')}
-          />
-          &nbsp;
-          <Button
-            color="primary"
-            title={i18n.t('button.save')}
-            onClick={handleSave}
-          >
-            <FiSave size={20} />
-          </Button>
-        </div>
-      </Modal>
-    </>
+  return addingRegion ? (
+    <CreateRegion
+      isOpen={addingRegion}
+      setOpen={() => setAddingRegion(false)}
+    ></CreateRegion>
+  ) : (
+    <ReactModal
+      shouldCloseOnOverlayClick={true}
+      onRequestClose={setOpen}
+      isOpen={isOpen}
+      ariaHideApp={false}
+      className={'city-modal'}
+      overlayClassName="modal-overlay"
+    >
+      <div>
+        <RegionSelect ref={refRegion} containerStyle={{ flexGrow: 2 }} />
+        &nbsp;
+        <Button
+          style={{}}
+          color="primary"
+          onClick={() => setAddingRegion(true)}
+        >
+          <FiPlus size={20} />
+        </Button>
+        &nbsp;
+        <Input
+          containerStyle={{ flexGrow: 1, marginRight: '18px' }}
+          type="text"
+          name="name"
+          label={i18n.t('city.label')}
+          autoFocus
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          placeholder={i18n.t('city.label')}
+        />
+        &nbsp;
+        <Button
+          color="primary"
+          title={i18n.t('button.save')}
+          onClick={handleSave}
+        >
+          <FiSave size={20} />
+        </Button>
+      </div>
+    </ReactModal>
   );
 };
 
