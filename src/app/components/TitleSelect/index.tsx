@@ -11,36 +11,37 @@ import i18n from '../../i18n';
 import { SelectHandles } from '../CreatableSelectInput';
 import SelectInput from '../SelectInput';
 
-export interface Option {
+interface Option {
   readonly label: string;
   readonly value: string;
 }
 
-interface UserProps {
+interface TitlePublisherProps {
   containerStyle?: unknown;
-  autoFocus?: boolean;
-  handleCustomChange: (selectedValue: OnChangeValue<Option, false>) => void;
 }
 
-interface User {
+interface TitlePublisher {
   id: string;
-  name: string;
+  classification: string;
+  title: {
+    name: string;
+  }
 }
 
-const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
-  { containerStyle, autoFocus, handleCustomChange },
+const TitleSelect: React.ForwardRefRenderFunction<SelectHandles, TitlePublisherProps> = (
+  { containerStyle },
   selectRef
 ) => {
   const [options, setOptions] = useState<Option[]>([]);
   const [value, setValue] = useState(undefined);
 
   useEffect(() => {
-    const result = window.api.sendSync('list', {
-      entity: 'User',
-    }) as User[];
+    const result = window.api.sendSync('listEdition', {
+      entity: 'TitlePublisher',
+    }) as TitlePublisher[];
 
     const mappedOptions = result.map((item) => ({
-      label: item.name,
+      label: `${item.classification} - ${item.title.name}`,
       value: item.id.toString(),
     }));
 
@@ -49,7 +50,6 @@ const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
 
   const handleChange = (selectedValue: OnChangeValue<Option, false>) => {
     setValue(selectedValue);
-    handleCustomChange(selectedValue);
   };
 
   useImperativeHandle<unknown, SelectHandles>(selectRef, () => ({
@@ -68,10 +68,9 @@ const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
   return (
     <Container style={containerStyle}>
       <SelectInput
-        autoFocus={autoFocus}
-        label={i18n.t('user.label')}
-        placeholder={i18n.t('user.select')}
-        noOptionsMessage={() => i18n.t('user.selectEmpty')}
+        label={i18n.t('title.label')}
+        placeholder={i18n.t('title.select')}
+        noOptionsMessage={() => i18n.t('title.selectEmpty')}
         onChange={handleChange}
         options={options}
         value={value}
@@ -80,4 +79,4 @@ const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
   );
 };
 
-export default forwardRef(UserSelect);
+export default forwardRef(TitleSelect);

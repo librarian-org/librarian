@@ -15,15 +15,15 @@ export class createBorrowRenovation1637863727843 implements MigrationInterface {
           },
           {
             name: 'borrowedAt',
-            type: 'varchar',
+            type: 'date',
           },
           {
             name: 'renewedAt',
-            type: 'varchar',
+            type: 'date',
           },
           {
             name: 'returnedAt',
-            type: 'varchar',
+            type: 'date',
             isNullable: true,
           },
           {

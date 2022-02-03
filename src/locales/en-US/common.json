@@ -59,7 +59,28 @@
     "itemsPerPage": "Items per page"
   },
   "borrow": {
-    "label": "Borrow"
+    "label": "Borrow",
+    "borrow": "Borrow",
+    "reservation": "Reservations",
+    "selectTitleToBorrow": "Select a title to borrow",
+    "classification": "Classification",
+    "title": "Title",
+    "borrowDate": "Borrow date",
+    "returnDate": "Return date",
+    "reserve": "Reserve",
+    "informErrors": "Check this #errors# before proceed",
+    "anErrorHasOccurred": "An error has occurred",
+    "anErrorOnLoadBorrow": "An error has occurred loading Borrows",
+    "anErrorOnLoadReservations": "An error has occurred loading Reservations",
+    "alreadyBorrowed": "Title already Borrowed",
+    "alreadyReserved": "Title already Reserved",
+    "cantRenewAnymore": "This Title has reached the maximum number of renewals",
+    "status": {
+      "1": "Borrowed",
+      "2": "Borrowed By Reservation",
+      "3": "Returned",
+      "4": "LateReturned"
+    }
   },
   "title": {
     "label": "Title",
@@ -82,12 +103,16 @@
     "typePublicationDate": "Type the edition date",
     "removeEditionInformation": "Remove edition information from list",
     "removeAuthorInformation": "Remove author from list",
-    "removeCategoryInformation": "Remove category from list"
+    "removeCategoryInformation": "Remove category from list",
+
+    "select": "Type or select a title",
+    "selectEmpty": "No title found"
   },
   "settings": {
     "label": "Settings",
-    "time": "Amount of days since borrow that reader must return book",
-    "path": "Path where backup will be done",
+    "daysReturnDate": "Borrow duration in days",
+    "backupPath": "Database backup path",
+    "allowedRenovations": "Allowed renovations",
     "saved": "Your settings have been saved"
   },
   "notifications": {
@@ -112,6 +137,11 @@
     "label": "Category",
     "selectOrCreate": "Select a category or type a name to create it",
     "selectEmpty": "No category created so far"
+  },
+  "user": {
+    "select": "Select a person",
+    "label": "Person",
+    "selectEmpty": "No person created so far"
   },
   "contactType": {
     "label": "Contact type",

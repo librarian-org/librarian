@@ -9,5 +9,8 @@ export class Settings {
   daysReturnDate: number;
 
   @Column()
+  allowedRenovations: number;
+
+  @Column()
   backupPath: string;
 }
