@@ -5,6 +5,8 @@ export default {
     background: '#090909',
     text: '#CCCCCC',
 
+    error: '#AA3939',
+
     primary: {
       dark: '#1D6F93',
       light: '#B0DBEE',

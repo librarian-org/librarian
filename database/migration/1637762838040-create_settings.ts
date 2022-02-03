@@ -17,6 +17,10 @@ export class createSettings1637762838040 implements MigrationInterface {
             type: 'int',
           },
           {
+            name: 'allowedRenovations',
+            type: 'int',
+          },
+          {
             name: 'backupPath',
             type: 'varchar',
           },

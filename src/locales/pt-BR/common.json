@@ -59,7 +59,28 @@
     "itemsPerPage": "Itens por página"
   },
   "borrow": {
-    "label": "Empréstimo"
+    "label": "Empréstimo",
+    "borrow": "Empréstimo",
+    "reservation": "Reservas",
+    "selectTitleToBorrow": "Selecione um título para emprestar",
+    "classification": "Classificação (Tombo)",
+    "title": "Título",
+    "borrowDate": "Data Empréstimo",
+    "returnDate": "Data Devolução",
+    "reserve": "Reservar",
+    "informErrors": "Para prosseguir, verifique os erros: #errors#",
+    "anErrorHasOccurred": "Ocorreu um erro",
+    "anErrorOnLoadBorrow": "Ocorreu um erro carregando os Empréstimos",
+    "anErrorOnLoadReservations": "Ocorreu um erro carregando as Reservas",
+    "alreadyBorrowed": "Título já Emprestado",
+    "alreadyReserved": "Título já Reservado",
+    "cantRenewAnymore": "Esse Título atingiu o máximo de renovações",
+    "status": {
+      "1": "Devolvido",
+      "2": "Emprestado a partir da reserva",
+      "3": "Devolvido",
+      "4": "Devolvido com atraso"
+    }
   },
   "title": {
     "label": "Título",
@@ -83,12 +104,17 @@
     "typePublicationDate": "Digite a data de publicação",
     "removeEditionInformation": "Remover informações de edição da lista",
     "removeAuthorInformation": "Remover autor da lista",
-    "removeCategoryInformation": "Remover categoria da lista"
+    "removeCategoryInformation": "Remover categoria da lista",
+
+
+    "select": "Digite ou selecione um título",
+    "selectEmpty": "Nenhum título encontrado"
   },
   "settings": {
     "label": "Configurações",
-    "time": "Quantidade de dias a partir do emprestimo em que o leitor deve devolver o livro",
-    "path": "Local onde será feito o backup das informações do sistema",
+    "daysReturnDate": "Duração do empréstimo em dias",
+    "backupPath": "Pasta da cópia de segurança",
+    "allowedRenovations": "Renovações permitidas",
     "saved": "Suas configurações foram salvas"
   },
   "notifications": {
@@ -113,6 +139,11 @@
     "label": "Categoria",
     "selectOrCreate": "Selecione uma categoria ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma categoria criada até o momento"
+  },
+  "user": {
+    "select": "Selecione uma pessoa",
+    "label": "Pessoa",
+    "selectEmpty": "Nenhuma pessoa cadastrada"
   },
   "contactType": {
     "label": "Tipo de contato",

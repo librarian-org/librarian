@@ -50,7 +50,11 @@ export default class RepositoryBase implements Repository {
 
   public async read(content: unknown): Promise<unknown | unknown[]> {
     try {
-      return await this.repository.find({ where: { id: content } });
+      let filter = {};
+      if (content) {
+        filter = { ...filter, ...{ content } };
+      }
+      return await this.repository.find(filter);
     } catch (err) {
       console.log(err);
       throw err;

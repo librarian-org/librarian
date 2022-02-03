@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, OneToMany } from 'typeorm';
+import { Borrow } from './Borrow.schema';
 import { Publisher } from './Publisher.schema';
 import { Title } from './Title.schema';
 
@@ -28,4 +29,7 @@ export class TitlePublisher
 
   @ManyToOne(() => Publisher, publisher => publisher.titlePublishers)
   publisher: Publisher;
+
+  @OneToMany(() => Borrow, borrow => borrow.titlePublisher)
+  borrow: Borrow;
 }

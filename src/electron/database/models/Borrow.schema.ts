@@ -4,9 +4,10 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { BorrowRenovation } from './BorrowRenovation.schema';
-import { Publisher } from './Publisher.schema';
+import { TitlePublisher } from './TitlePublisher.schema';
 import { User } from './User.schema';
 
 @Entity()
@@ -15,22 +16,19 @@ export class Borrow {
   id: number;
 
   @Column()
-  edition: number;
+  borrow: Date;
 
-  @Column({ type: 'date' })
-  borrow: string;
+  @Column()
+  estimatedReturn: Date;
 
-  @Column({ type: 'date' })
-  estimatedReturn: string;
-
-  @Column({ type: 'date', nullable: true })
-  returnedAt: string;
+  @Column({ nullable: true })
+  returnedAt: Date;
 
   @Column()
   status: number;
 
   @Column({ default: false })
-  isReserva: boolean;
+  isReservation: boolean;
 
   @Column()
   titlePublisherId: number;
@@ -41,9 +39,9 @@ export class Borrow {
   @ManyToOne(() => User, (user) => user.borrows)
   user: User;
 
-  @ManyToOne(() => Publisher, (publisher) => publisher.borrows)
-  publisher: Publisher;
-
   @OneToMany(() => BorrowRenovation, (renovation) => renovation.borrow)
   renovations: BorrowRenovation[];
+
+  @ManyToOne(() => TitlePublisher, (titlePublisher) => titlePublisher.borrow)
+  titlePublisher: TitlePublisher;
 }
