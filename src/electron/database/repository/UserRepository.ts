@@ -1,5 +1,5 @@
 import RepositoryBase from './RepositoryBase';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { User } from '../models/User.schema';
 
 interface Where {
