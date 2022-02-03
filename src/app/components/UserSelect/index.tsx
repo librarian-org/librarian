@@ -11,7 +11,7 @@ import i18n from '../../i18n';
 import { SelectHandles } from '../CreatableSelectInput';
 import SelectInput from '../SelectInput';
 
-interface Option {
+export interface Option {
   readonly label: string;
   readonly value: string;
 }
@@ -19,6 +19,7 @@ interface Option {
 interface UserProps {
   containerStyle?: unknown;
   autoFocus?: boolean;
+  handleCustomChange: (selectedValue: OnChangeValue<Option, false>) => void;
 }
 
 interface User {
@@ -27,7 +28,7 @@ interface User {
 }
 
 const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
-  { containerStyle, autoFocus },
+  { containerStyle, autoFocus, handleCustomChange },
   selectRef
 ) => {
   const [options, setOptions] = useState<Option[]>([]);
@@ -48,6 +49,7 @@ const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
 
   const handleChange = (selectedValue: OnChangeValue<Option, false>) => {
     setValue(selectedValue);
+    handleCustomChange(selectedValue);
   };
 
   useImperativeHandle<unknown, SelectHandles>(selectRef, () => ({

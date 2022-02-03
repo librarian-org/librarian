@@ -284,6 +284,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
 
   return (
     <Container>
+      {title && (
       <>
         <div
           style={{
@@ -449,7 +450,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
             <FiSave size={20} />
           </Button>
         </ButtonContainer>
-      </>
+      </>)}
     </Container>
   );
 };

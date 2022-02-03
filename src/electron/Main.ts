@@ -186,7 +186,67 @@ export default class Main {
         event.returnValue = await this.getCustomRepository(
           entity,
           BorrowRepository
-        ).listTitle(value);
+        ).list(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readBorrow', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).read(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readReservation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).readReservation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('updateRenovation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).updateRenovation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('returns', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).returns(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('borrowByReservation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).borrowByReservation(value);
       } catch (err) {
         log.error(err);
       }

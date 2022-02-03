@@ -71,7 +71,16 @@
     "informErrors": "Check this #errors# before proceed",
     "anErrorHasOccurred": "An error has occurred",
     "anErrorOnLoadBorrow": "An error has occurred loading Borrows",
-    "anErrorOnLoadReservations": "An error has occurred loading Reservations"
+    "anErrorOnLoadReservations": "An error has occurred loading Reservations",
+    "alreadyBorrowed": "Title already Borrowed",
+    "alreadyReserved": "Title already Reserved",
+    "cantRenewAnymore": "This Title has reached the maximum number of renewals",
+    "status": {
+      "1": "Borrowed",
+      "2": "Borrowed By Reservation",
+      "3": "Returned",
+      "4": "LateReturned"
+    }
   },
   "title": {
     "label": "Title",
@@ -101,8 +110,9 @@
   },
   "settings": {
     "label": "Settings",
-    "time": "Amount of days since borrow that reader must return book",
-    "path": "Path where backup will be done",
+    "daysReturnDate": "Borrow duration in days",
+    "backupPath": "Database backup path",
+    "allowedRenovations": "Allowed renovations",
     "saved": "Your settings have been saved"
   },
   "notifications": {

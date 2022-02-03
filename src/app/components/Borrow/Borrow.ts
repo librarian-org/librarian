@@ -23,6 +23,14 @@ interface User {
   email: string;
 }
 
+interface BorrowRenovation {
+  id: number;
+  borrowId: number;
+  borrowedAt: Date;
+  renewedAt: Date;
+  returnedAt: Date;
+}
+
 export type Borrow = {
   id: number;
   userId: number;
@@ -34,6 +42,7 @@ export type Borrow = {
   isReservation: boolean;
   titlePublisherId: number;
   titlePublisher: TitlePublisher;
+  renovations: BorrowRenovation[]
 }
 
 export type Reservation = Borrow;

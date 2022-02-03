@@ -3,6 +3,7 @@ import React, {
   useRef,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 
 import { IconBaseProps } from 'react-icons';
@@ -35,6 +36,10 @@ const Input: React.FC<InputProps> = ({
   const [error, setError] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
+
+  useEffect(() => {
+    setIsFilled(!!inputRef.current?.value);
+  }, []);
 
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);

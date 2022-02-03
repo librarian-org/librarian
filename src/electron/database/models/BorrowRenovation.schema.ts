@@ -6,15 +6,15 @@ export class BorrowRenovation {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({type: 'date'})
-  borrowedAt: string;
-  
-  @Column({type: 'date'})
-  renewedAt: string;
-  
-  @Column({type: 'date' , nullable: true})
-  returnedAt: string;
-  
+  @Column()
+  borrowedAt: Date;
+
+  @Column()
+  renewedAt: Date;
+
+  @Column({ nullable: true })
+  returnedAt: Date;
+
   @Column()
   borrowId: number;
 

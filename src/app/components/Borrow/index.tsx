@@ -1,12 +1,12 @@
 import React, {
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { Cell, Column } from 'react-table';
+import { Setting } from '../../util/DefaultEntities';
 import i18n from '../../i18n';
 import Input from '../Input';
 import SectionContent from '../Sections/SectionContent';
@@ -20,14 +20,20 @@ import { Container, Header, Row } from './styles';
 import Button from '../Button';
 import { FiDownload, FiPlus, FiRefreshCw, FiShare } from 'react-icons/fi';
 import { SelectHandles } from '../CreatableSelectInput';
-import UserSelect from '../UserSelect';
-import { format, isDate, parseISO } from 'date-fns';
+import UserSelect, { Option } from '../UserSelect';
+import { format, parseISO } from 'date-fns';
 import TitleSelect from '../TitleSelect';
 import { ThemeContext } from 'styled-components';
+import { OnChangeValue } from 'react-select';
+import { BorrowStatus } from '../../../common/BorrowStatus';
 
 interface SelectType {
   id: string;
   name: string;
+}
+
+interface BorrowSearch extends Search {
+  userId: string;
 }
 
 const Borrow: React.FC = () => {
@@ -54,18 +60,6 @@ const Borrow: React.FC = () => {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [pageCount, setPageCount] = React.useState(0);
-
-  const handleRenovation = (item: Borrow): void => {
-    console.log('Renovation of ', item);
-  };
-
-  const handleBorrow = (item: Borrow): void => {
-    console.log('Borrow of reserved: ', item);
-  };
-
-  const handleReturn = (item: Borrow): void => {
-    console.log('Return of title: ', item);
-  };
 
   const handleIsReservation = (): void => {
     setIsReservation(!isReservation);
@@ -98,8 +92,11 @@ const Borrow: React.FC = () => {
         Header: i18n.t('borrow.returnDate'),
         id: 'returnDate',
         Cell: (b: Cell<Borrow>) => {
-          return <>{format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}</>;
-          // return <>{b.row.original.estimatedReturn}</>;
+          return (
+            <>
+              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
+            </>
+          );
         },
       },
       {
@@ -129,7 +126,6 @@ const Borrow: React.FC = () => {
                 size={20}
                 onClick={(event) => {
                   event.stopPropagation();
-                  console.log(row.row);
                   handleReturn(row.row.original);
                 }}
               />
@@ -161,16 +157,18 @@ const Borrow: React.FC = () => {
         Header: i18n.t('borrow.borrowDate'),
         id: 'borrowDate',
         Cell: (b: Cell<Borrow>) => {
-          // return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
-          return <>{b.row.original.borrow}</>;
+          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
         },
       },
       {
         Header: i18n.t('borrow.returnDate'),
         id: 'returnDate',
         Cell: (b: Cell<Borrow>) => {
-          // return <>{format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}</>;
-          return <>{b.row.original.estimatedReturn}</>;
+          return (
+            <>
+              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
+            </>
+          );
         },
       },
       {
@@ -183,7 +181,7 @@ const Borrow: React.FC = () => {
                 size={20}
                 onClick={(event) => {
                   event.stopPropagation();
-                  handleBorrow(row.row.original);
+                  handleBorrowByReservation(row.row.original);
                 }}
               />
             </>
@@ -195,17 +193,19 @@ const Borrow: React.FC = () => {
   );
 
   const handleReservationSubmit = useCallback(
-    async ({ pageIndex = 0 }: Search) => {
+    async ({ pageIndex = 0, userId }: BorrowSearch) => {
       try {
-        const user = refUser.current.getValue<SelectType>();
-        if (!user) {
+        if (!userId) {
           return;
         }
         setLoadingReservation(true);
         const response = window.api.sendSync('listBorrow', {
           entity: 'Borrow',
           value: {
-            where: { isReservation: true, userId: user.id },
+            where: {
+              isReservation: '1',
+              userId,
+            },
             pageStart: reservationRowsPerPage * pageIndex,
             pageSize: reservationRowsPerPage,
           },
@@ -228,17 +228,27 @@ const Borrow: React.FC = () => {
   );
 
   const handleBorrowSubmit = useCallback(
-    async ({ pageIndex = 0 }: Search) => {
+    async ({ pageIndex = 0, userId }: BorrowSearch) => {
       try {
-        const user = refUser.current.getValue<SelectType>();
-        if (!user) {
+        if (!userId) {
           return;
         }
         setLoading(true);
         const response = window.api.sendSync('listBorrow', {
           entity: 'Borrow',
           value: {
-            where: { isReservation: false, userId: user.id },
+            where: [
+              {
+                isReservation: '0',
+                userId,
+                status: BorrowStatus.Borrowed,
+              },
+              {
+                isReservation: '0',
+                userId,
+                status: BorrowStatus.BorrowedByReservation,
+              },
+            ],
             pageStart: rowsPerPage * pageIndex,
             pageSize: rowsPerPage,
           },
@@ -253,17 +263,164 @@ const Borrow: React.FC = () => {
           title: i18n.t('borrow.anErrorHasOccurred'),
           description: i18n.t('borrow.anErrorOnLoadBorrow'),
         });
+        console.log(err);
       }
     },
-    [addToast, rowsPerPage, refUser]
+    [addToast, rowsPerPage]
   );
 
-  // useEffect(() => {
-  //   handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
-  //   console.log('USER1: ', refUser.current.getValue<SelectType>());
+  const handleRefresh = useCallback(async () => {
+    await handleBorrowSubmit({
+      pageIndex: 0,
+      pageSize: 10,
+      userId: refUser.current.getValue<SelectType>().id,
+    });
+    await handleReservationSubmit({
+      pageIndex: 0,
+      pageSize: 10,
+      userId: refUser.current.getValue<SelectType>().id,
+    });
+  }, [handleBorrowSubmit, handleReservationSubmit]);
 
-  //   handleReservationSubmit({ pageIndex: 0, pageSize: 10 });
-  // }, [handleBorrowSubmit, handleReservationSubmit, refUser]);
+  const handleRenovation = useCallback(
+    async (item: Borrow): Promise<void> => {
+      const errors: string[] = [];
+
+      const result = window.api.sendSync('list', {
+        entity: 'Settings',
+        value: {},
+      }) as Setting[];
+      const settings = result[0];
+
+      const reserved = window.api.sendSync('readReservation', {
+        entity: 'Borrow',
+        value: item.titlePublisherId,
+      });
+
+      if (reserved) {
+        errors.push(i18n.t('borrow.alreadyReserved'));
+      }
+
+      if (item.renovations.length > parseInt(settings.allowedRenovations)) {
+        errors.push(i18n.t('borrow.cantRenewAnymore'));
+      }
+
+      if (errors.length > 0) {
+        addToast({
+          title: i18n.t('notifications.warning'),
+          type: 'error',
+          description: i18n
+            .t('borrow.informErrors')
+            .replace('#errors#', errors.join(', ')),
+        });
+        return;
+      }
+
+      try {
+        const user = refUser.current.getValue<SelectType>();
+
+        window.api.sendSync('updateRenovation', {
+          entity: 'Borrow',
+          value: {
+            where: {
+              id: item.id,
+              titlePublisherId: item.titlePublisherId,
+              userId: user.id,
+            },
+            config: {
+              daysReturnDate: settings.daysReturnDate,
+            },
+          },
+        });
+        await handleRefresh();
+      } catch (err) {
+        addToast({
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          type: 'error',
+          description: err,
+        });
+      }
+    },
+    [addToast, handleRefresh]
+  );
+
+  const handleBorrowByReservation = useCallback(
+    async (item: Borrow): Promise<void> => {
+      try {
+        const result = window.api.sendSync('list', {
+          entity: 'Settings',
+          value: {},
+        }) as Setting[];
+        const settings = result[0];
+
+        window.api.sendSync('borrowByReservation', {
+          entity: 'Borrow',
+          value: {
+            where: {
+              id: item.id,
+            },
+            config: {
+              daysReturnDate: settings.daysReturnDate,
+            },
+          },
+        });
+        await handleRefresh();
+      } catch (err) {
+        addToast({
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          type: 'error',
+          description: err,
+        });
+      }
+    },
+    [addToast, handleRefresh]
+  );
+
+  const handleReturn = useCallback(
+    async (item: Borrow): Promise<void> => {
+      try {
+        window.api.sendSync('returns', {
+          entity: 'Borrow',
+          value: {
+            where: {
+              id: item.id,
+            },
+          },
+        });
+        await handleRefresh();
+      } catch (err) {
+        addToast({
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          type: 'error',
+          description: err,
+        });
+      }
+    },
+    [addToast, handleRefresh]
+  );
+
+  const handleCustomChange = useCallback(
+    (selectedValue: OnChangeValue<Option, false>) => {
+      handleBorrowSubmit({
+        pageIndex: 0,
+        pageSize: 10,
+        userId: selectedValue.value,
+      });
+      handleReservationSubmit({
+        pageIndex: 0,
+        pageSize: 10,
+        userId: selectedValue.value,
+      });
+    },
+    [handleBorrowSubmit, handleReservationSubmit]
+  );
+
+  const cleanForm = useCallback(() => {
+    setBorrowDate('');
+    setReturnDate('');
+    refTitle.current.clear();
+    setIsReservation(false);
+  }, []);
 
   const handleAddBorrow = useCallback(async () => {
     const user = refUser.current.getValue<SelectType>();
@@ -286,6 +443,29 @@ const Borrow: React.FC = () => {
       errors.push(i18n.t('borrow.returnDate'));
     }
 
+    if (!isReservation && title) {
+      const borrowed = window.api.sendSync('readBorrow', {
+        entity: 'Borrow',
+        value: title.id,
+      });
+
+      if (borrowed) {
+        errors.push(i18n.t('borrow.alreadyBorrowed'));
+      }
+    }
+
+    if (isReservation && title) {
+      const reserved = window.api.sendSync('readReservation', {
+        entity: 'Borrow',
+        value: title.id,
+      });
+
+      if (reserved) {
+        errors.push(i18n.t('borrow.alreadyReserved'));
+        cleanForm();
+      }
+    }
+
     if (errors.length > 0) {
       addToast({
         title: i18n.t('notifications.warning'),
@@ -304,18 +484,14 @@ const Borrow: React.FC = () => {
           userId: user.id,
           borrow: parseISO(borrowDate),
           estimatedReturn: parseISO(returnDate),
-          status: 1,
+          status: BorrowStatus.Borrowed,
           isReservation: isReservation,
           titlePublisherId: title.id,
         },
       });
 
-      setBorrowDate('');
-      setReturnDate('');
-      refTitle.current.clear();
-      setIsReservation(false);
-
-      await handleBorrowSubmit({ pageIndex: 0, pageSize: 10 });
+      cleanForm();
+      await handleRefresh();
     } catch (err) {
       addToast({
         title: i18n.t('borrow.anErrorHasOccurred'),
@@ -323,12 +499,23 @@ const Borrow: React.FC = () => {
         description: err,
       });
     }
-  }, [addToast, borrowDate, handleBorrowSubmit, isReservation, returnDate]);
+  }, [
+    addToast,
+    borrowDate,
+    cleanForm,
+    handleRefresh,
+    isReservation,
+    returnDate,
+  ]);
 
   return (
     <Container>
       <Header>
-        <UserSelect autoFocus ref={refUser} />
+        <UserSelect
+          autoFocus
+          ref={refUser}
+          handleCustomChange={handleCustomChange}
+        />
       </Header>
       <SectionHeader>
         {sections.map((section) => (
@@ -383,9 +570,12 @@ const Borrow: React.FC = () => {
           pageCount={pageCount}
           fetchData={handleBorrowSubmit}
           setRowsPerPage={setRowsPerPage}
-          getRowProps={row => ({
+          getRowProps={(row) => ({
             style: {
-              color: row.original.estimatedReturn <= new Date() ? colors.error: colors.text,
+              color:
+                row.original.estimatedReturn <= new Date()
+                  ? colors.error
+                  : colors.text,
             },
           })}
         />

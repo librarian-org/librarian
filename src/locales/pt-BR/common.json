@@ -68,10 +68,19 @@
     "borrowDate": "Data Empréstimo",
     "returnDate": "Data Devolução",
     "reserve": "Reservar",
-    "informErrors": "Verifique os erros: #errors# para prosseguir",
+    "informErrors": "Para prosseguir, verifique os erros: #errors#",
     "anErrorHasOccurred": "Ocorreu um erro",
     "anErrorOnLoadBorrow": "Ocorreu um erro carregando os Empréstimos",
-    "anErrorOnLoadReservations": "Ocorreu um erro carregando as Reservas"
+    "anErrorOnLoadReservations": "Ocorreu um erro carregando as Reservas",
+    "alreadyBorrowed": "Título já Emprestado",
+    "alreadyReserved": "Título já Reservado",
+    "cantRenewAnymore": "Esse Título atingiu o máximo de renovações",
+    "status": {
+      "1": "Devolvido",
+      "2": "Emprestado a partir da reserva",
+      "3": "Devolvido",
+      "4": "Devolvido com atraso"
+    }
   },
   "title": {
     "label": "Título",
@@ -103,8 +112,9 @@
   },
   "settings": {
     "label": "Configurações",
-    "time": "Quantidade de dias a partir do emprestimo em que o leitor deve devolver o livro",
-    "path": "Local onde será feito o backup das informações do sistema",
+    "daysReturnDate": "Duração do empréstimo em dias",
+    "backupPath": "Pasta da cópia de segurança",
+    "allowedRenovations": "Renovações permitidas",
     "saved": "Suas configurações foram salvas"
   },
   "notifications": {

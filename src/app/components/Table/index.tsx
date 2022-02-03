@@ -1,4 +1,5 @@
 import React, {
+  MouseEvent,
   PropsWithChildren,
   ReactElement,
   useContext,
@@ -22,8 +23,6 @@ export interface PaginatedSearch<T> {
   data: T[];
 }
 
-// const defaultPropGetter = () => ({});
-
 export interface TableProperties<T extends Record<string, unknown>>
   extends TableOptions<T> {
   name: string;
@@ -37,7 +36,7 @@ export interface TableProperties<T extends Record<string, unknown>>
 const hooks = [usePagination, useRowSelect];
 
 export function Table<T extends Record<string, unknown>>(
-  props: PropsWithChildren<TableProperties<T>>,
+  props: PropsWithChildren<TableProperties<T>>
 ): ReactElement {
   const { colors } = useContext(ThemeContext);
 
@@ -61,24 +60,26 @@ export function Table<T extends Record<string, unknown>>(
       initialState,
       manualPagination: true,
     },
-    ...hooks,
+    ...hooks
   );
 
-  const {
-    getTableProps,
-    headerGroups,
-    getTableBodyProps,
-    page,
-    prepareRow,
-  } = instance;
+  const { getTableProps, headerGroups, getTableBodyProps, page, prepareRow } =
+    instance;
+
+  const handleClick = (event: MouseEvent, row: Row<T>) => {
+    event.stopPropagation();
+    if (onRowClick) {
+      onRowClick(row.original);
+    }
+  };
 
   return (
     <Container>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
             </tr>
@@ -92,12 +93,14 @@ export function Table<T extends Record<string, unknown>>(
               </td>
             </tr>
           ) : (
-            page.map(row => {
+            page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps(getRowProps ? getRowProps(row) : {})}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()} onClick={(event) => { event.stopPropagation(); onRowClick(row.original)}}>{cell.render('Cell')}</td>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} onClick={(event) => handleClick(event, row)}>
+                      {cell.render('Cell')}
+                    </td>
                   ))}
                 </tr>
               );
