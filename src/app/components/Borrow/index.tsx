@@ -65,133 +65,6 @@ const Borrow: React.FC = () => {
     setIsReservation(!isReservation);
   };
 
-  const borrowColumns: Array<Column<Borrow>> = useMemo(
-    () => [
-      {
-        Header: i18n.t('borrow.classification'),
-        id: 'classification',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{b.row.original.titlePublisher.classification}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.title'),
-        id: 'title',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{b.row.original.titlePublisher.title.name}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.borrowDate'),
-        id: 'borrowDate',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.returnDate'),
-        id: 'returnDate',
-        Cell: (b: Cell<Borrow>) => {
-          return (
-            <>
-              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
-            </>
-          );
-        },
-      },
-      {
-        Header: () => null,
-        id: 'refresh',
-        Cell: (row: Cell<Borrow>) => {
-          return (
-            <>
-              <FiRefreshCw
-                size={20}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleRenovation(row.row.original);
-                }}
-              />
-            </>
-          );
-        },
-      },
-      {
-        Header: () => null,
-        id: 'return',
-        Cell: (row: Cell<Borrow>) => {
-          return (
-            <>
-              <FiDownload
-                size={20}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleReturn(row.row.original);
-                }}
-              />
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
-  const reservationColumns: Array<Column<Borrow>> = useMemo(
-    () => [
-      {
-        Header: i18n.t('borrow.classification'),
-        id: 'classificationReservation',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{b.row.original.titlePublisher.classification}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.title'),
-        id: 'titleReservation',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{b.row.original.titlePublisher.title.name}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.borrowDate'),
-        id: 'borrowDate',
-        Cell: (b: Cell<Borrow>) => {
-          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
-        },
-      },
-      {
-        Header: i18n.t('borrow.returnDate'),
-        id: 'returnDate',
-        Cell: (b: Cell<Borrow>) => {
-          return (
-            <>
-              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
-            </>
-          );
-        },
-      },
-      {
-        Header: () => null,
-        id: 'borrowing',
-        Cell: (row: Cell<Borrow>) => {
-          return (
-            <>
-              <FiShare
-                size={20}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleBorrowByReservation(row.row.original);
-                }}
-              />
-            </>
-          );
-        },
-      },
-    ],
-    []
-  );
-
   const handleReservationSubmit = useCallback(
     async ({ pageIndex = 0, userId }: BorrowSearch) => {
       try {
@@ -269,6 +142,7 @@ const Borrow: React.FC = () => {
     [addToast, rowsPerPage]
   );
 
+
   const handleRefresh = useCallback(async () => {
     await handleBorrowSubmit({
       pageIndex: 0,
@@ -281,6 +155,29 @@ const Borrow: React.FC = () => {
       userId: refUser.current.getValue<SelectType>().id,
     });
   }, [handleBorrowSubmit, handleReservationSubmit]);
+
+  const handleReturn = useCallback(
+    async (item: Borrow): Promise<void> => {
+      try {
+        window.api.sendSync('returns', {
+          entity: 'Borrow',
+          value: {
+            where: {
+              id: item.id,
+            },
+          },
+        });
+        await handleRefresh();
+      } catch (err) {
+        addToast({
+          title: i18n.t('borrow.anErrorHasOccurred'),
+          type: 'error',
+          description: err,
+        });
+      }
+    },
+    [addToast, handleRefresh]
+  );
 
   const handleRenovation = useCallback(
     async (item: Borrow): Promise<void> => {
@@ -376,27 +273,131 @@ const Borrow: React.FC = () => {
     [addToast, handleRefresh]
   );
 
-  const handleReturn = useCallback(
-    async (item: Borrow): Promise<void> => {
-      try {
-        window.api.sendSync('returns', {
-          entity: 'Borrow',
-          value: {
-            where: {
-              id: item.id,
-            },
-          },
-        });
-        await handleRefresh();
-      } catch (err) {
-        addToast({
-          title: i18n.t('borrow.anErrorHasOccurred'),
-          type: 'error',
-          description: err,
-        });
-      }
-    },
-    [addToast, handleRefresh]
+  const borrowColumns: Array<Column<Borrow>> = useMemo(
+    () => [
+      {
+        Header: i18n.t('borrow.classification'),
+        id: 'classification',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.classification}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.title'),
+        id: 'title',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.title.name}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.borrowDate'),
+        id: 'borrowDate',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.returnDate'),
+        id: 'returnDate',
+        Cell: (b: Cell<Borrow>) => {
+          return (
+            <>
+              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
+            </>
+          );
+        },
+      },
+      {
+        Header: () => null,
+        id: 'refresh',
+        Cell: (row: Cell<Borrow>) => {
+          return (
+            <>
+              <FiRefreshCw
+                size={20}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleRenovation(row.row.original);
+                }}
+              />
+            </>
+          );
+        },
+      },
+      {
+        Header: () => null,
+        id: 'return',
+        Cell: (row: Cell<Borrow>) => {
+          return (
+            <>
+              <FiDownload
+                size={20}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleReturn(row.row.original);
+                }}
+              />
+            </>
+          );
+        },
+      },
+    ],
+    [handleRenovation, handleReturn]
+  );
+
+  const reservationColumns: Array<Column<Borrow>> = useMemo(
+    () => [
+      {
+        Header: i18n.t('borrow.classification'),
+        id: 'classificationReservation',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.classification}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.title'),
+        id: 'titleReservation',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{b.row.original.titlePublisher.title.name}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.borrowDate'),
+        id: 'borrowDate',
+        Cell: (b: Cell<Borrow>) => {
+          return <>{format(new Date(b.row.original.borrow), 'dd/MM/yyyy')}</>;
+        },
+      },
+      {
+        Header: i18n.t('borrow.returnDate'),
+        id: 'returnDate',
+        Cell: (b: Cell<Borrow>) => {
+          return (
+            <>
+              {format(new Date(b.row.original.estimatedReturn), 'dd/MM/yyyy')}
+            </>
+          );
+        },
+      },
+      {
+        Header: () => null,
+        id: 'borrowing',
+        Cell: (row: Cell<Borrow>) => {
+          return (
+            <>
+              <FiShare
+                size={20}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleBorrowByReservation(row.row.original);
+                }}
+              />
+            </>
+          );
+        },
+      },
+    ],
+    [handleBorrowByReservation]
   );
 
   const handleCustomChange = useCallback(
