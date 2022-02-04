@@ -121,7 +121,7 @@ const CreatePerson: React.FC = () => {
       });
       return;
     }
-  }, [complement, zipcode, neighborhood, publicPlace]);
+  }, [complement, zipcode, neighborhood, publicPlace, addToast]);
 
   const handleSave = useCallback(() => {
     const errors: string[] = [];
@@ -160,9 +160,10 @@ const CreatePerson: React.FC = () => {
         name,
         login,
         password,
-        document,
         language,
         notes,
+        document,
+        userTypeId: userType.id
       },
     }) as { id: string };
   }, [addToast, document, language, login, name, notes, password]);
