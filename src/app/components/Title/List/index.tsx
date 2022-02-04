@@ -63,7 +63,7 @@ const TitleList: React.FC = () => {
         Cell: (row: Cell<Title>) => {
           return (
           <>
-            <FaPen size={20} onClick={(event) => { event.stopPropagation(); handleUpdate(row.row.original)}} />
+            <FaPen size={20} title={i18n.t('title.edit')} onClick={(event) => { event.stopPropagation(); handleUpdate(row.row.original)}} />
           </>)
         }
       }

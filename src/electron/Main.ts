@@ -181,6 +181,18 @@ export default class Main {
       }
     });
 
+    ipcMain.on('readTitle', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          TitleRepository
+        ).read(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
     ipcMain.on('listBorrow', async (event, content: Event[]) => {
       try {
         const { value, entity } = content[0];
