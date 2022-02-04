@@ -106,7 +106,9 @@
     "removeCategoryInformation": "Remove category from list",
 
     "select": "Type or select a title",
-    "selectEmpty": "No title found"
+    "selectEmpty": "No title found",
+
+    "edit": "Edit"
   },
   "settings": {
     "label": "Settings",

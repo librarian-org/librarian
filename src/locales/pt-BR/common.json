@@ -108,7 +108,9 @@
 
 
     "select": "Digite ou selecione um título",
-    "selectEmpty": "Nenhum título encontrado"
+    "selectEmpty": "Nenhum título encontrado",
+
+    "edit": "Editar"
   },
   "settings": {
     "label": "Configurações",
