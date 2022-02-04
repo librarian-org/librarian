@@ -158,20 +158,36 @@
     "selectOrCreate": "Selecione um tipo de contato ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum tipo de contato criado"
   },
-  "state": {
+  "country": {
+    "label": "País",
+    "select": "Selecione um país",
+    "selectEmpty": "País não encontrado"
+  },
+  "region": {
     "label": "Estado",
     "selectOrCreate": "Selecione um estado ou escreva um nome para cria-lo",
-    "selectEmpty": "Nenhum estado criado"
+    "selectEmpty": "Nenhum estado criado",
+    "name": "O nome deve ser preenchido",
+    "country": "Por favor selecione um país",
+    "informError" : "Por favor forneça todas as informações para criar um estado #errors#"
   },
   "city": {
     "label": "Cidade",
     "selectOrCreate": "Selecione uma cidade",
-    "selectEmpty": "Nenhuma cidade criada"
+    "selectEmpty": "Nenhuma cidade criada",
+    "name": "O nome deve ser preenchido",
+    "region": "Por favor selecione um estado",
+    "informError" : "Por favor forneça todas as informações para criar uma cidade #errors#"
   },
   "profile": {
     "label": "Perfil",
     "selectOrCreate": "Selecione um perfil ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum perfil criado"
+  },
+  "userType": {
+    "label": "Tipo de Usuário",
+    "selectOrCreate": "Selecione um tipo de usuário ou escreva para criar um",
+    "selectEmpty": "Nenhum tipo de usuário criado"
   },
   "person": {
     "label": "Pessoa",
@@ -191,7 +207,8 @@
     "contactType": "Tipo de contato",
     "profile": "Perfil",
     "contact": "Informação do contato",
-    "informErrorsContact": "Por favor forneça informação do contato",
+    "informError": "Por favor forneça informações para criar a pessoa #errors#",
+    "informErrorsContact": "Por favor forneça informação do contato ",
     "informErrorsProfile": "Por favor selecine um perfil",
     "informErrorsAddress": "Por favor forneça informação de endereço",
     "hasBeenAdd": "Este contato já foi adicionado"

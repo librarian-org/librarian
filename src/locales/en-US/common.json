@@ -156,20 +156,36 @@
     "selectOrCreate": "Select a contact type or type a name to create it",
     "selectEmpty": "No contact type created so far"
   },
-  "state": {
+  "country": {
+    "label": "Country",
+    "select": "Select a country",
+    "selectEmpty": "No country found"
+  },
+  "region": {
     "label": "State",
     "selectOrCreate": "Select a state or type a name to create it",
-    "selectEmpty": "No state created so far"
+    "selectEmpty": "No state created so far",
+    "name": "A name must be provided to a state",
+    "country": "Please select a country",
+    "informError" : "Please provide a information to create a state #errors#"
   },
   "city": {
     "label": "City",
     "selectOrCreate": "Select a city",
-    "selectEmpty": "No city created so far"
+    "selectEmpty": "No city created so far",
+    "name": "A name must be provided to a city",
+    "region": "Please select a state",
+    "informError" : "Please provide a information to create a city #errors#"
   },
   "profile": {
     "label": "Profile",
     "selectOrCreate": "Select a profile or type a name to create it",
     "selectEmpty": "No profile created so far"
+  },
+  "userType": {
+    "label": "Type USer",
+    "selectOrCreate": "Select a type or type a name to create it",
+    "selectEmpty": "No type user created so far"
   },
   "person": {
     "label": "Person",
@@ -189,6 +205,7 @@
     "contactType": "Contact Type",
     "profile": "Profile",
     "contact": "Contact info",
+    "informError": "Please provide information to create person #errors#",
     "informErrorsContact": "Please provide information to a contact",
     "informErrorsProfile": "Please select a profile",
     "informErrorsAddress": "Please profive information to a address",

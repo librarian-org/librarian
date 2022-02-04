@@ -7,8 +7,8 @@ import React, {
   import { ActionMeta, OnChangeValue } from 'react-select';
   
   import { Container } from './style';
-  import i18n from '../../i18n';
-  import CreatableSelectInput, { SelectHandles } from '../CreatableSelectInput';
+  import i18n from '../../../i18n';
+  import CreatableSelectInput, { SelectHandles } from '../../CreatableSelectInput';
   
   interface Option {
     readonly label: string;
@@ -19,12 +19,12 @@ import React, {
     containerStyle?: unknown;
   }
   
-  interface State {
+  interface Country {
     id: string;
     name: string;
   }
   
-  const StateSelect: React.ForwardRefRenderFunction<
+  const CountrySelect: React.ForwardRefRenderFunction<
     SelectHandles,
     StateProps
   > = ({ containerStyle }, selectRef) => {
@@ -34,43 +34,22 @@ import React, {
   
     useEffect(() => {
       const result = window.api.sendSync('list', {
-        entity: 'State',
-      }) as State[];
+        entity: 'Country',
+      }) as Country[];
   
       const mappedOptions = result.map((item) => ({
-        label: item.name,
+        label: i18n.t(`countries.${item.name}`),
         value: item.id.toString(),
       }));
   
       setOptions(mappedOptions);
     }, []);
   
-    const createOption = (label: string, value: string) => ({
-      label,
-      value,
-    });
-  
     const handleChange = (
       newValue: OnChangeValue<Option, false>,
       _actionMeta: ActionMeta<Option>
     ) => {
       setValue(newValue);
-    };
-  
-    const handleCreate = (inputValue: string) => {
-      setIsLoading(true);
-  
-      const result = window.api.sendSync('create', {
-        entity: 'State',
-        value: {
-          name: inputValue,
-        },
-      }) as State;
-  
-      const newOption = createOption(result.name, result.id.toString());
-      setOptions((options) => [...options, newOption]);
-      setValue(newOption);
-      setIsLoading(false);
     };
   
     useImperativeHandle<unknown, SelectHandles>(selectRef, () => ({
@@ -90,13 +69,12 @@ import React, {
       <Container style={containerStyle}>
         <CreatableSelectInput
           isClearable
-          label={i18n.t('state.label')}
-          placeholder={i18n.t('state.selectOrCreate')}
-          noOptionsMessage={() => i18n.t('state.selectEmpty')}
+          label={i18n.t('country.label')}
+          placeholder={i18n.t('country.select')}
+          noOptionsMessage={() => i18n.t('country.selectEmpty')}
           isDisabled={isLoading}
           isLoading={isLoading}
           onChange={handleChange}
-          onCreateOption={handleCreate}
           options={options}
           value={value}
         />
@@ -104,5 +82,5 @@ import React, {
     );
   };
   
-  export default forwardRef(StateSelect);
+  export default forwardRef(CountrySelect);
   
