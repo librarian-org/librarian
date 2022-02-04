@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-} from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import Button from '../../Button';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import i18n from '../../../i18n';
@@ -16,7 +11,9 @@ import ContactTypeSelect from '../../ContactTypeSelect';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import ProfileSelect from '../../ProfileSelect';
-import CitySelect from '../../CitySelect';
+import CitySelect from '../../City/CitySelect';
+import UserTypeSelect from '../../UserTypeSelect';
+import CreateCity from '../../City';
 
 interface SelectType {
   id: string;
@@ -38,6 +35,7 @@ const CreatePerson: React.FC = () => {
   const [zipcode, setZipcode] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [publicPlace, setPublicPlace] = useState('');
+  const [addingCity, setAddingCity] = useState(false);
 
   const [selectedSection, setSelectedSection] = useState('contacts');
 
@@ -54,6 +52,8 @@ const CreatePerson: React.FC = () => {
 
   const [profiles, setProfiles] = useState<SelectType[]>([]);
   const refProfile = useRef<SelectHandles>(null);
+
+  const refUserType = useRef<SelectHandles>(null);
 
   const handleAddContact = useCallback(() => {
     const contactType = refTypeContact.current.getValue<SelectType>();
@@ -121,21 +121,57 @@ const CreatePerson: React.FC = () => {
       });
       return;
     }
-  }, [complement, zipcode, neighborhood, publicPlace]);
+  }, [complement, zipcode, neighborhood, publicPlace, addToast]);
 
   const handleSave = useCallback(() => {
+    const errors: string[] = [];
+    const userType = refUserType.current.getValue<SelectType>();
+
+    if (!userType) {
+      errors.push(i18n.t('person.userType'));
+    }
+
+    if (!name) {
+      errors.push(i18n.t('person.name'));
+    }
+
+    if (!login) {
+      errors.push(i18n.t('person.login'));
+    }
+
+    if (!document) {
+      errors.push(i18n.t('person.document'));
+    }
+
+    if (errors.length > 0) {
+      addToast({
+        title: i18n.t('notifications.warning'),
+        type: 'error',
+        description: i18n
+          .t('person.informError')
+          .replace('#errors#', errors.join(', ')),
+      });
+      return;
+    }
+
     const result = window.api.sendSync('create', {
       entity: 'User',
       value: {
         name,
         login,
         password,
-        document,
         language,
         notes,
+        document,
+        userTypeId: userType.id
       },
     }) as { id: string };
+  }, [addToast, document, language, login, name, notes, password]);
+
+  const handleCLoseCity = useCallback(() => {
+    setAddingCity((oldState) => !oldState);
   }, []);
+
   return (
     <Container>
       <>
@@ -157,6 +193,7 @@ const CreatePerson: React.FC = () => {
             value={name}
             placeholder={i18n.t('person.name')}
           />
+          <UserTypeSelect ref={refUserType} containerStyle={{ flexGrow: 2 }} />
           <Input
             containerStyle={{ flexGrow: 1, marginRight: '18px' }}
             type="text"
@@ -254,7 +291,15 @@ const CreatePerson: React.FC = () => {
                 containerStyle={{ flexGrow: 2 }}
               />
               &nbsp;
-              <Button style={{}} color="primary" onClick={handleAddContact}>
+              <CreateCity
+                isOpen={addingCity}
+                setOpen={handleCLoseCity}
+              ></CreateCity>
+              <Button
+                style={{}}
+                color="primary"
+                onClick={() => setAddingCity(true)}
+              >
                 <FiPlus size={20} />
               </Button>
               &nbsp;

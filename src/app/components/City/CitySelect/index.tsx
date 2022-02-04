@@ -7,8 +7,8 @@ import React, {
   import { ActionMeta, OnChangeValue } from 'react-select';
   
   import { Container } from './style';
-  import i18n from '../../i18n';
-  import CreatableSelectInput, { SelectHandles } from '../CreatableSelectInput';
+  import i18n from '../../../i18n';
+  import CreatableSelectInput, { SelectHandles } from '../../CreatableSelectInput';
   
   interface Option {
     readonly label: string;
