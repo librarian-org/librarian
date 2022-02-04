@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Translator from '../I18n/Translator';
 
-import { Container } from './styles';
+import { CardContent, CardHeader, Container } from './styles';
 
 interface Props {
   title?: string;
+  actions?: ReactNode;
 }
 
-const Card: React.FC<Props> = ({children, title}) => {
+const Card: React.FC<Props> = ({ children, title, actions }) => {
   return (
     <Container>
-      {title && (<h2>{<Translator path={title} />}</h2>)}
-      <div>
-        {children}
-      </div>
+      {title && (
+        <CardHeader>
+          <h2>{<Translator path={title} />}</h2>
+          {actions}
+        </CardHeader>
+      )}
+      <CardContent>{children}</CardContent>
     </Container>
   );
 };

@@ -15,6 +15,10 @@ import Button from '../../Button';
 import CategorySelect from '../../CategorySelect';
 import { SelectHandles } from '../../CreatableSelectInput';
 
+import { AppEvent } from '../../../../common/AppEvent';
+import { trigger } from '../../../util/EventHandler';
+import { Actions } from '../../../../common/Actions';
+
 import Input from '../../Input';
 import PublisherSelect from '../../PublisherSelect';
 import SectionContent from '../../Sections/SectionContent';
@@ -74,14 +78,14 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
 
       const authorsAux: SelectType[] = item.titleAuthors.map((item) => ({
         id: item.authorId.toString(),
-        name: item.author.name
+        name: item.author.name,
       }));
       setAuthors(authorsAux);
 
       const categoriesAux: SelectType[] = item.titleCategories.map((item) => ({
         id: item.categoryId.toString(),
         name: item.category.name,
-      }))
+      }));
       setCategories(categoriesAux);
     }
   }, [item]);
@@ -211,7 +215,6 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
   );
 
   const handleSave = useCallback(() => {
-
     const errors: string[] = [];
     if (!title) {
       errors.push(i18n.t('title.label'));
@@ -239,7 +242,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
       },
     });
 
-    ['TitleCategory', 'TitleAuthor', 'TitlePublisher'].map(tableName => {
+    ['TitleCategory', 'TitleAuthor', 'TitlePublisher'].map((tableName) => {
       window.api.sendSync('delete', {
         entity: tableName,
         value: {
@@ -280,177 +283,187 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
         },
       });
     });
-  }, [addToast, authors, categories, isbn, item.id, publishers, title]);
+
+    const updatedTitle = window.api.sendSync('readTitle', {
+      entity: 'Title',
+      value: {
+        where: {
+          id: item.id,
+        },
+      },
+    }) as Title;
+
+    trigger(AppEvent.titleTab, { action: Actions.read, value: updatedTitle });
+  }, [addToast, authors, categories, isbn, item, publishers, title]);
 
   return (
     <Container>
       {title && (
-      <>
-        <div
-          style={{
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Input
-            containerStyle={{ flexGrow: 1, marginRight: '18px' }}
-            type="text"
-            name="name"
-            label={i18n.t('title.name')}
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            placeholder={i18n.t('title.typeTitleName')}
-          />
+        <>
+          <div
+            style={{
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Input
+              containerStyle={{ flexGrow: 1, marginRight: '18px' }}
+              type="text"
+              name="name"
+              label={i18n.t('title.name')}
+              autoFocus
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              placeholder={i18n.t('title.typeTitleName')}
+            />
 
-          <Input
-            type="text"
-            name="ISBN"
-            label="ISBN"
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-            placeholder={i18n.t('title.typeISBN')}
-          />
-        </div>
-        <SectionHeader>
-          {sections.map((section) => (
-            <a
-              key={section}
-              className={selectedSection === section ? 'active' : ''}
-              onClick={() => setSelectedSection(section)}
-            >
-              {i18n.t(`title.${section}`)}
-            </a>
-          ))}
-        </SectionHeader>
-        <div>
-          <SectionContent isActive={selectedSection === 'editions'}>
-            <Row style={{ minHeight: '180px' }}>
-              <Input
-                type="text"
-                name="classification"
-                label={i18n.t('title.classification')}
-                placeholder={i18n.t('title.typeClassification')}
-                value={classification}
-                onChange={(e) => setClassification(e.target.value)}
-              />
-              &nbsp;
-              <Input
-                type="text"
-                name="edition"
-                label={i18n.t('title.edition')}
-                placeholder={i18n.t('title.typeEdition')}
-                value={edition}
-                onChange={(e) => setEdition(e.target.value)}
-              />
-              &nbsp;
-              <Input
-                type="date"
-                name="edition_date"
-                label={i18n.t('title.publishedAt')}
-                placeholder={i18n.t('title.typePublicationDate')}
-                alt={i18n.t('title.typePublicationDate')}
-                value={publishedAt}
-                onChange={(e) => setPublishedAt(e.target.value)}
-              />
-              &nbsp;
-              <PublisherSelect
-                ref={refPublisher}
-                containerStyle={{ flexGrow: 2 }}
-              />
-              &nbsp;
-              <Button style={{}} color="primary" onClick={handleAddPublisher}>
-                <FiPlus size={20} />
-              </Button>
-            </Row>
-            <Row>
-              <List>
-                {publishers.map((publisher) => (
-                  <ListItem key={v4()}>
-                    <span>{publisher.classification}</span>
-                    <span>{publisher.edition}</span>
-                    <span>
-                      {format(publisher.publishedAt, 'dd/MM/yyyy')}
-                    </span>
-                    <span>{publisher.publisher.name}</span>
-                    <span style={{ width: '10%', textAlign: 'right' }}>
+            <Input
+              type="text"
+              name="ISBN"
+              label="ISBN"
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value.replace(/\D/,''))}
+              placeholder={i18n.t('title.typeISBN')}
+            />
+          </div>
+          <SectionHeader>
+            {sections.map((section) => (
+              <a
+                key={section}
+                className={selectedSection === section ? 'active' : ''}
+                onClick={() => setSelectedSection(section)}
+              >
+                {i18n.t(`title.${section}`)}
+              </a>
+            ))}
+          </SectionHeader>
+          <div>
+            <SectionContent isActive={selectedSection === 'editions'}>
+              <Row style={{ minHeight: '180px' }}>
+                <Input
+                  type="text"
+                  name="classification"
+                  label={i18n.t('title.classification')}
+                  placeholder={i18n.t('title.typeClassification')}
+                  value={classification}
+                  onChange={(e) => setClassification(e.target.value)}
+                />
+                &nbsp;
+                <Input
+                  type="text"
+                  name="edition"
+                  label={i18n.t('title.edition')}
+                  placeholder={i18n.t('title.typeEdition')}
+                  value={edition}
+                  onChange={(e) => setEdition(e.target.value)}
+                />
+                &nbsp;
+                <Input
+                  type="date"
+                  name="edition_date"
+                  label={i18n.t('title.publishedAt')}
+                  placeholder={i18n.t('title.typePublicationDate')}
+                  alt={i18n.t('title.typePublicationDate')}
+                  value={publishedAt}
+                  onChange={(e) => setPublishedAt(e.target.value)}
+                />
+                &nbsp;
+                <PublisherSelect
+                  ref={refPublisher}
+                  containerStyle={{ flexGrow: 2 }}
+                />
+                &nbsp;
+                <Button style={{}} color="primary" onClick={handleAddPublisher}>
+                  <FiPlus size={20} />
+                </Button>
+              </Row>
+              <Row>
+                <List>
+                  {publishers.map((publisher) => (
+                    <ListItem key={v4()}>
+                      <span>{publisher.classification}</span>
+                      <span>{publisher.edition}</span>
+                      <span>{format(publisher.publishedAt, 'dd/MM/yyyy')}</span>
+                      <span>{publisher.publisher.name}</span>
+                      <span style={{ width: '10%', textAlign: 'right' }}>
+                        <FiTrash2
+                          size={20}
+                          onClick={() => handleRemovePublisher(publisher)}
+                          title={i18n.t('title.removeEditionInformation')}
+                        />
+                      </span>
+                    </ListItem>
+                  ))}
+                </List>
+              </Row>
+            </SectionContent>
+
+            <SectionContent isActive={selectedSection === 'authors'}>
+              <Row>
+                <AuthorSelect
+                  ref={refAuthor}
+                  containerStyle={{ flexGrow: 2, marginRight: '16px' }}
+                />
+                <Button color="primary" onClick={handleAddAuthor}>
+                  <FiPlus size={20} />
+                </Button>
+              </Row>
+              <Row>
+                <List>
+                  {authors.map((author) => (
+                    <ListItem key={v4()}>
+                      {author.name}{' '}
                       <FiTrash2
                         size={20}
-                        onClick={() => handleRemovePublisher(publisher)}
-                        title={i18n.t('title.removeEditionInformation')}
+                        onClick={() => handleRemoveAuthor(author)}
+                        title={i18n.t('title.removeAuthorInformation')}
                       />
-                    </span>
-                  </ListItem>
-                ))}
-              </List>
-            </Row>
-          </SectionContent>
+                    </ListItem>
+                  ))}
+                </List>
+              </Row>
+            </SectionContent>
 
-          <SectionContent isActive={selectedSection === 'authors'}>
-            <Row>
-              <AuthorSelect
-                ref={refAuthor}
-                containerStyle={{ flexGrow: 2, marginRight: '16px' }}
-              />
-              <Button color="primary" onClick={handleAddAuthor}>
-                <FiPlus size={20} />
-              </Button>
-            </Row>
-            <Row>
-              <List>
-                {authors.map((author) => (
-                  <ListItem key={v4()}>
-                    {author.name}{' '}
-                    <FiTrash2
-                      size={20}
-                      onClick={() => handleRemoveAuthor(author)}
-                      title={i18n.t('title.removeAuthorInformation')}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Row>
-          </SectionContent>
+            <SectionContent isActive={selectedSection === 'categories'}>
+              <Row>
+                <CategorySelect
+                  ref={refCategory}
+                  containerStyle={{ flexGrow: 2, marginRight: '16px' }}
+                />
 
-          <SectionContent isActive={selectedSection === 'categories'}>
-            <Row>
-              <CategorySelect
-                ref={refCategory}
-                containerStyle={{ flexGrow: 2, marginRight: '16px' }}
-              />
-
-              <Button color="primary" onClick={handleAddCategory}>
-                <FiPlus size={20} />
-              </Button>
-            </Row>
-            <Row>
-              <List>
-                {categories.map((category) => (
-                  <ListItem key={v4()}>
-                    {category.name}{' '}
-                    <FiTrash2
-                      size={20}
-                      onClick={() => handleRemoveCategory(category)}
-                      title={i18n.t('title.removeCategoryInformation')}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Row>
-          </SectionContent>
-        </div>
-        <ButtonContainer>
-          <Button
-            color="primary"
-            title={i18n.t('button.save')}
-            onClick={handleSave}
-          >
-            <FiSave size={20} />
-          </Button>
-        </ButtonContainer>
-      </>)}
+                <Button color="primary" onClick={handleAddCategory}>
+                  <FiPlus size={20} />
+                </Button>
+              </Row>
+              <Row>
+                <List>
+                  {categories.map((category) => (
+                    <ListItem key={v4()}>
+                      {category.name}{' '}
+                      <FiTrash2
+                        size={20}
+                        onClick={() => handleRemoveCategory(category)}
+                        title={i18n.t('title.removeCategoryInformation')}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+              </Row>
+            </SectionContent>
+          </div>
+          <ButtonContainer>
+            <Button
+              color="primary"
+              title={i18n.t('button.save')}
+              onClick={handleSave}
+            >
+              <FiSave size={20} />
+            </Button>
+          </ButtonContainer>
+        </>
+      )}
     </Container>
   );
 };

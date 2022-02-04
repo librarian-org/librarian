@@ -6,10 +6,14 @@ import i18n from '../../../i18n';
 import SectionContent from '../../Sections/SectionContent';
 import SectionHeader from '../../Sections/SectionHeader';
 
+import { AppEvent } from '../../../../common/AppEvent';
+import { trigger } from '../../../util/EventHandler';
+import { Actions } from '../../../../common/Actions';
 import { Container, List, ListItem, Row } from './styles';
 import { format, parseISO } from 'date-fns';
 import { v4 } from 'uuid';
 import Barcode from '../../Barcode';
+import { FaPen } from 'react-icons/fa';
 
 interface SelectType {
   id: string;
@@ -44,33 +48,43 @@ const ReadTitle: React.FC<{ item: Title }> = ({ item }) => {
 
       const authorsAux: SelectType[] = item.titleAuthors.map((item) => ({
         id: item.authorId.toString(),
-        name: item.author.name
+        name: item.author.name,
       }));
       setAuthors(authorsAux);
 
       const categoriesAux: SelectType[] = item.titleCategories.map((item) => ({
         id: item.categoryId.toString(),
         name: item.category.name,
-      }))
+      }));
       setCategories(categoriesAux);
     }
   }, [item]);
 
+  const handleEditClick = (item: Title) => {
+    trigger(AppEvent.titleTab, { action: Actions.update, value: item });
+  };
+
   return (
     <Container>
-      <Card title={item.name}>
-        <Barcode value={item.ISBN} options={{
-          format: 'EAN13',
-          font: 'Monospace',
-          fontSize: 14,
-          textMargin: 0,
-          width: 1.5,
-          height: 54,
-          margin: 8,
-          textAlign: 'center',
-          background: '#FFFFFF',
-          lineColor: '#000000',
-        }} />
+      <Card
+        title={item.name}
+        actions={<FaPen size={20} title={i18n.t('title.edit')} onClick={() => handleEditClick(item)} />}
+      >
+        <Barcode
+          value={item.ISBN}
+          options={{
+            format: 'EAN13',
+            font: 'Monospace',
+            fontSize: 14,
+            textMargin: 0,
+            width: 1.5,
+            height: 54,
+            margin: 8,
+            textAlign: 'center',
+            background: '#FFFFFF',
+            lineColor: '#000000',
+          }}
+        />
       </Card>
       <Card>
         <SectionHeader>
@@ -92,9 +106,7 @@ const ReadTitle: React.FC<{ item: Title }> = ({ item }) => {
                   <ListItem key={v4()}>
                     <span>{publisher.classification}</span>
                     <span>{publisher.edition}</span>
-                    <span>
-                      {format(publisher.publishedAt, 'dd/MM/yyyy')}
-                    </span>
+                    <span>{format(publisher.publishedAt, 'dd/MM/yyyy')}</span>
                     <span>{publisher.publisher.name}</span>
                   </ListItem>
                 ))}
@@ -106,9 +118,7 @@ const ReadTitle: React.FC<{ item: Title }> = ({ item }) => {
             <Row>
               <List>
                 {authors.map((author) => (
-                  <ListItem key={v4()}>
-                    {author.name}{' '}
-                  </ListItem>
+                  <ListItem key={v4()}>{author.name} </ListItem>
                 ))}
               </List>
             </Row>
@@ -118,9 +128,7 @@ const ReadTitle: React.FC<{ item: Title }> = ({ item }) => {
             <Row>
               <List>
                 {categories.map((category) => (
-                  <ListItem key={v4()}>
-                    {category.name}{' '}
-                  </ListItem>
+                  <ListItem key={v4()}>{category.name} </ListItem>
                 ))}
               </List>
             </Row>
