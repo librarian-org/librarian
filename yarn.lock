@@ -659,6 +659,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/nunito@^4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@fontsource/nunito/-/nunito-4.5.4.tgz#9d267c1b7c157014d96f622cebdcc45229690d5c"
+  integrity sha512-pD5tXcQ7SM2oHvZuYOypOD/kfs76HPTBHUGa/7lARkpW6K3LJckycwr8gz9ykmmQACEwFYjcxJt/kM9qaAwnYQ==
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
