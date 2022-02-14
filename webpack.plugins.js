@@ -51,6 +51,8 @@ module.exports = [
       { from: 'node_modules/tslib', to: './database/node_modules/tslib/' },
       { from: 'node_modules/typeorm', to: './database/node_modules/typeorm/' },
       { from: 'dist/', to: './database/' },
+      { from: 'node_modules/@fontsource/nunito/files/nunito-all-400-normal.woff', to: 'nunito-all-400-normal.woff' },
+      { from: 'node_modules/@fontsource/nunito/files/nunito-latin-400-normal.woff2', to: 'nunito-latin-400-normal.woff2' },
     ],
   }),
   new ForkTsCheckerWebpackPlugin(),

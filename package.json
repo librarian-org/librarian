@@ -40,6 +40,7 @@
     "@electron-forge/maker-zip": "6.0.0-beta.63",
     "@electron-forge/plugin-webpack": "6.0.0-beta.63",
     "@electron-forge/publisher-github": "6.0.0-beta.63",
+    "@fontsource/nunito": "^4.5.4",
     "@types/bcryptjs": "^2.4.2",
     "@types/i18next-fs-backend": "^1.1.2",
     "@types/react": "^17.0.34",
