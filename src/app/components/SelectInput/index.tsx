@@ -93,9 +93,9 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, ...rest }) => {
     }),
   }), [colors]);
 
-  // useEffect(() => {
-  //   setIsFilled(!!rest.value);
-  // }, [rest]);
+  useEffect(() => {
+    setIsFilled(!!rest.value);
+  }, [rest]);
 
   return (
     <Container>

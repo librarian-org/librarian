@@ -6,11 +6,17 @@ export const Container = styled.div`
   margin-top: 64px;
 `;
 
-export const Center = styled.div`
+export const Center = styled.div``;
+
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 290px;
+
+  > img {
+    margin: 0 auto;
+  }
 
   > div {
     > div {
@@ -18,10 +24,6 @@ export const Center = styled.div`
       flex-direction: column;
       justify-content: space-between;
       height: 290px;
-
-      > img {
-        margin: 0 auto;
-      }
     }
   }
 `;
