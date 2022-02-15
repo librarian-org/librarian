@@ -15,7 +15,7 @@ export class Region
   countryId: number;
 
   @ManyToOne(() => Country, country => country.regions)
-  country: Country[];
+  country: Country;
 
   @OneToMany(() => City, city => city.region)
   cities: City[];

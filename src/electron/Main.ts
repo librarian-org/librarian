@@ -326,8 +326,8 @@ export default class Main {
       icon: this.getIcon(),
       minWidth: 800,
       minHeight: 600,
-      height: 800,
-      width: 1024,
+      height: 600,
+      width: 800,
       show: false,
       webPreferences: {
         nodeIntegration: false,

@@ -1,7 +1,14 @@
 import styled from 'styled-components';
-import Modal from '../Modal';
+
 export const Container = styled.div`
   display: flex;
-  flex-grow: 1;
+  flex-direction: column;
+
+  padding: 24px;
 `;
 
+export const Row = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+`;

@@ -16,8 +16,8 @@ const Login: React.FC = () => {
   const { addToast } = useToast();
   const navigate = useNavigate();
   const { signIn } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('admin@librarian');
 
   const handleLogin = useCallback(async () => {
     if (!username) {

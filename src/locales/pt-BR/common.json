@@ -157,7 +157,7 @@
   },
   "contactType": {
     "label": "Tipo de contato",
-    "selectOrCreate": "Selecione um tipo de contato ou escreva um nome para cria-lo",
+    "selectOrCreate": "Selecione um tipo ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum tipo de contato criado"
   },
   "country": {
@@ -175,11 +175,13 @@
   },
   "city": {
     "label": "Cidade",
-    "selectOrCreate": "Selecione uma cidade",
+    "select": "Selecione uma cidade",
     "selectEmpty": "Nenhuma cidade criada",
-    "name": "O nome deve ser preenchido",
-    "region": "Por favor selecione um estado",
-    "informError" : "Por favor forneça todas as informações para criar uma cidade #errors#"
+    "name": "Digite um nome",
+    "country": "Selecione um país",
+    "region": "Selecione um estado",
+    "informError" : "Por favor forneça todas as informações para criar uma cidade: #errors#",
+    "create": "Adicionar nova cidade"
   },
   "profile": {
     "label": "Perfil",
@@ -188,8 +190,11 @@
   },
   "userType": {
     "label": "Tipo de Usuário",
-    "selectOrCreate": "Selecione um tipo de usuário ou escreva para criar um",
-    "selectEmpty": "Nenhum tipo de usuário criado"
+    "select": "Selecione um tipo de usuário",
+    "selectEmpty": "Nenhum tipo de usuário criado",
+    "admin": "Administrador",
+    "librarian": "Bibliotecário",
+    "person": "Pessoa"
   },
   "person": {
     "label": "Pessoa",
@@ -197,29 +202,29 @@
     "login": "Login",
     "password": "Senha",
     "language": "Idioma",
-    "notes": "Obeservações",
+    "notes": "Observações",
     "document": "Documento",
     "userType": "Tipo usuário",
     "contacts": "Contatos",
     "profiles": "Perfis",
     "borrows": "Emprestimos",
     "addresses": "Endereços",
-    "removeProfile": "Excluir perfil",
+    "removeContact": "Excluir contato",
     "removeAddress": "Excluir endereço",
     "contactType": "Tipo de contato",
     "profile": "Perfil",
     "contact": "Informação do contato",
-    "informError": "Por favor forneça informações para criar a pessoa #errors#",
-    "informErrorsContact": "Por favor forneça informação do contato ",
-    "informErrorsProfile": "Por favor selecine um perfil",
-    "informErrorsAddress": "Por favor forneça informação de endereço",
+    "informError": "Por favor forneça as informações para criar a pessoa: #errors#",
+    "informErrorsContact": "Por favor forneça informação do contato: #errors#",
+    "informErrorsAddress": "Por favor forneça informação de endereço: #errors#",
     "hasBeenAdd": "Este contato já foi adicionado"
   },
   "address":{
-    "complement": "Rua",
     "zipcode": "CEP",
+    "publicPlace": "Logradouro",
+    "number": "Número",
     "neighborhood": "Bairro",
-    "publicPlace": "Referência"
+    "complement": "Complemento"
   },
   "countries": {
     "AF": "Afeganistão",

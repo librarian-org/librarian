@@ -27,6 +27,7 @@ interface ColourOption {
 }
 export interface SelectHandles {
   getValue<T>(): T;
+  setValue?: (newValue: Option) => void;
   clear(): void;
 }
 
