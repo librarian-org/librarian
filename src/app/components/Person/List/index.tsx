@@ -57,7 +57,7 @@ const PersonList: React.FC = () => {
         Header: i18n.t('person.userType'),
         id: 'userType',
         Cell: (b: Cell<Person>) => {
-          return <>{b.row.original.userType.name}</>;
+          return <>{i18n.t(`userType.${b.row.original.userType.name}`)}</>;
         },
       },
       {

@@ -3,7 +3,7 @@ import { FiLock, FiUser } from 'react-icons/fi';
 import Input from '../Input';
 import i18n from '../../i18n';
 
-import { Container, Center } from './styles';
+import { Container, Center, Form } from './styles';
 import Button from '../Button';
 import Card from '../Card';
 
@@ -58,29 +58,32 @@ const Login: React.FC = () => {
     <Container>
       <Center>
         <Card>
-          <img src={logoImg} alt="Librarian" width="64" />
-          <Input
-            name="username"
-            autoFocus
-            icon={FiUser}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            label={i18n.t('login.username')}
-            placeholder={i18n.t('login.typeUsername')}
-          />
-          <Input
-            name="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            icon={FiLock}
-            label={i18n.t('login.password')}
-            placeholder={i18n.t('login.typePassword')}
-          />
+          <Form>
+            <img src={logoImg} alt="Librarian" width="64" />
 
-          <Button type="button" color="primary" onClick={handleLogin}>
-            {i18n.t('login.login')}
-          </Button>
+            <Input
+              name="username"
+              autoFocus
+              icon={FiUser}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              label={i18n.t('login.username')}
+              placeholder={i18n.t('login.typeUsername')}
+            />
+            <Input
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              icon={FiLock}
+              label={i18n.t('login.password')}
+              placeholder={i18n.t('login.typePassword')}
+            />
+
+            <Button type="submit" color="primary" onClick={handleLogin}>
+              {i18n.t('login.login')}
+            </Button>
+          </Form>
         </Card>
       </Center>
     </Container>

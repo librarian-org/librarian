@@ -31,6 +31,7 @@ export interface City {
 }
 
 export interface Address {
+  id: string;
   city: City;
   publicPlace: string;
   number: string;
@@ -42,6 +43,9 @@ export interface Address {
 export type Person = {
   id: string;
   name: string;
+  document: string;
+  login: string;
+  notes: string;
   userType: UserType;
   contacts: Contact[];
   addresses: Address[];

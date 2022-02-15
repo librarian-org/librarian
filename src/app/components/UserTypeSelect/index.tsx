@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react';
 import { OnChangeValue } from 'react-select';
@@ -60,6 +61,9 @@ const UserTypeSelect: React.ForwardRefRenderFunction<
       }
 
       return { id: value.value, name: value.label } as unknown as T;
+    },
+    setValue(newValue: Option) {
+      setValue(newValue);
     },
     clear() {
       handleChange(null);
