@@ -15,12 +15,12 @@ export class Contact
   userId: number;
 
   @Column()
-  contentTypeId: number;
+  contactTypeId: number;
 
   @ManyToOne(() => User, user => user.contacts)
   user: User;
 
   @ManyToOne(() => ContactType, contactType => contactType.contacts)
-  type: ContactType;
+  contactType: ContactType;
 
 }
