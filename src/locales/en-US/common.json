@@ -155,7 +155,7 @@
   },
   "contactType": {
     "label": "Contact type",
-    "selectOrCreate": "Select a contact type or type a name to create it",
+    "selectOrCreate": "Select a type or type a name to create it",
     "selectEmpty": "No contact type created so far"
   },
   "country": {
@@ -173,11 +173,13 @@
   },
   "city": {
     "label": "City",
-    "selectOrCreate": "Select a city",
+    "select": "Select a city",
     "selectEmpty": "No city created so far",
-    "name": "A name must be provided to a city",
-    "region": "Please select a state",
-    "informError" : "Please provide a information to create a city #errors#"
+    "name": "Type a name",
+    "country": "Select a country",
+    "region": "Select a region",
+    "informError" : "Please provide a information to create a city #errors#",
+    "create": "Add new city"
   },
   "profile": {
     "label": "Profile",
@@ -185,9 +187,12 @@
     "selectEmpty": "No profile created so far"
   },
   "userType": {
-    "label": "Type USer",
-    "selectOrCreate": "Select a type or type a name to create it",
-    "selectEmpty": "No type user created so far"
+    "label": "User Type",
+    "select": "Select a user type",
+    "selectEmpty": "No user type created so far",
+    "admin": "Administrator",
+    "librarian": "Librarian",
+    "person": "Person"
   },
   "person": {
     "label": "Person",
@@ -202,20 +207,20 @@
     "profiles": "Profiles",
     "borrows": "Borrows",
     "addresses": "Addresses",
-    "removeProfile": "Remove Profile",
+    "removeContact": "Remove Contact",
     "removeAddress": "Remove Address",
     "contactType": "Contact Type",
     "profile": "Profile",
     "contact": "Contact info",
-    "informError": "Please provide information to create person #errors#",
-    "informErrorsContact": "Please provide information to a contact",
-    "informErrorsProfile": "Please select a profile",
-    "informErrorsAddress": "Please profive information to a address",
+    "informError": "Please provide information to create person: #errors#",
+    "informErrorsContact": "Please provide information to a contact: #errors#",
+    "informErrorsAddress": "Please profive information to a address: #errors#",
     "hasBeenAdd": "This contact already been added"
   },
   "address":{
+    "number": "Number",
     "complement": "Complement",
-    "zipcode": "Zipcode",
+    "zipcode": "Zipcode/Postcode",
     "neighborhood": "Neighborhood",
     "publicPlace": "Public Place"
   },

@@ -37,7 +37,11 @@ export default class PersonRepository extends RepositoryBase {
       let filter = {
         relations: [
           'contacts',
+          'contacts.contactType',
           'addresses',
+          'addresses.city',
+          'addresses.city.region',
+          'addresses.city.region.country',
         ],
       };
 

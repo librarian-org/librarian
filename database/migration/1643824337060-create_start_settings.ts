@@ -8,6 +8,7 @@ export class createStartSettings1643824337060 implements MigrationInterface {
       .into('settings', [
         'id',
         'daysReturnDate',
+        'allowedRenovations',
         'backupPath',
       ])
       .values({

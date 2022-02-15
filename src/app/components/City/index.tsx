@@ -1,17 +1,21 @@
-import React, { useState, useCallback, useRef, ReactNode } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 
 import Button from '../Button';
-import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
+import { FiSave } from 'react-icons/fi';
 import i18n from '../../i18n';
 import Input from '../Input';
 import { SelectHandles } from '../CreatableSelectInput';
 import ReactModal from 'react-modal';
-import RegionSelect from '../Region/RegionSelect';
-import CreateRegion from '../Region';
+import RegionSelect from '../RegionSelect';
 import { useToast } from '../../hooks/toast';
+import CountrySelect, { Option } from '../CountrySelect';
+import { OnChangeValue } from 'react-select';
+import { Container, Row } from './styles';
+
 interface ModalProps {
   isOpen: boolean;
   setOpen: () => void;
+  handleCreated: (created: Option) => void;
 }
 
 interface SelectType {
@@ -19,23 +23,32 @@ interface SelectType {
   name: string;
 }
 
-const CreateCity: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
+const CreateCity: React.FC<ModalProps> = ({
+  isOpen,
+  setOpen,
+  handleCreated,
+}) => {
   const { addToast } = useToast();
 
+  const [selectedCountry, setSelectedCountry] = useState<SelectType>();
+  const [selectedRegion, setSelectedRegion] = useState<SelectType>();
   const [name, setName] = useState('');
-  const [addingRegion, setAddingRegion] = useState(false);
   const refRegion = useRef<SelectHandles>(null);
+  const refCountry = useRef<SelectHandles>(null);
 
   const handleSave = useCallback(() => {
     const errors: string[] = [];
-    const region = refRegion.current.getValue<SelectType>();
+
+    if (!selectedCountry) {
+      errors.push(i18n.t('city.country'));
+    }
+
+    if (!selectedRegion) {
+      errors.push(i18n.t('city.region'));
+    }
 
     if (!name) {
       errors.push(i18n.t('city.name'));
-    }
-
-    if (!region) {
-      errors.push(i18n.t('city.region'));
     }
 
     if (errors.length > 0) {
@@ -53,20 +66,41 @@ const CreateCity: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
       entity: 'City',
       value: {
         name,
-        regionId: region.id,
+        regionId: selectedRegion.id,
       },
     }) as { id: string };
+
     setOpen();
     setName('');
-    return;
-  }, [addToast, name, setOpen]);
+    setSelectedCountry(null);
+    setSelectedRegion(null);
 
-  return addingRegion ? (
-    <CreateRegion
-      isOpen={addingRegion}
-      setOpen={() => setAddingRegion(false)}
-    ></CreateRegion>
-  ) : (
+    handleCreated({ value: result.id, label: name });
+  }, [addToast, handleCreated, name, selectedCountry, selectedRegion, setOpen]);
+
+  const handleCountryCustomChange = useCallback(
+    (selectedValue: OnChangeValue<Option, false>) => {
+      const country = {
+        id: selectedValue.value,
+        name: selectedValue.label,
+      };
+      setSelectedCountry(country);
+    },
+    []
+  );
+
+  const handleRegionCustomChange = useCallback(
+    (selectedValue: OnChangeValue<Option, false>) => {
+      const region = {
+        id: selectedValue.value,
+        name: selectedValue.label,
+      };
+      setSelectedRegion(region);
+    },
+    []
+  );
+
+  return (
     <ReactModal
       shouldCloseOnOverlayClick={true}
       onRequestClose={setOpen}
@@ -75,36 +109,47 @@ const CreateCity: React.FC<ModalProps> = ({ isOpen, setOpen }) => {
       className={'city-modal'}
       overlayClassName="modal-overlay"
     >
-      <div>
-        <RegionSelect ref={refRegion} containerStyle={{ flexGrow: 2 }} />
-        &nbsp;
-        <Button
-          style={{}}
-          color="primary"
-          onClick={() => setAddingRegion(true)}
-        >
-          <FiPlus size={20} />
-        </Button>
-        &nbsp;
-        <Input
-          containerStyle={{ flexGrow: 1, marginRight: '18px' }}
-          type="text"
-          name="name"
-          label={i18n.t('city.label')}
-          autoFocus
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-          placeholder={i18n.t('city.label')}
-        />
-        &nbsp;
-        <Button
-          color="primary"
-          title={i18n.t('button.save')}
-          onClick={handleSave}
-        >
-          <FiSave size={20} />
-        </Button>
-      </div>
+      <Container>
+        <h2>{i18n.t('city.create')}</h2>
+
+        <Row>
+          <CountrySelect
+            ref={refCountry}
+            handleCustomChange={handleCountryCustomChange}
+          />
+        </Row>
+        {selectedCountry && (
+          <Row>
+            <RegionSelect
+              ref={refRegion}
+              countryId={selectedCountry.id}
+              handleCustomChange={handleRegionCustomChange}
+            />
+          </Row>
+        )}
+        {selectedRegion && (
+          <Row>
+            <Input
+              type="text"
+              name="name"
+              label={i18n.t('city.label')}
+              autoFocus
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              placeholder={i18n.t('city.label')}
+            />
+          </Row>
+        )}
+        <Row>
+          <Button
+            color="primary"
+            title={i18n.t('button.save')}
+            onClick={handleSave}
+          >
+            <FiSave size={20} />
+          </Button>
+        </Row>
+      </Container>
     </ReactModal>
   );
 };

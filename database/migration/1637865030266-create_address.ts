@@ -19,6 +19,10 @@ export class createAddress1637865030266 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'number',
+            type: 'varchar',
+          },
+          {
             name: 'zipcode',
             type: 'varchar',
           },
