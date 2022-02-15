@@ -486,7 +486,6 @@ const CreatePerson: React.FC = () => {
           </List>
         </Row>
       </SectionContent>
-      {JSON.stringify(addresses)}
       <ButtonContainer>
         <Button
           color="primary"
