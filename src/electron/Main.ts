@@ -302,6 +302,30 @@ export default class Main {
       }
     });
 
+    ipcMain.on('userCreate', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).create(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('userUpdate', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).update(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
     ipcMain.on('listEdition', async (event, content: Event[]) => {
       try {
         const { value, entity } = content[0];
