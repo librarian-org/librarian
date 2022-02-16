@@ -126,7 +126,7 @@ export default createGlobalStyle`
     }
   }
 
-  .city-modal{
+  .city-modal, .password-modal {
     background-color: ${(props) => props.theme.colors.card.background};
     position: absolute;
     top: 10%;
@@ -141,7 +141,22 @@ export default createGlobalStyle`
     z-index: 1000;
   }
 
-  .modal-overlay{
+  .password-modal {
+    overflow-y: scroll;
+  }
+
+  .password-modal::-webkit-scrollbar {
+    border-radius: 8px;
+    width: 8px;
+    background: ${(props) => props.theme.colors.input.background};
+  }
+
+  .password-modal::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: ${(props) => tint(0.2, props.theme.colors.card.background)};
+  }
+
+  .modal-overlay {
     background-color: ${(props) => rgba(props.theme.colors.text, 0.4)};
     position: fixed;
     top: 0;

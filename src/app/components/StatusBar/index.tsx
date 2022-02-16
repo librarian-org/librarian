@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FaBell, FaRegBell } from 'react-icons/fa';
-import { FiUser } from 'react-icons/fi';
 import { on, off } from '../../util/EventHandler';
 import { ToastMessage, useToast } from '../../hooks/toast';
 import AlertsPanel from '../AlertsPanel';
 
-import { Container, StatusItem } from './styles';
+import { Container, StatusItem, StatusItemContainer } from './styles';
 import i18n from '../../i18n';
-import { useAuth } from '../../hooks/auth';
+import LoggedUser from '../LoggedUser';
 
 const StatusBar: React.FC = () => {
   const [alerts, setAlerts] = useState<ToastMessage[]>();
   const [alertsPanel, setAlertsPanel] = useState(false);
-  const { user } = useAuth();
   const { getAlerts, addToast } = useToast();
 
   useEffect(() => {
@@ -42,13 +40,14 @@ const StatusBar: React.FC = () => {
   return (
     <Container>
       <StatusItem>
-        <FiUser size={16} />
-        <span>{user && user.name}</span>
+        <LoggedUser />
       </StatusItem>
       <StatusItem>
-        <span onClick={handleAlertPanelClick}>
-          {alerts && alerts.length > 0 ? <FaBell /> : <FaRegBell />}
-        </span>
+        <StatusItemContainer onClick={handleAlertPanelClick}>
+          <span>
+            {alerts && alerts.length > 0 ? <FaBell /> : <FaRegBell />}
+          </span>
+        </StatusItemContainer>
       </StatusItem>
       {alertsPanel && <AlertsPanel alerts={alerts} />}
     </Container>

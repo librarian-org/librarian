@@ -20,6 +20,11 @@ interface Create {
 interface Update extends Create {
   id: string;
 }
+interface ChangePassword {
+  userId: string;
+  password: string;
+  newPassword: string;
+}
 
 export default class UserRepository extends RepositoryBase {
   public async create(content: Create): Promise<unknown | unknown[]> {
@@ -73,6 +78,27 @@ export default class UserRepository extends RepositoryBase {
       const user = (await this.repository.findOne(content.where)) as User;
 
       if (user && bcrypt.compareSync(content.password, user.password)) {
+        return user;
+      }
+
+      return false;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  public async changePassword(
+    content: ChangePassword
+  ): Promise<unknown | unknown[]> {
+    try {
+      const user = (await this.repository.findOne({
+        where: { id: content.userId },
+      })) as User;
+
+      if (user && bcrypt.compareSync(content.password, user.password)) {
+        user.password = await bcrypt.hash(content.newPassword, 12);
+        await this.repository.save(user);
         return user;
       }
 

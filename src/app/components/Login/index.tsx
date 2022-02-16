@@ -58,7 +58,7 @@ const Login: React.FC = () => {
     <Container>
       <Center>
         <Card>
-          <Form>
+          <Form onSubmit={e => e.preventDefault()}>
             <img src={logoImg} alt="Librarian" width="64" />
 
             <Input

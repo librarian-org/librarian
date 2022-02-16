@@ -48,7 +48,9 @@
     "save": "Save",
     "remove": "Remove",
     "add": "Add",
-    "create": "Create"
+    "create": "Create",
+    "logout": "Logout",
+    "changePassword": "Change password"
   },
   "home": {
     "message": "Hello World!"
@@ -184,7 +186,14 @@
   "profile": {
     "label": "Profile",
     "selectOrCreate": "Select a profile or type a name to create it",
-    "selectEmpty": "No profile created so far"
+    "selectEmpty": "No profile created so far",
+    "informError": "Please provide information to change password: #errors#",
+    "typePassword": "Type password",
+    "typeNewPassword": "Type new password",
+    "typeConfirmPassword": "Type password confirmation",
+    "oldPasswordInvalid": "Invalid current password",
+    "newAndConfirmPassword": "New password and it's confirmation don't match",
+    "successPasswordChange": "Sucessfully password change"
   },
   "userType": {
     "label": "User Type",
@@ -199,6 +208,8 @@
     "name": "Name",
     "login": "Login",
     "password": "Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
     "language": "Language",
     "notes": "Notes",
     "document": "Document",

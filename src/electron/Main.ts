@@ -326,6 +326,18 @@ export default class Main {
       }
     });
 
+    ipcMain.on('changePassword', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).changePassword(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
     ipcMain.on('listEdition', async (event, content: Event[]) => {
       try {
         const { value, entity } = content[0];

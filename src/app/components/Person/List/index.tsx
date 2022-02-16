@@ -22,25 +22,24 @@ const PersonList: React.FC = () => {
 
   useEffect(() => {
     try {
-    setLoading(true);
-    const response = window.api.sendSync('listPerson', {
-      entity: 'User',
-      value: {
-        where: null,
-        pageStart: 0,
-        pageSize: rowsPerPage,
-      },
-    }) as PaginatedSearch<Person>;
-    setList(response.data);
-    setLoading(false);
-  } catch (err) {
-    console.error(err);
-  }
-
+      setLoading(true);
+      const response = window.api.sendSync('listPerson', {
+        entity: 'User',
+        value: {
+          where: null,
+          pageStart: 0,
+          pageSize: rowsPerPage,
+        },
+      }) as PaginatedSearch<Person>;
+      setList(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
   }, [rowsPerPage]);
 
   const handleUpdate = (item: Person): void => {
-    trigger(AppEvent.personTab, { action: Actions.update, value: item});
+    trigger(AppEvent.personTab, { action: Actions.update, value: item });
   };
 
   const handleRowClick = (item: Person) => {
@@ -65,15 +64,24 @@ const PersonList: React.FC = () => {
         id: 'edit',
         Cell: (row: Cell<Person>) => {
           return (
-          <ColumWrapper>
-            <FaPen size={20} title={i18n.t('person.edit')} onClick={(event) => { event.stopPropagation(); handleUpdate(row.row.original)}} />
-          </ColumWrapper>)
-        }
-      }
+            <ColumWrapper>
+              {row.row.original.login !== 'admin' && (
+                <FaPen
+                  size={20}
+                  title={i18n.t('person.edit')}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleUpdate(row.row.original);
+                  }}
+                />
+              )}
+            </ColumWrapper>
+          );
+        },
+      },
     ],
-    [],
+    []
   );
-
 
   const handleSubmit = useCallback(
     async ({ pageIndex = 0 }: Search) => {
@@ -102,7 +110,7 @@ const PersonList: React.FC = () => {
         });
       }
     },
-    [addToast, rowsPerPage],
+    [addToast, rowsPerPage]
   );
 
   return (
