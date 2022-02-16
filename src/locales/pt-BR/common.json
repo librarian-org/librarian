@@ -48,7 +48,9 @@
     "save": "Salvar",
     "remove": "Remover",
     "add": "Adicionar",
-    "create": "Criar"
+    "create": "Criar",
+    "logout": "Sair",
+    "changePassword": "Trocar senha"
   },
   "home": {
     "message": "Olá Mundo!"
@@ -59,7 +61,28 @@
     "itemsPerPage": "Itens por página"
   },
   "borrow": {
-    "label": "Empréstimo"
+    "label": "Empréstimo",
+    "borrow": "Empréstimo",
+    "reservation": "Reservas",
+    "selectTitleToBorrow": "Selecione um título para emprestar",
+    "classification": "Classificação (Tombo)",
+    "title": "Título",
+    "borrowDate": "Data Empréstimo",
+    "returnDate": "Data Devolução",
+    "reserve": "Reservar",
+    "informErrors": "Para prosseguir, verifique os erros: #errors#",
+    "anErrorHasOccurred": "Ocorreu um erro",
+    "anErrorOnLoadBorrow": "Ocorreu um erro carregando os Empréstimos",
+    "anErrorOnLoadReservations": "Ocorreu um erro carregando as Reservas",
+    "alreadyBorrowed": "Título já Emprestado",
+    "alreadyReserved": "Título já Reservado",
+    "cantRenewAnymore": "Esse Título atingiu o máximo de renovações",
+    "status": {
+      "1": "Devolvido",
+      "2": "Emprestado a partir da reserva",
+      "3": "Devolvido",
+      "4": "Devolvido com atraso"
+    }
   },
   "title": {
     "label": "Título",
@@ -83,13 +106,28 @@
     "typePublicationDate": "Digite a data de publicação",
     "removeEditionInformation": "Remover informações de edição da lista",
     "removeAuthorInformation": "Remover autor da lista",
-    "removeCategoryInformation": "Remover categoria da lista"
+    "removeCategoryInformation": "Remover categoria da lista",
+
+
+    "select": "Digite ou selecione um título",
+    "selectEmpty": "Nenhum título encontrado",
+
+    "edit": "Editar"
   },
   "settings": {
     "label": "Configurações",
-    "time": "Quantidade de dias a partir do emprestimo em que o leitor deve devolver o livro",
-    "path": "Local onde será feito o backup das informações do sistema",
+    "daysReturnDate": "Duração do empréstimo em dias",
+    "backupPath": "Pasta da cópia de segurança",
+    "allowedRenovations": "Renovações permitidas",
     "saved": "Suas configurações foram salvas"
+  },
+  "login": {
+    "login": "Entrar",
+    "username": "Usuário",
+    "typeUsername": "Digite seu usuário",
+    "password": "Senha",
+    "typePassword": "Digite sua senha",
+    "invalid": "Login inválido"
   },
   "notifications": {
     "information": "Informação",
@@ -114,54 +152,90 @@
     "selectOrCreate": "Selecione uma categoria ou digite um nome para criá-la",
     "selectEmpty": "Nenhuma categoria criada até o momento"
   },
+  "user": {
+    "select": "Selecione uma pessoa",
+    "label": "Pessoa",
+    "selectEmpty": "Nenhuma pessoa cadastrada"
+  },
   "contactType": {
     "label": "Tipo de contato",
-    "selectOrCreate": "Selecione um tipo de contato ou escreva um nome para cria-lo",
+    "selectOrCreate": "Selecione um tipo ou escreva um nome para cria-lo",
     "selectEmpty": "Nenhum tipo de contato criado"
   },
-  "state": {
+  "country": {
+    "label": "País",
+    "select": "Selecione um país",
+    "selectEmpty": "País não encontrado"
+  },
+  "region": {
     "label": "Estado",
     "selectOrCreate": "Selecione um estado ou escreva um nome para cria-lo",
-    "selectEmpty": "Nenhum estado criado"
+    "selectEmpty": "Nenhum estado criado",
+    "name": "O nome deve ser preenchido",
+    "country": "Por favor selecione um país",
+    "informError" : "Por favor forneça todas as informações para criar um estado #errors#"
   },
   "city": {
     "label": "Cidade",
-    "selectOrCreate": "Selecione uma cidade",
-    "selectEmpty": "Nenhuma cidade criada"
+    "select": "Selecione uma cidade",
+    "selectEmpty": "Nenhuma cidade criada",
+    "name": "Digite um nome",
+    "country": "Selecione um país",
+    "region": "Selecione um estado",
+    "informError" : "Por favor forneça todas as informações para criar uma cidade: #errors#",
+    "create": "Adicionar nova cidade"
   },
   "profile": {
     "label": "Perfil",
     "selectOrCreate": "Selecione um perfil ou escreva um nome para cria-lo",
-    "selectEmpty": "Nenhum perfil criado"
+    "selectEmpty": "Nenhum perfil criado",
+    "informError": "Por favor forneça as informações para alterar a senha: #errors#",
+    "typePassword": "Digite a senha",
+    "typeNewPassword": "Digite a nova senha",
+    "typeConfirmPassword": "Digite a confirmação de senha",
+    "oldPasswordInvalid": "Senha atual inválida",
+    "newAndConfirmPassword": "Nova senha e sua confirmação não conferem",
+    "successPasswordChange": "Senha alterada com sucesso"
+  },
+  "userType": {
+    "label": "Tipo de Usuário",
+    "select": "Selecione um tipo de usuário",
+    "selectEmpty": "Nenhum tipo de usuário criado",
+    "admin": "Administrador",
+    "librarian": "Bibliotecário",
+    "person": "Pessoa"
   },
   "person": {
     "label": "Pessoa",
     "name": "Nome",
     "login": "Login",
     "password": "Senha",
+    "newPassword": "Nova senha",
+    "confirmPassword": "Confirmar senha",
     "language": "Idioma",
-    "notes": "Obeservações",
+    "notes": "Observações",
     "document": "Documento",
     "userType": "Tipo usuário",
     "contacts": "Contatos",
     "profiles": "Perfis",
     "borrows": "Emprestimos",
     "addresses": "Endereços",
-    "removeProfile": "Excluir perfil",
+    "removeContact": "Excluir contato",
     "removeAddress": "Excluir endereço",
     "contactType": "Tipo de contato",
     "profile": "Perfil",
     "contact": "Informação do contato",
-    "informErrorsContact": "Por favor forneça informação do contato",
-    "informErrorsProfile": "Por favor selecine um perfil",
-    "informErrorsAddress": "Por favor forneça informação de endereço",
+    "informError": "Por favor forneça as informações para criar a pessoa: #errors#",
+    "informErrorsContact": "Por favor forneça informação do contato: #errors#",
+    "informErrorsAddress": "Por favor forneça informação de endereço: #errors#",
     "hasBeenAdd": "Este contato já foi adicionado"
   },
   "address":{
-    "complement": "Rua",
     "zipcode": "CEP",
+    "publicPlace": "Logradouro",
+    "number": "Número",
     "neighborhood": "Bairro",
-    "publicPlace": "Referência"
+    "complement": "Complemento"
   },
   "countries": {
     "AF": "Afeganistão",

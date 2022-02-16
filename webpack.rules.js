@@ -25,5 +25,9 @@ module.exports = [
         transpileOnly: true
       }
     }
-  }
+  },
+  {
+    test: /\.(png|jpg|jpeg|gif)$/i,
+    type: "asset/resource",
+  },
 ];

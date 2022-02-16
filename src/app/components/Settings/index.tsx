@@ -1,104 +1,116 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { FiSave } from 'react-icons/fi';
+import { Setting } from '../../util/DefaultEntities';
 import { useToast } from '../../hooks/toast';
 import i18n from '../../i18n';
 import Button from '../Button';
 import Input from '../Input';
-import { ButtonContainer, Container } from './styles';
-interface Settings {
-  id?: number;
-  daysReturnDate: string;
-  backupPath: string;
-}
+import { ButtonContainer, Container, Wrapper, Row } from './styles';
+
+const defaultSetting: Setting = {
+  id: 1,
+  daysReturnDate: '7',
+  allowedRenovations: '3',
+  backupPath: '',
+};
+
 const Settings: React.FC = () => {
   const { addToast } = useToast();
 
-  const [settings, setSettings] = useState(null);
-  const [daysReturnDate, setDaysReturnDate] = useState('7');
-  const [backupPath, setBackupPath] = useState('');
+  const [settings, setSettings] = useState<Setting>(defaultSetting);
 
   useEffect(() => {
     const result = window.api.sendSync('list', {
       entity: 'Settings',
       value: {},
-    }) as Settings[];
-
+    }) as Setting[];
     if (result.length > 0) {
       setSettings(result[0]);
-      setDaysReturnDate(result[0].daysReturnDate);
-      setBackupPath(result[0].backupPath);
-      return;
     }
   }, []);
 
   const handleSave = useCallback(() => {
-    const result = window.api.sendSync(settings.id ? 'update' : 'create', {
-      entity: 'Settings',
-      value: settings.id
-        ? {
-            id: settings.id,
-            daysReturnDate: daysReturnDate,
-            backupPath: backupPath,
-          }
-        : {
-            daysReturnDate: daysReturnDate,
-            backupPath: backupPath,
-          },
-    }) as { id: string };
+    try {
+      window.api.sendSync('update', {
+        entity: 'Settings',
+        value: {
+          id: settings.id,
+          daysReturnDate: settings.daysReturnDate,
+          backupPath: settings.backupPath,
+          allowedRenovations: settings.allowedRenovations,
+        },
+      });
 
-    addToast({
-      title: i18n.t('notifications.success'),
-      type: 'success',
-      description: i18n.t('settings.saved'),
-    });
+      addToast({
+        title: i18n.t('notifications.success'),
+        type: 'success',
+        description: i18n.t('settings.saved'),
+      });
+    } catch (err) {
+      addToast({
+        title: i18n.t('borrow.anErrorHasOccurred'),
+        type: 'error',
+        description: err,
+      });
+    }
+  }, [settings, addToast]);
 
-    return;
-  }, [backupPath, daysReturnDate, settings]);
+  const setConfig = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, config: string) => {
+      const newSetting = { [config]: event.target.value };
+      const mergedSetting = { ...settings, ...newSetting };
+
+      setSettings(mergedSetting);
+    },
+    [settings]
+  );
 
   return (
     <Container>
-      <>
-        <div
-          style={{
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Input
-            containerStyle={{ marginRight: '18px' }}
-            type="number"
-            name="daysReturnDate"
-            label={i18n.t('settings.time')}
-            autoFocus
-            onChange={(e) => setDaysReturnDate(e.target.value)}
-            value={daysReturnDate}
-            placeholder={i18n.t('settings.time')}
-          />
+      {settings && (
+        <Wrapper>
+          <Row>
+            <Input
+              type="number"
+              name="daysReturnDate"
+              label={i18n.t('settings.daysReturnDate')}
+              autoFocus
+              onChange={(e) => setConfig(e, 'daysReturnDate')}
+              value={settings.daysReturnDate}
+              placeholder={i18n.t('settings.daysReturnDate')}
+            />
 
-          <Input
-            directory=""
-            webkitdirectory=""
-            type="file"
-            name="path"
-            label={i18n.t('settings.path')}
-            value={backupPath}
-            onChange={(e) => setBackupPath(e.target.value)}
-            placeholder={i18n.t('settings.path')}
-          />
-        </div>
+            <Input
+              type="number"
+              name="allowedRenovations"
+              label={i18n.t('settings.allowedRenovations')}
+              onChange={(e) => setConfig(e, 'allowedRenovations')}
+              value={settings.allowedRenovations}
+              placeholder={i18n.t('settings.allowedRenovations')}
+            />
 
-        <ButtonContainer>
-          <Button
-            color="primary"
-            title={i18n.t('button.save')}
-            onClick={handleSave}
-          >
-            <FiSave size={20} />
-          </Button>
-        </ButtonContainer>
-      </>
+            {/* <Input
+              directory=""
+              webkitdirectory=""
+              type="file"
+              name="path"
+              label={i18n.t('settings.backupPath')}
+              value={settings.backupPath}
+              onChange={(e) => setConfig(e, 'backupPath')}
+              placeholder={i18n.t('settings.backupPath')}
+            /> */}
+          </Row>
+          <ButtonContainer>
+            <Button
+              color="primary"
+              title={i18n.t('button.save')}
+              onClick={handleSave}
+            >
+              <FiSave size={20} />
+            </Button>
+          </ButtonContainer>
+        </Wrapper>
+      )}
     </Container>
   );
 };

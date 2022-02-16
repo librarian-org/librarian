@@ -20,6 +20,9 @@ export class Address {
   publicPlace: string;
 
   @Column()
+  number: string;
+
+  @Column()
   cityId: number;
 
   @Column()

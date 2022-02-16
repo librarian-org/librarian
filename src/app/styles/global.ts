@@ -36,12 +36,16 @@ export default createGlobalStyle`
     color: ${(props) => props.theme.colors.primary.light};
 
     &:hover {
-      ${(props) => props.theme.title == 'light' && css`
-        background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
-      `}
-      ${(props) => props.theme.title == 'dark' && css`
-        background: ${(props) => tint(0.2, props.theme.colors.primary.dark)};
-      `}
+      ${(props) =>
+        props.theme.title == 'light' &&
+        css`
+          background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
+        `}
+      ${(props) =>
+        props.theme.title == 'dark' &&
+        css`
+          background: ${(props) => tint(0.2, props.theme.colors.primary.dark)};
+        `}
     }
   }
 
@@ -50,12 +54,18 @@ export default createGlobalStyle`
     color: ${(props) => props.theme.colors.secondary.light};
 
     &:hover {
-      ${(props) => props.theme.title == 'light' && css`
-        background: ${(props) => shade(0.2, props.theme.colors.secondary.dark)};
-      `}
-      ${(props) => props.theme.title == 'dark' && css`
-        background: ${(props) => tint(0.2, props.theme.colors.secondary.dark)};
-      `}
+      ${(props) =>
+        props.theme.title == 'light' &&
+        css`
+          background: ${(props) =>
+            shade(0.2, props.theme.colors.secondary.dark)};
+        `}
+      ${(props) =>
+        props.theme.title == 'dark' &&
+        css`
+          background: ${(props) =>
+            tint(0.2, props.theme.colors.secondary.dark)};
+        `}
     }
   }
 
@@ -116,7 +126,37 @@ export default createGlobalStyle`
     }
   }
 
-  .modal-overlay{
+  .city-modal, .password-modal {
+    background-color: ${(props) => props.theme.colors.card.background};
+    position: absolute;
+    top: 10%;
+    left: calc( 50% -  500px / 2 );
+    right: auto;
+    bottom: auto;
+
+    margin-right: -50%;
+    border-radius: 8px;
+    width: 500px;
+    height: 350px;
+    z-index: 1000;
+  }
+
+  .password-modal {
+    overflow-y: scroll;
+  }
+
+  .password-modal::-webkit-scrollbar {
+    border-radius: 8px;
+    width: 8px;
+    background: ${(props) => props.theme.colors.input.background};
+  }
+
+  .password-modal::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: ${(props) => tint(0.2, props.theme.colors.card.background)};
+  }
+
+  .modal-overlay {
     background-color: ${(props) => rgba(props.theme.colors.text, 0.4)};
     position: fixed;
     top: 0;

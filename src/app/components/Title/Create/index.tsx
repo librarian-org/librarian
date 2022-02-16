@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { format, parseISO } from 'date-fns';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import { v4 } from 'uuid';
@@ -14,12 +9,17 @@ import Button from '../../Button';
 import CategorySelect from '../../CategorySelect';
 import { SelectHandles } from '../../CreatableSelectInput';
 
+import { AppEvent } from '../../../../common/AppEvent';
+import { trigger } from '../../../util/EventHandler';
+import { Actions } from '../../../../common/Actions';
+
 import Input from '../../Input';
 import PublisherSelect from '../../PublisherSelect';
 import SectionContent from '../../Sections/SectionContent';
 import SectionHeader from '../../Sections/SectionHeader';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
+import { Title } from '../Title';
 
 interface SelectType {
   id: string;
@@ -238,6 +238,17 @@ const TitleCreate: React.FC = () => {
         },
       });
     });
+
+    const insertedTitle = window.api.sendSync('readTitle', {
+      entity: 'Title',
+      value: {
+        where: {
+          id: result.id,
+        },
+      },
+    }) as Title;
+
+    trigger(AppEvent.titleTab, { action: Actions.read, value: insertedTitle });
   }, [addToast, authors, categories, isbn, publishers, title]);
 
   return (
@@ -267,7 +278,7 @@ const TitleCreate: React.FC = () => {
             name="ISBN"
             label="ISBN"
             value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
+            onChange={(e) => setIsbn(e.target.value.replace(/\D/,''))}
             placeholder={i18n.t('title.typeISBN')}
           />
         </div>
@@ -328,9 +339,7 @@ const TitleCreate: React.FC = () => {
                   <ListItem key={v4()}>
                     <span>{publisher.classification}</span>
                     <span>{publisher.edition}</span>
-                    <span>
-                      {format(publisher.publishedAt, 'dd/MM/yyyy')}
-                    </span>
+                    <span>{format(publisher.publishedAt, 'dd/MM/yyyy')}</span>
                     <span>{publisher.publisher.name}</span>
                     <span style={{ width: '10%', textAlign: 'right' }}>
                       <FiTrash2

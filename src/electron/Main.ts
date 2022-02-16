@@ -23,6 +23,10 @@ import fs from 'fs';
 import { entityMap } from './database/EntityMap';
 import RepositoryBase from './database/repository/RepositoryBase';
 import TitleRepository from './database/repository/TitleRepository';
+import BorrowRepository from './database/repository/BorrowRepository';
+import TitlePublisherRepository from './database/repository/TitlePublisherRepository';
+import UserRepository from './database/repository/UserRepository';
+import PersonRepository from './database/repository/PersonRepository';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -172,6 +176,174 @@ export default class Main {
         event.returnValue = await this.getCustomRepository(
           entity,
           TitleRepository
+        ).listTitle(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readTitle', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          TitleRepository
+        ).read(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('listPerson', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          PersonRepository
+        ).listPerson(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readPerson', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          PersonRepository
+        ).read(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('listBorrow', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).list(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readBorrow', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).read(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('readReservation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).readReservation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('updateRenovation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).updateRenovation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('returns', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).returns(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('borrowByReservation', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          BorrowRepository
+        ).borrowByReservation(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('userLogin', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).login(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('userCreate', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).create(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('userUpdate', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).update(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('changePassword', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          UserRepository
+        ).changePassword(value);
+      } catch (err) {
+        log.error(err);
+      }
+    });
+
+    ipcMain.on('listEdition', async (event, content: Event[]) => {
+      try {
+        const { value, entity } = content[0];
+        event.returnValue = await this.getCustomRepository(
+          entity,
+          TitlePublisherRepository
         ).listTitle(value);
       } catch (err) {
         log.error(err);

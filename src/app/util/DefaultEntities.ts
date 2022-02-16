@@ -24,13 +24,12 @@ export interface SearchSource {
 }
 
 const actionCreate = {
-  action: Actions.create
-}
+  action: Actions.create,
+};
 
 const actionList = {
-  action: Actions.list
-}
-
+  action: Actions.list,
+};
 
 export const entities: SearchSource[] = [
   {
@@ -42,16 +41,22 @@ export const entities: SearchSource[] = [
     handler: {
       onClick: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.borrowTab);
+        trigger(AppEvent.borrowTab, actionCreate);
       },
       onPress: (): void => {
         trigger(AppEvent.quickSearch);
-        trigger(AppEvent.borrowTab);
+        trigger(AppEvent.borrowTab, actionCreate);
       },
     },
     action: {
-      onClick: () => console.log('emprestimo action click'),
-      onPress: () => console.log('emprestimo action press'),
+      onClick: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.borrowTab, actionCreate);
+      },
+      onPress: (): void => {
+        trigger(AppEvent.quickSearch);
+        trigger(AppEvent.borrowTab, actionCreate);
+      },
     },
   },
   {
@@ -136,3 +141,10 @@ export const entities: SearchSource[] = [
     },
   },
 ];
+
+export interface Setting {
+  id: number;
+  daysReturnDate: string;
+  allowedRenovations: string;
+  backupPath: string;
+}

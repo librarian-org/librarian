@@ -10,6 +10,6 @@ export class ContactType
   @Column()
   name: string;
 
-  @OneToMany(() => Contact, contact => contact.type)
+  @OneToMany(() => Contact, contact => contact.contactType)
   contacts: Contact[];
 }
