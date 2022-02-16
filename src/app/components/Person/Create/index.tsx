@@ -210,7 +210,7 @@ const CreatePerson: React.FC = () => {
       return;
     }
 
-    const result = window.api.sendSync('create', {
+    const result = window.api.sendSync('userCreate', {
       entity: 'User',
       value: {
         name,

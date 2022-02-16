@@ -62,6 +62,7 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
   const [document, setDocument] = useState('');
   const [notes, setNotes] = useState('');
   const [contact, setContact] = useState('');
+  const [password, setPassword] = useState('');
 
   const [complement, setComplement] = useState('');
   const [zipcode, setZipcode] = useState('');
@@ -256,17 +257,22 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
       return;
     }
 
-    const result = window.api.sendSync('update', {
+    let insertEntity = {
+      id: item.id,
+      name,
+      login,
+      language: i18n.language,
+      notes,
+      document,
+      userTypeId: userType.id,
+    };
+    if (password) {
+      insertEntity = { ...insertEntity, ...{ password } };
+    }
+
+    const result = window.api.sendSync('userUpdate', {
       entity: 'User',
-      value: {
-        id: item.id,
-        name,
-        login,
-        language: i18n.language,
-        notes,
-        document,
-        userTypeId: userType.id,
-      },
+      value: insertEntity,
     }) as { id: string };
 
     ['Contact', 'Address'].map((tableName) => {
@@ -317,7 +323,17 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
       action: Actions.read,
       value: insertedPerson,
     });
-  }, [addToast, addresses, contacts, document, item.id, login, name, notes]);
+  }, [
+    addToast,
+    addresses,
+    contacts,
+    document,
+    item.id,
+    login,
+    name,
+    notes,
+    password,
+  ]);
 
   const handleCityModal = useCallback(() => {
     setAddingCity((oldState) => !oldState);
@@ -370,6 +386,17 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
                   value={login}
                   required={false}
                   placeholder={i18n.t('person.login')}
+                />
+              </Column>
+              <Column>
+                <Input
+                  type="password"
+                  name="password"
+                  label={i18n.t('person.password')}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  required={false}
+                  placeholder={i18n.t('person.password')}
                 />
               </Column>
               <Column>
