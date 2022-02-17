@@ -113,7 +113,9 @@
     "select": "Digite ou selecione um título",
     "selectEmpty": "Nenhum título encontrado",
 
-    "edit": "Editar"
+    "edit": "Editar",
+
+    "invalidISBN": "ISBN inválido"
   },
   "settings": {
     "label": "Configurações",
