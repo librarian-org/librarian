@@ -21,11 +21,12 @@ import Button from '../Button';
 import { FiDownload, FiPlus, FiRefreshCw, FiShare } from 'react-icons/fi';
 import { SelectHandles } from '../CreatableSelectInput';
 import UserSelect, { Option } from '../UserSelect';
-import { format, parseISO } from 'date-fns';
+import { addDays, format, parseISO } from 'date-fns';
 import TitleSelect from '../TitleSelect';
 import { ThemeContext } from 'styled-components';
 import { OnChangeValue } from 'react-select';
 import { BorrowStatus } from '../../../common/BorrowStatus';
+import { useSettings } from '../../hooks/useSettings';
 
 interface SelectType {
   id: string;
@@ -39,6 +40,7 @@ interface BorrowSearch extends Search {
 const Borrow: React.FC = () => {
   const { colors } = useContext(ThemeContext);
   const { addToast } = useToast();
+  const settings = useSettings();
 
   const refUser = useRef<SelectHandles>(null);
   const refTitle = useRef<SelectHandles>(null);
@@ -142,7 +144,6 @@ const Borrow: React.FC = () => {
     [addToast, rowsPerPage]
   );
 
-
   const handleRefresh = useCallback(async () => {
     await handleBorrowSubmit({
       pageIndex: 0,
@@ -182,12 +183,6 @@ const Borrow: React.FC = () => {
   const handleRenovation = useCallback(
     async (item: Borrow): Promise<void> => {
       const errors: string[] = [];
-
-      const result = window.api.sendSync('list', {
-        entity: 'Settings',
-        value: {},
-      }) as Setting[];
-      const settings = result[0];
 
       const reserved = window.api.sendSync('readReservation', {
         entity: 'Borrow',
@@ -238,7 +233,12 @@ const Borrow: React.FC = () => {
         });
       }
     },
-    [addToast, handleRefresh]
+    [
+      addToast,
+      handleRefresh,
+      settings.allowedRenovations,
+      settings.daysReturnDate,
+    ]
   );
 
   const handleBorrowByReservation = useCallback(
@@ -400,6 +400,13 @@ const Borrow: React.FC = () => {
     [handleBorrowByReservation]
   );
 
+  const cleanForm = useCallback(() => {
+    setBorrowDate('');
+    setReturnDate('');
+    refTitle.current.clear();
+    setIsReservation(false);
+  }, []);
+
   const handleCustomChange = useCallback(
     (selectedValue: OnChangeValue<Option, false>) => {
       handleBorrowSubmit({
@@ -412,16 +419,11 @@ const Borrow: React.FC = () => {
         pageSize: 10,
         userId: selectedValue.value,
       });
-    },
-    [handleBorrowSubmit, handleReservationSubmit]
-  );
 
-  const cleanForm = useCallback(() => {
-    setBorrowDate('');
-    setReturnDate('');
-    refTitle.current.clear();
-    setIsReservation(false);
-  }, []);
+      cleanForm();
+    },
+    [cleanForm, handleBorrowSubmit, handleReservationSubmit]
+  );
 
   const handleAddBorrow = useCallback(async () => {
     const user = refUser.current.getValue<SelectType>();
@@ -509,6 +511,21 @@ const Borrow: React.FC = () => {
     returnDate,
   ]);
 
+  const handleSelectTitle = useCallback(
+    (selectedValue: OnChangeValue<Option, false>) => {
+      if (selectedValue) {
+        setBorrowDate(format(new Date(), 'yyyy-MM-dd'));
+        setReturnDate(
+          format(
+            addDays(new Date(), parseInt(settings.daysReturnDate)),
+            'yyyy-MM-dd'
+          )
+        );
+      }
+    },
+    [settings.daysReturnDate]
+  );
+
   return (
     <Container>
       <Header>
@@ -531,7 +548,7 @@ const Borrow: React.FC = () => {
       </SectionHeader>
       <SectionContent isActive={selectedSection === 'borrow'}>
         <Row>
-          <TitleSelect ref={refTitle} />
+          <TitleSelect ref={refTitle} handleCustomChange={handleSelectTitle} />
           <Input
             type="date"
             name="borrowDate"

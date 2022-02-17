@@ -18,6 +18,7 @@ interface Option {
 
 interface TitlePublisherProps {
   containerStyle?: unknown;
+  handleCustomChange?: (selectedValue: OnChangeValue<Option, false>) => void;
 }
 
 interface TitlePublisher {
@@ -25,13 +26,13 @@ interface TitlePublisher {
   classification: string;
   title: {
     name: string;
-  }
+  };
 }
 
-const TitleSelect: React.ForwardRefRenderFunction<SelectHandles, TitlePublisherProps> = (
-  { containerStyle },
-  selectRef
-) => {
+const TitleSelect: React.ForwardRefRenderFunction<
+  SelectHandles,
+  TitlePublisherProps
+> = ({ containerStyle, handleCustomChange }, selectRef) => {
   const [options, setOptions] = useState<Option[]>([]);
   const [value, setValue] = useState(undefined);
 
@@ -50,6 +51,9 @@ const TitleSelect: React.ForwardRefRenderFunction<SelectHandles, TitlePublisherP
 
   const handleChange = (selectedValue: OnChangeValue<Option, false>) => {
     setValue(selectedValue);
+    if (handleCustomChange) {
+      handleCustomChange(selectedValue);
+    }
   };
 
   useImperativeHandle<unknown, SelectHandles>(selectRef, () => ({
