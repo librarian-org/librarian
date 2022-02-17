@@ -69,7 +69,7 @@
     "title": "Title",
     "borrowDate": "Borrow date",
     "returnDate": "Return date",
-    "estimatedReturnDate": "Estmated returned date",
+    "estimatedReturnDate": "Estimated returned date",
     "reserve": "Reserve",
     "informErrors": "Check this #errors# before proceed",
     "anErrorHasOccurred": "An error has occurred",
