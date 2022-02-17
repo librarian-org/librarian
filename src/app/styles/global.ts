@@ -32,39 +32,41 @@ export default createGlobalStyle`
   }
 
   .primary {
-    background: ${(props) => props.theme.colors.primary.dark};
-    color: ${(props) => props.theme.colors.primary.light};
+    background: ${(props) => props.theme.colors.primary.dark} !important;
+    color: ${(props) => props.theme.colors.primary.light} !important;
 
     &:hover {
       ${(props) =>
         props.theme.title == 'light' &&
         css`
-          background: ${(props) => shade(0.2, props.theme.colors.primary.dark)};
+          background: ${(props) =>
+            shade(0.2, props.theme.colors.primary.dark)} !important;
         `}
       ${(props) =>
         props.theme.title == 'dark' &&
         css`
-          background: ${(props) => tint(0.2, props.theme.colors.primary.dark)};
+          background: ${(props) =>
+            tint(0.2, props.theme.colors.primary.dark)} !important;
         `}
     }
   }
 
   .secondary {
-    background: ${(props) => props.theme.colors.secondary.dark};
-    color: ${(props) => props.theme.colors.secondary.light};
+    background: ${(props) => props.theme.colors.secondary.dark} !important;
+    color: ${(props) => props.theme.colors.secondary.light} !important;
 
     &:hover {
       ${(props) =>
         props.theme.title == 'light' &&
         css`
           background: ${(props) =>
-            shade(0.2, props.theme.colors.secondary.dark)};
+            shade(0.2, props.theme.colors.secondary.dark)} !important;
         `}
       ${(props) =>
         props.theme.title == 'dark' &&
         css`
           background: ${(props) =>
-            tint(0.2, props.theme.colors.secondary.dark)};
+            tint(0.2, props.theme.colors.secondary.dark)} !important;
         `}
     }
   }
