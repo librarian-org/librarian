@@ -111,7 +111,9 @@
     "select": "Type or select a title",
     "selectEmpty": "No title found",
 
-    "edit": "Edit"
+    "edit": "Edit",
+
+    "invalidISBN": "Invalid ISBN"
   },
   "settings": {
     "label": "Settings",
