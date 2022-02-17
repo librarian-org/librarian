@@ -318,7 +318,6 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
         },
       },
     }) as Person;
-
     trigger(AppEvent.personTab, {
       action: Actions.read,
       value: insertedPerson,

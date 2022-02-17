@@ -69,6 +69,7 @@
     "title": "Title",
     "borrowDate": "Borrow date",
     "returnDate": "Return date",
+    "estimatedReturnDate": "Estimated returned date",
     "reserve": "Reserve",
     "informErrors": "Check this #errors# before proceed",
     "anErrorHasOccurred": "An error has occurred",
@@ -153,7 +154,8 @@
   "user": {
     "select": "Select a person",
     "label": "Person",
-    "selectEmpty": "No person created so far"
+    "selectEmpty": "No person created so far",
+    "borrowedBy": "Borrowed titles by "
   },
   "contactType": {
     "label": "Contact type",

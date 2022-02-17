@@ -69,6 +69,7 @@
     "title": "Título",
     "borrowDate": "Data Empréstimo",
     "returnDate": "Data Devolução",
+    "estimatedReturnDate": "Data Estimada Devolução",
     "reserve": "Reservar",
     "informErrors": "Para prosseguir, verifique os erros: #errors#",
     "anErrorHasOccurred": "Ocorreu um erro",
@@ -155,7 +156,8 @@
   "user": {
     "select": "Selecione uma pessoa",
     "label": "Pessoa",
-    "selectEmpty": "Nenhuma pessoa cadastrada"
+    "selectEmpty": "Nenhuma pessoa cadastrada",
+    "borrowedBy": "Títulos emprestados por "
   },
   "contactType": {
     "label": "Tipo de contato",

@@ -40,6 +40,46 @@ export interface Address {
   complement: string;
 }
 
+interface Publisher {
+  id: string;
+  name: string;
+}
+
+export interface Title {
+  id: string;
+  name: string;
+  ISBN: string;
+}
+
+interface TitlePublisher {
+  id: string;
+  classification: string;
+  publisherId: number;
+  publisher: Publisher;
+  title: Title;
+}
+interface BorrowRenovation {
+  id: number;
+  borrowId: number;
+  borrowedAt: Date;
+  renewedAt: Date;
+  returnedAt: Date;
+}
+
+export interface Borrows {
+  id: number;
+  userId: number;
+  user: Person;
+  borrow: Date;
+  estimatedReturn: Date;
+  returnedAt: Date;
+  status: number;
+  isReservation: boolean;
+  titlePublisherId: number;
+  titlePublisher: TitlePublisher;
+  renovations: BorrowRenovation[]
+}
+
 export type Person = {
   id: string;
   name: string;
@@ -49,4 +89,5 @@ export type Person = {
   userType: UserType;
   contacts: Contact[];
   addresses: Address[];
+  borrows: Borrows[];
 }
