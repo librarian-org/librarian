@@ -155,7 +155,8 @@
   "user": {
     "select": "Selecione uma pessoa",
     "label": "Pessoa",
-    "selectEmpty": "Nenhuma pessoa cadastrada"
+    "selectEmpty": "Nenhuma pessoa cadastrada",
+    "borrowedBy": "Títulos emprestados por "
   },
   "contactType": {
     "label": "Tipo de contato",

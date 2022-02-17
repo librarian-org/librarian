@@ -153,7 +153,8 @@
   "user": {
     "select": "Select a person",
     "label": "Person",
-    "selectEmpty": "No person created so far"
+    "selectEmpty": "No person created so far",
+    "borrowedBy": "Titles borrowed by "
   },
   "contactType": {
     "label": "Contact type",
