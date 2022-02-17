@@ -7,7 +7,7 @@ export const Container = styled.div`
   right: 4px;
 
   padding: 4px;
-  background: ${(props) => tint(0.2 ,props.theme.colors.background)};
+  background: ${(props) => tint(0.2, props.theme.colors.background)};
 
   width: 450px;
   max-height: 450px;
@@ -33,7 +33,7 @@ export const AlertList = styled.ul`
     border-radius: 8px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${(props) => tint(0.2 ,props.theme.colors.background)};
+    background-color: ${(props) => tint(0.2, props.theme.colors.background)};
     border-radius: 8px;
     border: 3px solid ${(props) => props.theme.colors.card.background};
   }
@@ -58,7 +58,26 @@ export const AlertItem = styled.li`
 
       svg {
         cursor: pointer;
+
+        &:hover {
+          color: ${(props) => props.theme.colors.primary.dark};
+        }
       }
     }
+  }
+`;
+
+export const Clear = styled.button`
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  font-size: 10px;
+  color: ${(props) => props.theme.colors.text};
+  padding: 3px;
+
+  &:hover {
+    color: ${(props) => props.theme.colors.primary.dark};
   }
 `;
