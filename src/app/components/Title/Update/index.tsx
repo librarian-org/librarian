@@ -299,6 +299,13 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
       },
     }) as Title;
 
+    addToast({
+      title: i18n.t('notifications.success'),
+      type: 'success',
+      description: i18n
+        .t('title.successSave'),
+    });
+
     trigger(AppEvent.titleTab, { action: Actions.read, value: updatedTitle });
   }, [addToast, authors, categories, isbn, item, publishers, title]);
 

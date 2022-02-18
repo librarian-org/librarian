@@ -29,9 +29,9 @@ interface Event {
 const Tabs: React.FC = () => {
   const [tabItems, setTabItems] = useState<Tab[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(null);
+  const [selectedTab, setSelectedTab] = useState<Tab>(null);
   const [isOpen, setOpen] = useState(false);
-  const [action, setAction] = useState('list');
-  // const [item, setItem] = useState(undefined);
+  const [, setAction] = useState('list');
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -79,11 +79,11 @@ const Tabs: React.FC = () => {
 
       const tabAlreadyOpened = tabItems.filter((t) => t.type === type);
       if (tabAlreadyOpened.length > 0) {
-        setAction(action);
         tabAlreadyOpened[0].action = action;
         tabAlreadyOpened[0].item = item;
+        setAction(action);
         setTabItems(tabItems);
-        setActiveTab(tabAlreadyOpened[0]);
+        setSelectedTab(tabAlreadyOpened[0]);
         return;
       }
 
@@ -92,7 +92,7 @@ const Tabs: React.FC = () => {
         type: type,
         title: `${type}.label`,
         action: action,
-        item: undefined
+        item: undefined,
       };
 
       addTab(tab);
@@ -123,20 +123,29 @@ const Tabs: React.FC = () => {
     }
   }, [activeTab, close]);
 
-  const borrowTab = useCallback((params: CustomEvent<ActionParameter>) => {
-    const { action, value } = params.detail;
-    handleCreateTab('borrow', action, value);
-  }, [handleCreateTab]);
+  const borrowTab = useCallback(
+    (params: CustomEvent<ActionParameter>) => {
+      const { action, value } = params.detail;
+      handleCreateTab('borrow', action, value);
+    },
+    [handleCreateTab]
+  );
 
-  const personTab = useCallback((params: CustomEvent<ActionParameter>) => {
-    const { action, value } = params.detail;
-    handleCreateTab('person', action, value);
-  }, [handleCreateTab]);
+  const personTab = useCallback(
+    (params: CustomEvent<ActionParameter>) => {
+      const { action, value } = params.detail;
+      handleCreateTab('person', action, value);
+    },
+    [handleCreateTab]
+  );
 
-  const titleTab = useCallback((params: CustomEvent<ActionParameter>) => {
-    const { action, value } = params.detail;
-    handleCreateTab('title', action, value);
-  }, [handleCreateTab]);
+  const titleTab = useCallback(
+    (params: CustomEvent<ActionParameter>) => {
+      const { action, value } = params.detail;
+      handleCreateTab('title', action, value);
+    },
+    [handleCreateTab]
+  );
 
   const settingsTab = useCallback(() => {
     handleCreateTab('settings', Actions.update, {});
@@ -185,6 +194,10 @@ const Tabs: React.FC = () => {
     [tabItems]
   );
 
+  useEffect(()=>{
+    setActiveTab(selectedTab);
+  }, [selectedTab]);
+
   const rendererTabs = (tab: Tab, index: number, isActive: boolean) => {
     return (
       <TabHeader
@@ -221,8 +234,12 @@ const Tabs: React.FC = () => {
                   key={`tab-content-${tab.id}`}
                 >
                   {tab.type === 'borrow' && <Borrow />}
-                  {tab.type === 'person' && <Person action={tab.action} item={tab.item}/>}
-                  {tab.type === 'title' && <Title action={tab.action} item={tab.item} />}
+                  {tab.type === 'person' && (
+                    <Person action={tab.action} item={tab.item} />
+                  )}
+                  {tab.type === 'title' && (
+                    <Title action={tab.action} item={tab.item} />
+                  )}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>
               )
