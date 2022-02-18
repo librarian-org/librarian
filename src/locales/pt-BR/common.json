@@ -115,7 +115,8 @@
 
     "edit": "Editar",
 
-    "invalidISBN": "ISBN inválido"
+    "invalidISBN": "ISBN inválido",
+    "successSave": "Título salvo com sucesso"
   },
   "settings": {
     "label": "Configurações",
@@ -232,7 +233,8 @@
     "informError": "Por favor forneça as informações para criar a pessoa: #errors#",
     "informErrorsContact": "Por favor forneça informação do contato: #errors#",
     "informErrorsAddress": "Por favor forneça informação de endereço: #errors#",
-    "hasBeenAdd": "Este contato já foi adicionado"
+    "hasBeenAdd": "Este contato já foi adicionado",
+    "successSave": "Registro da Pessoa salvo com sucesso"
   },
   "address":{
     "zipcode": "CEP",
