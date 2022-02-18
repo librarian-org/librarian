@@ -15,6 +15,7 @@ interface ToastContextData {
 
   getAlerts(): ToastMessage[];
   removeAlerts(id: string): void;
+  removeAllAlerts(): void;
 }
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData);
@@ -34,18 +35,22 @@ const ToastProvider: React.FC = ({ children }) => {
         description,
       };
 
-      setMessages(state => [...state, toast]);
-      setAlerts(state => [...state, toast]);
+      setMessages((state) => [...state, toast]);
+      setAlerts((state) => [...state, toast]);
     },
-    [],
+    []
   );
 
   const removeToast = useCallback((id: string) => {
-    setMessages(state => state.filter(message => message.id !== id));
+    setMessages((state) => state.filter((message) => message.id !== id));
   }, []);
 
   const removeAlerts = useCallback((id: string) => {
-    setAlerts(state => state.filter(message => message.id !== id));
+    setAlerts((state) => state.filter((message) => message.id !== id));
+  }, []);
+
+  const removeAllAlerts = useCallback(() => {
+    setAlerts([]);
   }, []);
 
   const getAlerts = useCallback(() => {
@@ -53,7 +58,15 @@ const ToastProvider: React.FC = ({ children }) => {
   }, [alerts]);
 
   return (
-    <ToastContext.Provider value={{ addToast, removeToast, getAlerts, removeAlerts }}>
+    <ToastContext.Provider
+      value={{
+        addToast,
+        removeToast,
+        getAlerts,
+        removeAlerts,
+        removeAllAlerts,
+      }}
+    >
       {children}
       <ToastContainer messages={messages} />
     </ToastContext.Provider>

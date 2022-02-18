@@ -23,6 +23,7 @@ import Input from '../../Input';
 import PublisherSelect from '../../PublisherSelect';
 import SectionContent from '../../Sections/SectionContent';
 import SectionHeader from '../../Sections/SectionHeader';
+import { isValidEAN13 } from '../../../hooks/useBarcode';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import { Title } from '../Title';
@@ -222,6 +223,11 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
     if (!isbn) {
       errors.push('ISBN');
     }
+
+    if (isbn && !isValidEAN13(isbn)) {
+      errors.push(i18n.t('title.invalidISBN'));
+    }
+
     if (errors.length > 0) {
       addToast({
         title: i18n.t('notifications.warning'),
@@ -292,6 +298,13 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
         },
       },
     }) as Title;
+
+    addToast({
+      title: i18n.t('notifications.success'),
+      type: 'success',
+      description: i18n
+        .t('title.successSave'),
+    });
 
     trigger(AppEvent.titleTab, { action: Actions.read, value: updatedTitle });
   }, [addToast, authors, categories, isbn, item, publishers, title]);

@@ -69,6 +69,7 @@
     "title": "Title",
     "borrowDate": "Borrow date",
     "returnDate": "Return date",
+    "estimatedReturnDate": "Estimated returned date",
     "reserve": "Reserve",
     "informErrors": "Check this #errors# before proceed",
     "anErrorHasOccurred": "An error has occurred",
@@ -110,7 +111,10 @@
     "select": "Type or select a title",
     "selectEmpty": "No title found",
 
-    "edit": "Edit"
+    "edit": "Edit",
+
+    "invalidISBN": "Invalid ISBN",
+    "successSave": "Title saved successfully "
   },
   "settings": {
     "label": "Settings",
@@ -153,7 +157,8 @@
   "user": {
     "select": "Select a person",
     "label": "Person",
-    "selectEmpty": "No person created so far"
+    "selectEmpty": "No person created so far",
+    "borrowedBy": "Borrowed titles by "
   },
   "contactType": {
     "label": "Contact type",
@@ -226,7 +231,8 @@
     "informError": "Please provide information to create person: #errors#",
     "informErrorsContact": "Please provide information to a contact: #errors#",
     "informErrorsAddress": "Please profive information to a address: #errors#",
-    "hasBeenAdd": "This contact already been added"
+    "hasBeenAdd": "This contact already been added",
+    "successSave": "Person saved successfully"
   },
   "address":{
     "number": "Number",

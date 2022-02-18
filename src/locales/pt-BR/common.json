@@ -69,6 +69,7 @@
     "title": "Título",
     "borrowDate": "Data Empréstimo",
     "returnDate": "Data Devolução",
+    "estimatedReturnDate": "Data Estimada Devolução",
     "reserve": "Reservar",
     "informErrors": "Para prosseguir, verifique os erros: #errors#",
     "anErrorHasOccurred": "Ocorreu um erro",
@@ -112,7 +113,10 @@
     "select": "Digite ou selecione um título",
     "selectEmpty": "Nenhum título encontrado",
 
-    "edit": "Editar"
+    "edit": "Editar",
+
+    "invalidISBN": "ISBN inválido",
+    "successSave": "Título salvo com sucesso"
   },
   "settings": {
     "label": "Configurações",
@@ -155,7 +159,8 @@
   "user": {
     "select": "Selecione uma pessoa",
     "label": "Pessoa",
-    "selectEmpty": "Nenhuma pessoa cadastrada"
+    "selectEmpty": "Nenhuma pessoa cadastrada",
+    "borrowedBy": "Títulos emprestados por "
   },
   "contactType": {
     "label": "Tipo de contato",
@@ -228,7 +233,8 @@
     "informError": "Por favor forneça as informações para criar a pessoa: #errors#",
     "informErrorsContact": "Por favor forneça informação do contato: #errors#",
     "informErrorsAddress": "Por favor forneça informação de endereço: #errors#",
-    "hasBeenAdd": "Este contato já foi adicionado"
+    "hasBeenAdd": "Este contato já foi adicionado",
+    "successSave": "Registro da Pessoa salvo com sucesso"
   },
   "address":{
     "zipcode": "CEP",
