@@ -318,6 +318,14 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
         },
       },
     }) as Person;
+
+    addToast({
+      title: i18n.t('notifications.success'),
+      type: 'success',
+      description: i18n
+        .t('person.successSave'),
+    });
+
     trigger(AppEvent.personTab, {
       action: Actions.read,
       value: insertedPerson,
