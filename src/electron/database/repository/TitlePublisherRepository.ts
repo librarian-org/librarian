@@ -10,7 +10,7 @@ export default class TitlePublisherRepository extends RepositoryBase {
     content: ListTitlePublisher
   ): Promise<unknown | unknown[]> {
     try {
-      const reserved = await this.repository
+      const freeTitles = await this.repository
         .createQueryBuilder('titlePublisher')
         .innerJoinAndSelect('titlePublisher.title', 'title')
         .leftJoinAndSelect('titlePublisher.borrow', 'borrow')
@@ -29,7 +29,7 @@ export default class TitlePublisherRepository extends RepositoryBase {
         })
         .getMany();
 
-      return reserved;
+      return freeTitles;
     } catch (err) {
       console.log(err);
       throw err;
