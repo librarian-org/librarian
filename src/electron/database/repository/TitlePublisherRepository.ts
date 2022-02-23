@@ -12,14 +12,8 @@ export default class TitlePublisherRepository extends RepositoryBase {
     try {
       const reserved = await this.repository
         .createQueryBuilder('titlePublisher')
-        .innerJoinAndSelect(
-          'titlePublisher.title',
-          'title'
-        )
-        .leftJoinAndSelect(
-          'titlePublisher.borrow',
-          'borrow'
-        )
+        .innerJoinAndSelect('titlePublisher.title', 'title')
+        .leftJoinAndSelect('titlePublisher.borrow', 'borrow')
         .where('borrow.isReservation IS NULL')
         .orWhere((qb) => {
           const subQuery = qb
@@ -34,8 +28,6 @@ export default class TitlePublisherRepository extends RepositoryBase {
           return `"titlePublisher"."id" IN ${subQuery}`;
         })
         .getMany();
-
-      console.log('RESULT: ', reserved);
 
       return reserved;
     } catch (err) {
