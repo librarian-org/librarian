@@ -2,8 +2,6 @@
 
 [![Build](https://github.com/librarian-org/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/librarian-org/librarian/actions/workflows/build.yml)
 
-> **NOTE**: This project is in Work-In-Progress stage, so it's not functional yet...
-
 A free OpenSource software to handle with books. It's ideal for school libraries
 and for someone who have many books.
 
