@@ -31,8 +31,9 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 export default class Main {
-  private adapter = new I18nAdapter();
   private connection: Connection;
+
+  constructor(private adapter: I18nAdapter) { }
 
   public async initialize(): Promise<void> {
     if (!isDev && process.platform !== 'linux') {
