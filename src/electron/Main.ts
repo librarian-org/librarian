@@ -369,20 +369,6 @@ export default class Main {
     });
   }
 
-  protected getIcon(): NativeImage {
-    return nativeImage.createFromPath(
-      path.resolve(
-        __dirname,
-        '..',
-        'renderer',
-        'main_window',
-        'assets',
-        'images',
-        'librarian.png'
-      )
-    );
-  }
-
   public setIpcMainListeners(): void {
     ipcMain.on(AppEvent.getInitialTranslations, async (event) => {
       event.returnValue = await this.adapter.loadAditional(
