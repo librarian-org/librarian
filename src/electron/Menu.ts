@@ -1,209 +1,204 @@
-import { app, BrowserWindow, shell } from 'electron';
-import { i18n } from 'i18next';
+import {
+  app,
+  BrowserWindow,
+  shell,
+  MenuItemConstructorOptions,
+} from 'electron';
 import path from 'path';
 import { AppEvent } from '../common/AppEvent';
 import fs from 'fs';
 import { Actions } from '../common/Actions';
-
-type Language = {
-  code: string;
-  name: string;
-}
+import { I18nAdapter } from './infra/i18n/i18nAdapter';
 
 const getIcon = (): string => {
   return path.resolve(
-      __dirname,
-      '..',
-      'renderer',
-      'main_window',
-      'assets',
-      'images',
-      'librarian.png'
-    );
-}
+    __dirname,
+    '..',
+    'renderer',
+    'main_window',
+    'assets',
+    'images',
+    'librarian.png'
+  );
+};
 
 const writeLanguageFile = (language: string) => {
-  fs.writeFile('./selected-language.json', JSON.stringify({ language }, null, 4 ), (err) => {
-    if (err) {
-      console.error(err);  return;
+  fs.writeFile(
+    './selected-language.json',
+    JSON.stringify({ language }, null, 4),
+    (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
     }
-  });
-}
+  );
+};
 
 const createMenuTemplate = async (
   mainWindow: BrowserWindow,
-  i18n: i18n,
-  languages: string[],
-): Promise<Electron.MenuItemConstructorOptions[]> => {
-  const template: Electron.MenuItemConstructorOptions[] = [];
+  i18nAdapter: I18nAdapter
+): Promise<MenuItemConstructorOptions[]> => {
+  const template: MenuItemConstructorOptions[] = [];
 
-  await Promise.all(
-    languages.map(async item => {
-        await i18n.loadLanguages(item);
-      })
-  );
+  const langs = await i18nAdapter.getLanguages();
 
-  const data = Object.entries(i18n.services.resourceStore.data);
-  const lngs: Language[] = data.map((item) => {
-    const l = item[1].common as Language;
-    return {code: l.code, name: l.name};
-  });
-
-  const languageMenu: Electron.MenuItemConstructorOptions[] = lngs.map((lang) => {
+  const languageMenu: MenuItemConstructorOptions[] = langs.map((lang) => {
     return {
-      label: i18n.t(lang.name),
+      label: i18nAdapter.translate(lang.name),
       type: 'radio',
-      checked: i18n.language === lang.code,
-      enabled: i18n.language !== lang.code,
+      checked: i18nAdapter.currentLanguage() === lang.code,
+      enabled: i18nAdapter.currentLanguage() !== lang.code,
       click: () => {
         writeLanguageFile(lang.code);
-        i18n.changeLanguage(lang.code);
-      }
-    }
+        i18nAdapter.changeLanguage(lang.code);
+      },
+    };
   });
 
   const language = {
-    label: i18n.t('menu.language'),
-    submenu: languageMenu
+    label: i18nAdapter.translate('menu.language'),
+    submenu: languageMenu,
   };
 
   const actionCreate = {
-    action: Actions.create
-  }
+    action: Actions.create,
+  };
 
   template.push({
-      label: i18n.t('menu.file.label'),
-      submenu: [
-        {
-          label: i18n.t('menu.file.newBorrow'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+B' : 'Ctrl+B',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.borrowTab, actionCreate);
-            }
+    label: i18nAdapter.translate('menu.file.label'),
+    submenu: [
+      {
+        label: i18nAdapter.translate('menu.file.newBorrow'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+B' : 'Ctrl+B',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.borrowTab, actionCreate);
           }
         },
-        {
-          label: i18n.t('menu.file.newPerson'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+P' : 'Ctrl+P',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.personTab, actionCreate);
-            }
+      },
+      {
+        label: i18nAdapter.translate('menu.file.newPerson'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+P' : 'Ctrl+P',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.personTab, actionCreate);
           }
         },
-        {
-          label: i18n.t('menu.file.newTitle'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+T' : 'Ctrl+T',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.titleTab, actionCreate);
-            }
+      },
+      {
+        label: i18nAdapter.translate('menu.file.newTitle'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+T' : 'Ctrl+T',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.titleTab, actionCreate);
           }
         },
-        { type: 'separator' },
-        {
-          label: i18n.t('menu.file.quickSearch'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+F' : 'Ctrl+F',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.quickSearch);
-            }
+      },
+      { type: 'separator' },
+      {
+        label: i18nAdapter.translate('menu.file.quickSearch'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+F' : 'Ctrl+F',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.quickSearch);
           }
         },
-        {
-          label: i18n.t('menu.file.closeTab'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+K' : 'Ctrl+K',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.closeCurrentTab);
-            }
+      },
+      {
+        label: i18nAdapter.translate('menu.file.closeTab'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+K' : 'Ctrl+K',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.closeCurrentTab);
           }
         },
-        { type: 'separator' },
-        {
-          label: i18n.t('menu.file.settings'),
-          accelerator: process.platform === 'darwin' ? 'Cmd+G' : 'Ctrl+G',
-          click: async() => {
-            if (mainWindow) {
-              mainWindow.webContents.send(AppEvent.settingsTab);
-            }
+      },
+      { type: 'separator' },
+      {
+        label: i18nAdapter.translate('menu.file.settings'),
+        accelerator: process.platform === 'darwin' ? 'Cmd+G' : 'Ctrl+G',
+        click: async () => {
+          if (mainWindow) {
+            mainWindow.webContents.send(AppEvent.settingsTab);
           }
         },
-        { type: 'separator' },
-        { role: 'quit', label: i18n.t('menu.quit') },
-      ],
+      },
+      { type: 'separator' },
+      { role: 'quit', label: i18nAdapter.translate('menu.quit') },
+    ],
   });
 
   template.push({
-    label: i18n.t('menu.edit.label'),
+    label: i18nAdapter.translate('menu.edit.label'),
     submenu: [
       {
-        label: i18n.t('menu.edit.undo'),
+        label: i18nAdapter.translate('menu.edit.undo'),
         accelerator: process.platform === 'darwin' ? 'Cmd+Z' : 'Ctrl+Z',
-        click: async() => {
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.undo();
           }
-        }
+        },
       },
       {
-        label: i18n.t('menu.edit.redo'),
-        accelerator: process.platform === 'darwin' ? 'Cmd+Option+Z' : 'Ctrl+Shift+Z',
-        click: async() => {
+        label: i18nAdapter.translate('menu.edit.redo'),
+        accelerator:
+          process.platform === 'darwin' ? 'Cmd+Option+Z' : 'Ctrl+Shift+Z',
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.redo();
           }
-        }
+        },
       },
       { type: 'separator' },
       {
-        label: i18n.t('menu.edit.cut'),
+        label: i18nAdapter.translate('menu.edit.cut'),
         accelerator: process.platform === 'darwin' ? 'Cmd+X' : 'Ctrl+X',
-        click: async() => {
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.cut();
           }
-        }
+        },
       },
       {
-        label: i18n.t('menu.edit.copy'),
+        label: i18nAdapter.translate('menu.edit.copy'),
         accelerator: process.platform === 'darwin' ? 'Cmd+C' : 'Ctrl+C',
-        click: async() => {
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.copy();
           }
-        }
+        },
       },
       {
-        label: i18n.t('menu.edit.paste'),
+        label: i18nAdapter.translate('menu.edit.paste'),
         accelerator: process.platform === 'darwin' ? 'Cmd+V' : 'Ctrl+V',
-        click: async() => {
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.paste();
           }
-        }
+        },
       },
       { type: 'separator' },
       {
-        label: i18n.t('menu.edit.selectAll'),
+        label: i18nAdapter.translate('menu.edit.selectAll'),
         accelerator: process.platform === 'darwin' ? 'Cmd+A' : 'Ctrl+A',
-        click: async() => {
+        click: async () => {
           if (mainWindow) {
             mainWindow.webContents.selectAll();
           }
-        }
+        },
       },
-    ]
+    ],
   });
 
   template.push({
-    label: i18n.t('menu.view'),
+    label: i18nAdapter.translate('menu.view'),
     submenu: [
       language,
       { type: 'separator' },
       {
-        label: i18n.t('menu.darkTheme'),
+        label: i18nAdapter.translate('menu.darkTheme'),
         id: 'dark-theme',
         type: 'checkbox',
         click: async () => {
@@ -213,70 +208,81 @@ const createMenuTemplate = async (
         },
       },
       { type: 'separator' },
-      { role: 'reload', label: i18n.t('menu.reload') },
-      { role: 'forceReload', label: i18n.t('menu.forceReload') },
-      { role: 'toggleDevTools', label: i18n.t('menu.toggleDevTools') },
+      { role: 'reload', label: i18nAdapter.translate('menu.reload') },
+      { role: 'forceReload', label: i18nAdapter.translate('menu.forceReload') },
+      {
+        role: 'toggleDevTools',
+        label: i18nAdapter.translate('menu.toggleDevTools'),
+      },
       { type: 'separator' },
-      { role: 'resetZoom', label: i18n.t('menu.resetZoom') },
-      { role: 'zoomIn', label: i18n.t('menu.zoomIn') },
-      { role: 'zoomOut', label: i18n.t('menu.zoomOut') },
+      { role: 'resetZoom', label: i18nAdapter.translate('menu.resetZoom') },
+      { role: 'zoomIn', label: i18nAdapter.translate('menu.zoomIn') },
+      { role: 'zoomOut', label: i18nAdapter.translate('menu.zoomOut') },
       { type: 'separator' },
-      { role: 'togglefullscreen', label: i18n.t('menu.fullScreen') },
+      {
+        role: 'togglefullscreen',
+        label: i18nAdapter.translate('menu.fullScreen'),
+      },
     ],
   });
 
-
   template.push({
-    label: i18n.t('menu.window'),
+    label: i18nAdapter.translate('menu.window'),
     submenu: [
-      { role: 'minimize', label: i18n.t('menu.minimize') },
-      { role: 'zoom', label: i18n.t('menu.zoom') },
-      { role: 'close', label: i18n.t('menu.close') },
+      { role: 'minimize', label: i18nAdapter.translate('menu.minimize') },
+      { role: 'zoom', label: i18nAdapter.translate('menu.zoom') },
+      { role: 'close', label: i18nAdapter.translate('menu.close') },
     ],
   });
 
   template.push({
-      role: 'help',
-      label: i18n.t('menu.help.label'),
-      submenu: [
-        {
-          label: i18n.t('menu.help.documentation'),
-          click: async () => {
-            shell.openExternal('https://librarian-org.gitbook.io/librarian/');
-          },
+    role: 'help',
+    label: i18nAdapter.translate('menu.help.label'),
+    submenu: [
+      {
+        label: i18nAdapter.translate('menu.help.documentation'),
+        click: async () => {
+          shell.openExternal('https://librarian-org.gitbook.io/librarian/');
         },
-        {
-          label: i18n.t('menu.help.reportIssue'),
-          click: async () => {
-            shell.openExternal('https://github.com/librarian-org/librarian/issues/new');
-          },
+      },
+      {
+        label: i18nAdapter.translate('menu.help.reportIssue'),
+        click: async () => {
+          shell.openExternal(
+            'https://github.com/librarian-org/librarian/issues/new'
+          );
         },
-        {
-          label: i18n.t('menu.help.website'),
-          click: async () => {
-            shell.openExternal('https://librarian-org.github.io/');
-          },
+      },
+      {
+        label: i18nAdapter.translate('menu.help.website'),
+        click: async () => {
+          shell.openExternal('https://librarian-org.github.io/');
         },
-        { type: 'separator' },
-        {
-          id: 'about-menu',
-          label: i18n.t('menu.help.about'),
-          click: async () => {
-            app.setAboutPanelOptions({
-              applicationName: 'Librarian',
-              applicationVersion: app.getVersion(),
-              copyright: 'Librarian Team',
-              authors: ['Danilo Lutz', 'André Gava', 'All the amazing Github contributors'],
-              website: 'https://github.com/librarian-org/librarian',
-              iconPath: getIcon(),
-            });
-            app.showAboutPanel()
-          },
+      },
+      { type: 'separator' },
+      {
+        id: 'about-menu',
+        label: i18nAdapter.translate('menu.help.about'),
+        click: async () => {
+          app.setAboutPanelOptions({
+            applicationName: 'Librarian',
+            applicationVersion: app.getVersion(),
+            copyright: 'Librarian Team',
+            authors: [
+              'Danilo Lutz',
+              'André Gava',
+              'All the amazing Github contributors',
+            ],
+            website: 'https://github.com/librarian-org/librarian',
+            iconPath: getIcon(),
+          });
+          app.showAboutPanel();
         },
-      ],
-    });
+      },
+    ],
+  });
 
   return template;
-}
+};
 
 export default createMenuTemplate;

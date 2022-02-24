@@ -10,9 +10,7 @@ import {
 import log from 'electron-log';
 import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
-import { i18n } from 'i18next';
 import path from 'path';
-import Bootstrap from './Bootstrap';
 import createMenuTemplate from './Menu';
 
 import { Connection, createConnection } from 'typeorm';
@@ -27,16 +25,16 @@ import BorrowRepository from './database/repository/BorrowRepository';
 import TitlePublisherRepository from './database/repository/TitlePublisherRepository';
 import UserRepository from './database/repository/UserRepository';
 import PersonRepository from './database/repository/PersonRepository';
+import { I18nAdapter } from './infra/i18n/i18nAdapter';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 export default class Main {
-  private bootstrap = new Bootstrap();
-  private translations: i18n;
+  private adapter = new I18nAdapter();
   private connection: Connection;
 
-  public async start(): Promise<void> {
+  public async initialize(): Promise<void> {
     if (!isDev && process.platform !== 'linux') {
       updater({
         logger: log,
@@ -409,52 +407,43 @@ export default class Main {
     }
   }
 
-  protected async handleTranslations(window: BrowserWindow): Promise<void> {
-    this.translations = await this.bootstrap.startI18n(
-      this.getSelectedLanguage()
+  private getLanguages(): string[] {
+    const folder = path.resolve(
+      __dirname,
+      '..',
+      'renderer',
+      'main_window',
+      'locales'
     );
+
+    const langs = fs.readdirSync(folder);
+    return langs;
+  }
+
+  protected async handleTranslations(window: BrowserWindow): Promise<void> {
+    await this.adapter.initialize(this.getSelectedLanguage());
+    await this.adapter.load(this.getLanguages());
 
     Menu.setApplicationMenu(
-      Menu.buildFromTemplate(
-        await createMenuTemplate(
-          window,
-          this.translations,
-          this.bootstrap.getLanguages()
-        )
-      )
+      Menu.buildFromTemplate(await createMenuTemplate(window, this.adapter))
     );
 
-    this.translations.on('loaded', () => {
-      this.translations.changeLanguage('en-US');
-      this.translations.off('loaded');
-    });
+    this.adapter.onLoaded();
 
-    this.translations.on('languageChanged', (lng: string) => {
+    this.adapter.onLanguageChanged((language: string) => {
       window.webContents.send(AppEvent.languageChange, {
-        language: lng,
+        language,
         namespace: 'common',
-        resource: this.translations.getResourceBundle(lng, 'common'),
+        resource: this.adapter.getResource(language),
       });
     });
   }
 
   protected setIpcMainListeners(): void {
     ipcMain.on(AppEvent.getInitialTranslations, async (event) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let initial: any;
-      await Promise.all(
-        this.bootstrap.getLanguages().map(async (item) => {
-          await this.translations.loadLanguages(item, () => {
-            const lang = {
-              [item]: {
-                common: this.translations.getResourceBundle(item, 'common'),
-              },
-            };
-            initial = { ...initial, ...lang };
-          });
-        })
+      event.returnValue = await this.adapter.loadAditional(
+        this.getLanguages()
       );
-      event.returnValue = initial;
     });
 
     ipcMain.on(AppEvent.getTheme, (event, content) => {

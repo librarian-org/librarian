@@ -3,7 +3,7 @@ import Main from './Main';
 (async () => {
   try {
     const main = new Main();
-    await main.start();
+    await main.initialize();
   } catch (err) {
     console.error("ERROR INITIALIZING APP");
     console.error(err);
