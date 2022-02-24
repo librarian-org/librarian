@@ -11,13 +11,10 @@ import log from 'electron-log';
 import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
 import path from 'path';
-import createMenuTemplate from './Menu';
 
 import { Connection, createConnection } from 'typeorm';
 import { Event } from '../electron/contracts/Event';
 import Factory from './database/factory';
-import { AppEvent } from '../common/AppEvent';
-import fs from 'fs';
 import { entityMap } from './database/EntityMap';
 import RepositoryBase from './database/repository/RepositoryBase';
 import TitleRepository from './database/repository/TitleRepository';
@@ -26,14 +23,16 @@ import TitlePublisherRepository from './database/repository/TitlePublisherReposi
 import UserRepository from './database/repository/UserRepository';
 import PersonRepository from './database/repository/PersonRepository';
 import I18nAdapter from './infra/i18n/i18nAdapter';
-
-declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
-declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+import Resources from './infra/resources/Resources';
+import LibrarianWindow from './LibrarianWindow';
+import DefaultMenu from './infra/menu/DefaultMenu';
+import { AppEvent } from '../common/AppEvent';
+import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
 
 export default class Main {
   private connection: Connection;
-
-  constructor(private adapter: I18nAdapter) { }
+  private adapter = new I18nAdapter();
+  private resources = new Resources();
 
   public async initialize(): Promise<void> {
     if (!isDev && process.platform !== 'linux') {
@@ -42,9 +41,9 @@ export default class Main {
       });
     }
     this.handleWindowsShortcuts();
+    this.setIpcMainListeners();
     await this.setListeners();
     await this.setConnection();
-    this.setIpcMainListeners();
   }
 
   private getDatabasePath(): string {
@@ -90,7 +89,19 @@ export default class Main {
 
   protected async setListeners(): Promise<void> {
     app.on('ready', async () => {
-      await this.createWindow();
+      await this.loadListeners();
+
+      LibrarianWindow.build(this.resources);
+
+      await this.adapter.initialize(this.resources.getSelectedLanguage());
+      await this.adapter.load(this.resources.getLanguages());
+
+      const handler = new NativeMenuActionHandlers(this.resources);
+
+      const menu = new DefaultMenu(this.adapter, this.resources, handler);
+      Menu.setApplicationMenu(
+        Menu.buildFromTemplate(await menu.buildTemplate())
+      );
     });
 
     app.on('window-all-closed', () => {
@@ -101,7 +112,7 @@ export default class Main {
 
     app.on('activate', async () => {
       if (BrowserWindow.getAllWindows().length === 0) {
-        await this.createWindow();
+        // await this.createWindow();
       }
     });
   }
@@ -114,7 +125,7 @@ export default class Main {
     return Factory.customMake(this.connection, entity, repository);
   }
 
-  protected async createWindow(): Promise<void> {
+  protected async loadListeners(): Promise<void> {
     ipcMain.on('create', async (event, content: Event[]) => {
       try {
         const { value, entity } = content[0];
@@ -356,32 +367,6 @@ export default class Main {
         log.error(err);
       }
     });
-
-    const mainWindow = new BrowserWindow({
-      icon: this.getIcon(),
-      minWidth: 800,
-      minHeight: 600,
-      height: 600,
-      width: 800,
-      show: false,
-      webPreferences: {
-        nodeIntegration: false,
-        contextIsolation: true,
-        preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-      },
-    });
-
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-    if (isDev) {
-      mainWindow.webContents.openDevTools();
-    }
-
-    mainWindow.once('ready-to-show', () => {
-      mainWindow.show();
-    });
-
-    await this.handleTranslations(mainWindow);
   }
 
   protected getIcon(): NativeImage {
@@ -398,52 +383,10 @@ export default class Main {
     );
   }
 
-  protected getSelectedLanguage(): string {
-    try {
-      const rawdata = fs.readFileSync('./selected-language.json');
-      const language: { language: string } = JSON.parse(rawdata.toString());
-      return language.language;
-    } catch (err) {
-      return 'en-US';
-    }
-  }
-
-  private getLanguages(): string[] {
-    const folder = path.resolve(
-      __dirname,
-      '..',
-      'renderer',
-      'main_window',
-      'locales'
-    );
-
-    const langs = fs.readdirSync(folder);
-    return langs;
-  }
-
-  protected async handleTranslations(window: BrowserWindow): Promise<void> {
-    await this.adapter.initialize(this.getSelectedLanguage());
-    await this.adapter.load(this.getLanguages());
-
-    Menu.setApplicationMenu(
-      Menu.buildFromTemplate(await createMenuTemplate(window, this.adapter))
-    );
-
-    this.adapter.onLoaded();
-
-    this.adapter.onLanguageChanged((language: string) => {
-      window.webContents.send(AppEvent.languageChange, {
-        language,
-        namespace: 'common',
-        resource: this.adapter.getResource(language),
-      });
-    });
-  }
-
-  protected setIpcMainListeners(): void {
+  public setIpcMainListeners(): void {
     ipcMain.on(AppEvent.getInitialTranslations, async (event) => {
       event.returnValue = await this.adapter.loadAditional(
-        this.getLanguages()
+        this.resources.getLanguages()
       );
     });
 
