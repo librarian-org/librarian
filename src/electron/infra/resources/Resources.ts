@@ -1,5 +1,7 @@
+import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
+import isDev from 'electron-is-dev';
 
 import {
   ResourceGetIcon,
@@ -52,7 +54,7 @@ export default class Resources
   public writeLanguageFile(language: string): void {
     fs.writeFile(
       './selected-language.json',
-      JSON.stringify({ language }, null, 4),
+      JSON.stringify({ language }, null, 2),
       (err) => {
         if (err) {
           console.error(err);
@@ -60,5 +62,29 @@ export default class Resources
         }
       }
     );
+  }
+
+  public getDatabasePath(): string {
+    const devPath = './database/database.sqlite';
+    const prodPath = path.resolve(
+      app.getPath('appData'),
+      app.name,
+      'database.sqlite'
+    );
+    return isDev ? devPath : prodPath;
+  }
+
+  public getMigrationPath(): string[] {
+    return [
+      path.resolve(
+        __dirname,
+        '..',
+        'renderer',
+        'main_window',
+        'database',
+        'migration',
+        '*.js'
+      ),
+    ];
   }
 }

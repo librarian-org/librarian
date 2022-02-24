@@ -1,4 +1,4 @@
-import { app, MenuItem, shell } from 'electron';
+import { app, BrowserWindow, MenuItem, shell } from 'electron';
 import { MenuActionHandler } from '../../data/protocols/Menu/MenuActionHandler';
 import { Actions } from '../../../common/Actions';
 import { AppEvent } from '../../../common/AppEvent';
@@ -8,7 +8,7 @@ const actionCreate = {
   action: Actions.create,
 };
 
-type ElectronWindow = Electron.BrowserWindow | undefined;
+type ElectronWindow = BrowserWindow | undefined;
 
 export default class NativeMenuActionHandlers implements MenuActionHandler {
 

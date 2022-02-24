@@ -106,9 +106,10 @@ export default class DefaultMenu implements MenuBuildTemplate {
         type: 'radio',
         checked: this.i18nAdapter.currentLanguage() === lang.code,
         enabled: this.i18nAdapter.currentLanguage() !== lang.code,
-        click: () => {
+        click: async () => {
           this.resources.writeLanguageFile(lang.code);
-          this.i18nAdapter.changeLanguage(lang.code);
+          await this.i18nAdapter.changeLanguage(lang.code);
+          console.log('LANGUAGE: ', this.i18nAdapter.currentLanguage());
         },
       };
     });

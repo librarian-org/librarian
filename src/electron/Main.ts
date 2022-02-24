@@ -1,16 +1,8 @@
 import 'reflect-metadata';
-import {
-  app,
-  BrowserWindow,
-  nativeImage,
-  ipcMain,
-  NativeImage,
-  Menu,
-} from 'electron';
+import { app, BrowserWindow, ipcMain, Menu } from 'electron';
 import log from 'electron-log';
 import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
-import path from 'path';
 
 import { Connection, createConnection } from 'typeorm';
 import { Event } from '../electron/contracts/Event';
@@ -46,39 +38,15 @@ export default class Main {
     await this.setConnection();
   }
 
-  private getDatabasePath(): string {
-    const devPath = './database/database.sqlite';
-    const prodPath = path.resolve(
-      app.getPath('appData'),
-      app.name,
-      'database.sqlite'
-    );
-    return isDev ? devPath : prodPath;
-  }
-
-  private getMigrationPath(): string[] {
-    return [
-      path.resolve(
-        __dirname,
-        '..',
-        'renderer',
-        'main_window',
-        'database',
-        'migration',
-        '*.js'
-      ),
-    ];
-  }
-
   protected async setConnection(): Promise<void> {
     try {
       this.connection = await createConnection({
         type: 'sqlite',
         migrationsRun: true,
-        migrations: this.getMigrationPath(),
+        migrations: this.resources.getMigrationPath(),
         logging: isDev,
         logger: 'simple-console',
-        database: this.getDatabasePath(),
+        database: this.resources.getDatabasePath(),
         entities: entityMap.map((entity) => entity.value),
       });
     } catch (err) {
@@ -95,6 +63,23 @@ export default class Main {
 
       await this.adapter.initialize(this.resources.getSelectedLanguage());
       await this.adapter.load(this.resources.getLanguages());
+
+      this.adapter.onLoaded();
+      this.adapter.onLanguageChanged(
+        (language: string) => {
+          const win = BrowserWindow.getFocusedWindow();
+          if (win) {
+            win.webContents.send(
+              AppEvent.languageChange,
+              {
+                language,
+                namespace: 'common',
+                resource: this.adapter.getResource(language),
+              }
+            );
+          }
+        }
+      );
 
       const handler = new NativeMenuActionHandlers(this.resources);
 
