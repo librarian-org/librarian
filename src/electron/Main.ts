@@ -345,7 +345,7 @@ export default class Main {
       }
     });
 
-    ipcMain.on('globalSearch', async (event, content: Event[]) => {
+    ipcMain.on('globalSearch', async (event) => {
       try {
         event.returnValue = [];
       } catch (err) {

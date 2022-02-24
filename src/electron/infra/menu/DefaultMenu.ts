@@ -109,7 +109,6 @@ export default class DefaultMenu implements MenuBuildTemplate {
         click: async () => {
           this.resources.writeLanguageFile(lang.code);
           await this.i18nAdapter.changeLanguage(lang.code);
-          console.log('LANGUAGE: ', this.i18nAdapter.currentLanguage());
         },
       };
     });
