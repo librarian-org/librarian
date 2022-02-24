@@ -25,7 +25,7 @@ import BorrowRepository from './database/repository/BorrowRepository';
 import TitlePublisherRepository from './database/repository/TitlePublisherRepository';
 import UserRepository from './database/repository/UserRepository';
 import PersonRepository from './database/repository/PersonRepository';
-import { I18nAdapter } from './infra/i18n/i18nAdapter';
+import I18nAdapter from './infra/i18n/i18nAdapter';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;

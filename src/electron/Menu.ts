@@ -8,7 +8,7 @@ import path from 'path';
 import { AppEvent } from '../common/AppEvent';
 import fs from 'fs';
 import { Actions } from '../common/Actions';
-import { I18nAdapter } from './infra/i18n/i18nAdapter';
+import I18nAdapter from './infra/i18n/i18nAdapter';
 
 const getIcon = (): string => {
   return path.resolve(

@@ -1,4 +1,4 @@
-import { I18nAdapter } from './infra/i18n/i18nAdapter';
+import I18nAdapter from './infra/i18n/i18nAdapter';
 import Main from './Main';
 
 (async () => {

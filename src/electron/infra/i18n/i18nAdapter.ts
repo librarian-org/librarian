@@ -22,7 +22,7 @@ import {
   Language,
 } from '../../data/protocols';
 
-export class I18nAdapter
+export default class I18nAdapter
   implements
     I18nLoad,
     I18nLoadAditional,
