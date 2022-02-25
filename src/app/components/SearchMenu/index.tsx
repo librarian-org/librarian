@@ -6,6 +6,8 @@ import Modal from '../Modal';
 import MenuItem from './MenuItem';
 import { FiSearch } from 'react-icons/fi';
 import { on, off } from '../../util/EventHandler';
+import BehaviourFactory from '../../factory/BehaviourFactory';
+import { AdapterBaseProps } from '../../../electron/database/adapter/AdapterBase';
 
 interface SearchMenuProps {
   setOpen(): void;
@@ -24,9 +26,12 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
 
   useEffect(() => {
     setSelectedItem(-1);
-    setSearchResult(searchSourceMemo);
+    setSearchResult(sortMenu(searchSourceMemo));
 
     setMaxItems(searchSourceMemo.length * 2);
+    if (!isOpen) {
+      setInputSearch('');
+    }
   }, [isOpen, searchSourceMemo]);
 
   useEffect(() => {
@@ -82,13 +87,29 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
     [searchResult, selectedItem]
   );
 
-  const globalSearchHandler = useCallback((search) => {
-    const retorno: any = window.api.sendSync('globalSearch', {
-      entity: 'Any',
-      value: search,
+  const factorySearchHandler = useCallback((ret) => {
+    const processed = ret.map((item: AdapterBaseProps) => {
+      console.log(item);
+      return BehaviourFactory.make(item);
     });
-    return retorno;
+    return processed;
   }, []);
+
+  const globalSearchHandler = useCallback(
+    (search) => {
+      const ret: any = window.api.sendSync('globalSearch', {
+        entity: 'Any',
+        value: search,
+      });
+
+      return factorySearchHandler(ret);
+    },
+    [factorySearchHandler]
+  );
+
+  const sortMenu = (results: any) => {
+    return results.sort((a: any, b: any) => (a.label < b.label ? -1 : 1));
+  };
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,9 +124,8 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
         results.push(...resultsDb);
       }
 
-      const finalResult: SearchSource[] = results.sort((a, b) =>
-        a.label < b.label ? -1 : 1
-      );
+      const finalResult: SearchSource[] = sortMenu(results);
+
       setSearchResult(finalResult);
       setMaxItems(finalResult.length * 2);
       setSelectedItem(-1);
@@ -150,7 +170,7 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   return (
     isOpen && (
       <>
-        <Modal isOpen={isOpen} setIsOpen={setOpen} customClass='quick-search'>
+        <Modal isOpen={isOpen} setIsOpen={setOpen} customClass="quick-search">
           <div>
             <Input
               name="search-menu"
