@@ -20,6 +20,8 @@ import LibrarianWindow from './LibrarianWindow';
 import DefaultMenu from './infra/menu/DefaultMenu';
 import { AppEvent } from '../common/AppEvent';
 import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
+import RepositoryFactory from './infra/db/factories/RepositoryFactory';
+import ListenerFactory from './infra/listen/factories/ListenerFactory';
 
 export default class Main {
   private connection: Connection;
@@ -35,7 +37,6 @@ export default class Main {
     this.handleWindowsShortcuts();
     this.setIpcMainListeners();
     await this.setListeners();
-    await this.setConnection();
   }
 
   protected async setConnection(): Promise<void> {
@@ -57,29 +58,22 @@ export default class Main {
 
   protected async setListeners(): Promise<void> {
     app.on('ready', async () => {
-      await this.loadListeners();
-
       LibrarianWindow.build(this.resources);
 
       await this.adapter.initialize(this.resources.getSelectedLanguage());
       await this.adapter.load(this.resources.getLanguages());
 
       this.adapter.onLoaded();
-      this.adapter.onLanguageChanged(
-        (language: string) => {
-          const win = BrowserWindow.getFocusedWindow();
-          if (win) {
-            win.webContents.send(
-              AppEvent.languageChange,
-              {
-                language,
-                namespace: 'common',
-                resource: this.adapter.getResource(language),
-              }
-            );
-          }
+      this.adapter.onLanguageChanged((language: string) => {
+        const win = BrowserWindow.getFocusedWindow();
+        if (win) {
+          win.webContents.send(AppEvent.languageChange, {
+            language,
+            namespace: 'common',
+            resource: this.adapter.getResource(language),
+          });
         }
-      );
+      });
 
       const handler = new NativeMenuActionHandlers(this.resources);
 
@@ -87,6 +81,9 @@ export default class Main {
       Menu.setApplicationMenu(
         Menu.buildFromTemplate(await menu.buildTemplate())
       );
+
+      await this.setConnection();
+      await this.loadListeners();
     });
 
     app.on('window-all-closed', () => {
@@ -111,70 +108,20 @@ export default class Main {
   }
 
   protected async loadListeners(): Promise<void> {
-    ipcMain.on('create', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).create(value);
-      } catch (err) {
-        log.error(err);
-      }
+    const repositoryFactory = new RepositoryFactory(this.connection);
+    const listenerFactory = new ListenerFactory(repositoryFactory);
+
+    const availableListeners = listenerFactory.getAvailableListeners();
+
+    const listeners = availableListeners.map((name) => {
+      const instance = listenerFactory.make(name);
+      return { name, instance };
     });
 
-    ipcMain.on('update', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).update(value);
-      } catch (err) {
-        log.error(err);
-      }
-    });
-
-    ipcMain.on('softDelete', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).softDelete(value);
-      } catch (err) {
-        log.error(err);
-      }
-    });
-
-    ipcMain.on('delete', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).delete(value);
-      } catch (err) {
-        log.error(err);
-      }
-    });
-
-    ipcMain.on('read', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).read(value);
-      } catch (err) {
-        log.error(err);
-      }
-    });
-
-    ipcMain.on('list', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getRepository(entity).list(value);
-      } catch (err) {
-        log.error(err);
-      }
-    });
-
-    ipcMain.on('listTitle', async (event, content: Event[]) => {
-      try {
-        const { value, entity } = content[0];
-        event.returnValue = await this.getCustomRepository(
-          entity,
-          TitleRepository
-        ).listTitle(value);
-      } catch (err) {
-        log.error(err);
-      }
+    listeners.map((listener) => {
+      ipcMain.on(listener.name, async (event, content: Event[]) => {
+        await listener.instance.handler(event, content);
+      });
     });
 
     ipcMain.on('readTitle', async (event, content: Event[]) => {
@@ -361,7 +308,7 @@ export default class Main {
       );
     });
 
-    ipcMain.on(AppEvent.getTheme, (event, content) => {
+    ipcMain.on(AppEvent.getTheme, (_event, content) => {
       const menu = Menu.getApplicationMenu();
       menu.getMenuItemById('dark-theme').checked = content as boolean;
     });

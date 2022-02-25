@@ -8,6 +8,8 @@ import {
   ResourceGetLanguages,
   ResourceGetSelectedLanguages,
   ResourceWriteLanguageFile,
+  ResourceGetDatabasePath,
+  ResourceGetMigrationPath,
 } from '../../data/protocols';
 
 export default class Resources
@@ -15,7 +17,9 @@ export default class Resources
     ResourceGetLanguages,
     ResourceGetSelectedLanguages,
     ResourceGetIcon,
-    ResourceWriteLanguageFile
+    ResourceWriteLanguageFile,
+    ResourceGetDatabasePath,
+    ResourceGetMigrationPath
 {
   public getLanguages(): string[] {
     const folder = path.resolve(

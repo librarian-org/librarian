@@ -1,3 +1,3 @@
-export interface ResourceMigrationPath {
-  getMigrationPath: () => string;
+export interface ResourceGetMigrationPath {
+  getMigrationPath: () => string[];
 }
