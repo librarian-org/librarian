@@ -23,7 +23,7 @@ export default class PersonRepository extends RepositoryBase {
           'borrows',
           'borrows.titlePublisher',
           'borrows.titlePublisher.title',
-          'borrows.titlePublisher.publisher'
+          'borrows.titlePublisher.publisher',
         ],
         skip: content.pageStart || 0,
         take: content.pageSize || 10,
@@ -56,7 +56,7 @@ export default class PersonRepository extends RepositoryBase {
           'borrows',
           'borrows.titlePublisher',
           'borrows.titlePublisher.title',
-          'borrows.titlePublisher.publisher'
+          'borrows.titlePublisher.publisher',
         ],
       };
 
@@ -65,6 +65,35 @@ export default class PersonRepository extends RepositoryBase {
       }
 
       return await this.repository.findOne(filter);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
+
+  public async globalSearch(content: string): Promise<unknown | unknown[]> {
+    try {
+      const filter = {
+        relations: [
+          'userType',
+          'contacts',
+          'contacts.contactType',
+          'addresses',
+          'addresses.city',
+          'addresses.city.region',
+          'addresses.city.region.country',
+          'borrows',
+          'borrows.titlePublisher',
+          'borrows.titlePublisher.title',
+          'borrows.titlePublisher.publisher',
+        ],
+        where: (qb: any) => {
+          qb.where(`User.name like '%${content}%'`);
+        },
+        limit: 15,
+      };
+      const data = await this.repository.find(filter);
+      return data;
     } catch (err) {
       console.log(err);
       throw err;

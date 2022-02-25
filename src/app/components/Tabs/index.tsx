@@ -92,7 +92,7 @@ const Tabs: React.FC = () => {
         type: type,
         title: `${type}.label`,
         action: action,
-        item: undefined,
+        item: item ? item : undefined,
       };
 
       addTab(tab);
@@ -194,7 +194,7 @@ const Tabs: React.FC = () => {
     [tabItems]
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     setActiveTab(selectedTab);
   }, [selectedTab]);
 

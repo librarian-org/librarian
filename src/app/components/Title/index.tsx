@@ -7,7 +7,6 @@ import TitleUpdate from './Update';
 
 const Title: React.FC<{ action: string, item?: unknown }> = ({ action, item }) => {
   const title = item as Title;
-
   return (
     <>
       {action === 'create' && <TitleCreate />}

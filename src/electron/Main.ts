@@ -27,6 +27,8 @@ import BorrowRepository from './database/repository/BorrowRepository';
 import TitlePublisherRepository from './database/repository/TitlePublisherRepository';
 import UserRepository from './database/repository/UserRepository';
 import PersonRepository from './database/repository/PersonRepository';
+import TitleAdapter from '../electron/database/adapter/TitleAdapter';
+import PersonAdapter from '../electron/database/adapter/PersonAdapter';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -352,7 +354,23 @@ export default class Main {
 
     ipcMain.on('globalSearch', async (event, content: Event[]) => {
       try {
-        event.returnValue = [];
+        const { value, entity } = content[0];
+        const titleAdapter = new TitleAdapter();
+        const personAdapter = new PersonAdapter();
+
+        const titles = await titleAdapter.defineData(
+          await this.getCustomRepository('Title', TitleRepository).globalSearch(
+            value
+          )
+        );
+
+        const people = await personAdapter.defineData(
+          await this.getCustomRepository('User', PersonRepository).globalSearch(
+            value
+          )
+        );
+
+        event.returnValue = [...titles, ...people];
       } catch (err) {
         log.error(err);
       }

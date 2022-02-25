@@ -60,4 +60,32 @@ export default class TitleRepository extends RepositoryBase {
       throw err;
     }
   }
+
+  public async globalSearch(content: string): Promise<unknown | unknown[]> {
+    try {
+      const filter = {
+        relations: [
+          'titleAuthors',
+          'titleAuthors.author',
+          'titleCategories',
+          'titleCategories.category',
+          'titlePublishers',
+          'titlePublishers.publisher',
+        ],
+        where: (qb: any) => {
+          qb.where(`Title.name like '%${content}%'`)
+            .orWhere(
+              `Title__titleCategories__category.name like '%${content}%'`
+            )
+            .orWhere(`Title__titleAuthors__author.name like '%${content}%'`);
+        },
+        limit: 15,
+      };
+      const data = await this.repository.find(filter);
+      return data;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }
