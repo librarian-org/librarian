@@ -2,24 +2,12 @@ import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
 import isDev from 'electron-is-dev';
+import Resource from '../../data/protocols/Resource/Resource';
 
-import {
-  ResourceGetIcon,
-  ResourceGetLanguages,
-  ResourceGetSelectedLanguages,
-  ResourceWriteLanguageFile,
-  ResourceGetDatabasePath,
-  ResourceGetMigrationPath,
-} from '../../data/protocols';
 
-export default class Resources
+export default class DefaultResources
   implements
-    ResourceGetLanguages,
-    ResourceGetSelectedLanguages,
-    ResourceGetIcon,
-    ResourceWriteLanguageFile,
-    ResourceGetDatabasePath,
-    ResourceGetMigrationPath
+    Resource
 {
   public getLanguages(): string[] {
     const folder = path.resolve(
@@ -33,6 +21,7 @@ export default class Resources
     const langs = fs.readdirSync(folder);
     return langs;
   }
+
   public getSelectedLanguage(): string {
     try {
       const rawdata = fs.readFileSync('./selected-language.json');

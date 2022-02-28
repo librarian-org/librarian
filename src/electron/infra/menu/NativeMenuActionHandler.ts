@@ -2,7 +2,7 @@ import { app, BrowserWindow, MenuItem, shell } from 'electron';
 import { MenuActionHandler } from '../../data/protocols/Menu/MenuActionHandler';
 import { Actions } from '../../../common/Actions';
 import { AppEvent } from '../../../common/AppEvent';
-import Resources from '../resources/Resources';
+import Resource from '../../data/protocols/Resource/Resource';
 
 const actionCreate = {
   action: Actions.create,
@@ -12,7 +12,7 @@ type ElectronWindow = BrowserWindow | undefined;
 
 export default class NativeMenuActionHandlers implements MenuActionHandler {
 
-  constructor(private resources: Resources) {}
+  constructor(private resources: Resource) {}
 
   newBorrow(_menuItem: MenuItem, win: ElectronWindow): void {
     if (win) {

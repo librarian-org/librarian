@@ -1,13 +1,13 @@
 import { MenuItemConstructorOptions } from 'electron';
+import I18nAdapter from '../../data/protocols/I18n/I18n';
 import { MenuActionHandler, MenuBuildTemplate } from '../../data/protocols';
 
-import I18nAdapter from '../i18n/i18nAdapter';
-import Resources from '../resources/Resources';
+import Resource from '../../data/protocols/Resource/Resource';
 
 export default class DefaultMenu implements MenuBuildTemplate {
   constructor(
     private i18nAdapter: I18nAdapter,
-    private resources: Resources,
+    private resources: Resource,
     private actionHandler: MenuActionHandler
   ) {}
 
@@ -136,12 +136,12 @@ export default class DefaultMenu implements MenuBuildTemplate {
           { type: 'separator' },
           {
             label: this.i18nAdapter.translate('menu.reload'),
-            accelerator: "Control+R",
+            accelerator: 'Control+R',
             click: this.actionHandler.reload,
           },
           {
             label: this.i18nAdapter.translate('menu.forceReload'),
-            accelerator: "Control+Shift+R",
+            accelerator: 'Control+Shift+R',
             click: this.actionHandler.forceReload,
           },
           {

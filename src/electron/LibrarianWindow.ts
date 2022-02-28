@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import isDev from 'electron-is-dev';
-import Resources from './infra/resources/Resources';
+import Resource from './data/protocols/Resource/Resource';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -9,7 +9,7 @@ export default class LibrarianWindow {
   private window: BrowserWindow | null;
 
   constructor(
-    private resources: Resources
+    private resources: Resource
   ) {
     this.window = new BrowserWindow({
       icon: this.resources.getIcon(),
@@ -37,7 +37,7 @@ export default class LibrarianWindow {
   }
 
   public static build(
-    resources: Resources
+    resources: Resource
   ): LibrarianWindow {
     return new LibrarianWindow(resources);
   }

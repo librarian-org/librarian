@@ -8,40 +8,17 @@ import i18n, {
   use,
 } from 'i18next';
 
-import {
-  I18nChangeLanguage,
-  I18nCurrentLanguage,
-  I18nGetLanguages,
-  I18nGetResource,
-  I18nInitialize,
-  I18nLoad,
-  I18nLoadAditional,
-  I18nOnLanguageChanged,
-  I18nOnLoaded,
-  I18nTranslate,
-  Language,
-} from '../../data/protocols';
+import I18nAdapter from '../../data/protocols/I18n/I18n';
+import { Language } from '../../data/protocols/I18n/I18nGetLanguages';
 
-export default class I18nAdapter
-  implements
-    I18nLoad,
-    I18nLoadAditional,
-    I18nGetLanguages,
-    I18nTranslate,
-    I18nCurrentLanguage,
-    I18nChangeLanguage,
-    I18nInitialize,
-    I18nOnLoaded,
-    I18nOnLanguageChanged,
-    I18nGetResource
-{
+export default class I18NextAdapter implements I18nAdapter {
   private getFolder(): string {
     return path.resolve(__dirname, '..', 'renderer', 'main_window', 'locales');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public getResource(language: string): any {
-    return i18n.getResourceBundle(language, 'common')
+    return i18n.getResourceBundle(language, 'common');
   }
 
   public async initialize(language: string): Promise<void> {

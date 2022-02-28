@@ -7,19 +7,21 @@ import updater from 'update-electron-app';
 import { Connection, createConnection } from 'typeorm';
 import { Event } from '../electron/contracts/Event';
 import { entityMap } from './database/EntityMap';
-import I18nAdapter from './infra/i18n/i18nAdapter';
-import Resources from './infra/resources/Resources';
+import DefaultResources from './infra/resources/DefaultResources';
 import LibrarianWindow from './LibrarianWindow';
 import DefaultMenu from './infra/menu/DefaultMenu';
 import { AppEvent } from '../common/AppEvent';
 import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
 import RepositoryFactory from './infra/db/factories/RepositoryFactory';
 import ListenersConfigs from './infra/listeners/ListenersConfigs';
+import I18NextAdapter from './infra/i18n/I18NextAdapter';
+import I18nAdapter from './data/protocols/I18n/I18n';
+import Resource from './data/protocols/Resource/Resource';
 
 export default class Main {
   private connection: Connection;
-  private adapter = new I18nAdapter();
-  private resources = new Resources();
+  private adapter: I18nAdapter = new I18NextAdapter();
+  private resources: Resource = new DefaultResources();
 
   public async initialize(): Promise<void> {
     if (!isDev && process.platform !== 'linux') {

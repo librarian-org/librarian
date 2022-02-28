@@ -1,6 +1,6 @@
 import { BrowserWindow, MenuItemConstructorOptions } from 'electron';
-import Resources from '../../../infra/resources/Resources';
-import I18nAdapter from '../../../infra/i18n/i18nAdapter';
+import Resources from '../../../infra/resources/DefaultResources';
+import I18nAdapter from '../I18n/I18n';
 
 export interface MenuBuildTemplate {
   buildTemplate(
