@@ -31,7 +31,7 @@ export default class Main {
     }
     this.handleWindowsShortcuts();
     this.setIpcMainListeners();
-    await this.setListeners();
+    await this.setMainListeners();
   }
 
   protected async setConnection(): Promise<void> {
@@ -51,7 +51,7 @@ export default class Main {
     }
   }
 
-  protected async setListeners(): Promise<void> {
+  protected async setMainListeners(): Promise<void> {
     app.on('ready', async () => {
       LibrarianWindow.build(this.resources);
 
@@ -78,7 +78,7 @@ export default class Main {
       );
 
       await this.setConnection();
-      await this.loadListeners();
+      await this.setCustomListeners();
     });
 
     app.on('window-all-closed', () => {
@@ -94,7 +94,7 @@ export default class Main {
     });
   }
 
-  protected async loadListeners(): Promise<void> {
+  protected async setCustomListeners(): Promise<void> {
     const repositoryFactory = new RepositoryFactory(this.connection);
 
     const listeners = ListenersConfigs.getListeners();
