@@ -13,8 +13,9 @@ export class GenericUpdateRepository extends RepositoryBase {
   public static getInstance(typeOrm: typeORM.Repository<unknown>): GenericUpdateRepository {
     if (!GenericUpdateRepository.instance) {
       GenericUpdateRepository.instance = new GenericUpdateRepository();
-      GenericUpdateRepository.instance.repository = typeOrm;
     }
+
+    GenericUpdateRepository.instance.repository = typeOrm;
 
     return GenericUpdateRepository.instance;
   }

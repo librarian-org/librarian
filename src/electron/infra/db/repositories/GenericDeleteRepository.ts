@@ -13,8 +13,9 @@ export class GenericDeleteRepository extends RepositoryBase {
   public static getInstance(typeOrm: typeORM.Repository<unknown>): GenericDeleteRepository {
     if (!GenericDeleteRepository.instance) {
       GenericDeleteRepository.instance = new GenericDeleteRepository();
-      GenericDeleteRepository.instance.repository = typeOrm;
     }
+
+    GenericDeleteRepository.instance.repository = typeOrm;
 
     return GenericDeleteRepository.instance;
   }

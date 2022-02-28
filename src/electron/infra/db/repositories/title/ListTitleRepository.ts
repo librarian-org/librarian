@@ -1,10 +1,10 @@
-import RepositoryBase from '../RepositoryBase';
+import RepositoryBase from '../../RepositoryBase';
 import typeORM from 'typeorm';
 
 interface Where {
   where: unknown;
 }
-interface ListTitle extends Where {
+interface List extends Where {
   pageStart: number;
   pageSize: number;
 }
@@ -21,13 +21,14 @@ export class ListTitleRepository extends RepositoryBase {
   public static getInstance(typeOrm: typeORM.Repository<unknown>): ListTitleRepository {
     if (!ListTitleRepository.instance) {
       ListTitleRepository.instance = new ListTitleRepository();
-      ListTitleRepository.instance.repository = typeOrm;
     }
+
+    ListTitleRepository.instance.repository = typeOrm;
 
     return ListTitleRepository.instance;
   }
 
-  public async execute(content: ListTitle): Promise<unknown> {
+  public async execute(content: List): Promise<unknown> {
     try {
       let filter = {
         relations: [

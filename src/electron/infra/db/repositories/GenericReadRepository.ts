@@ -13,8 +13,9 @@ export class GenericReadRepository extends RepositoryBase {
   public static getInstance(typeOrm: typeORM.Repository<unknown>): GenericReadRepository {
     if (!GenericReadRepository.instance) {
       GenericReadRepository.instance = new GenericReadRepository();
-      GenericReadRepository.instance.repository = typeOrm;
     }
+
+    GenericReadRepository.instance.repository = typeOrm;
 
     return GenericReadRepository.instance;
   }
