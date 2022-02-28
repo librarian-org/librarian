@@ -4,9 +4,8 @@ import log from 'electron-log';
 import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
 
-import { Connection, createConnection } from 'typeorm';
+import { Connection, createConnection, EntitySchema } from 'typeorm';
 import { Event } from '../electron/contracts/Event';
-import { entityMap } from './database/EntityMap';
 import DefaultResources from './infra/resources/DefaultResources';
 import LibrarianWindow from './LibrarianWindow';
 import DefaultMenu from './infra/menu/DefaultMenu';
@@ -17,6 +16,7 @@ import ListenersConfigs from './infra/listeners/ListenersConfigs';
 import I18NextAdapter from './infra/i18n/I18NextAdapter';
 import I18nAdapter from './data/protocols/I18n/I18n';
 import Resource from './data/protocols/Resource/Resource';
+import EntitiesConfigs from './database/EntitiesConfigs';
 
 export default class Main {
   private connection: Connection;
@@ -43,7 +43,7 @@ export default class Main {
         logging: isDev,
         logger: 'simple-console',
         database: this.resources.getDatabasePath(),
-        entities: entityMap.map((entity) => entity.value),
+        entities: EntitiesConfigs.getEntities() as EntitySchema[],
       });
     } catch (err) {
       log.error(err);
