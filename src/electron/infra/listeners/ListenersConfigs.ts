@@ -1,10 +1,10 @@
-interface Product {
+interface Config {
   listenerName: string;
   repositoryName: string;
 }
-export default class ListenerContainer {
-  public static getListeners(): Product[] {
-    const products: Product[] = [
+export default class ListenersConfigs {
+  public static getListeners(): Config[] {
+    const products: Config[] = [
       { listenerName: 'create', repositoryName: 'GenericCreate' },
       { listenerName: 'delete', repositoryName: 'GenericDelete' },
       { listenerName: 'list', repositoryName: 'GenericList' },
@@ -28,7 +28,6 @@ export default class ListenerContainer {
         repositoryName: 'BorrowByReservation',
       },
       { listenerName: 'listEdition', repositoryName: 'ListEdition' },
-
 
       { listenerName: 'userLogin', repositoryName: 'Login' },
       { listenerName: 'userCreate', repositoryName: 'UserCreate' },

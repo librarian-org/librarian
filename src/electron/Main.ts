@@ -14,7 +14,7 @@ import DefaultMenu from './infra/menu/DefaultMenu';
 import { AppEvent } from '../common/AppEvent';
 import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
 import RepositoryFactory from './infra/db/factories/RepositoryFactory';
-import ListenerContainer from './infra/listeners/ListenerContainer';
+import ListenersConfigs from './infra/listeners/ListenersConfigs';
 
 export default class Main {
   private connection: Connection;
@@ -95,7 +95,7 @@ export default class Main {
   protected async loadListeners(): Promise<void> {
     const repositoryFactory = new RepositoryFactory(this.connection);
 
-    const listeners = ListenerContainer.getListeners();
+    const listeners = ListenersConfigs.getListeners();
 
     listeners.map((listener) => {
       ipcMain.on(
