@@ -10,6 +10,7 @@ import DefaultResources from './infra/resources/DefaultResources';
 import LibrarianWindow from './LibrarianWindow';
 import DefaultMenu from './infra/menu/DefaultMenu';
 import { AppEvent } from '../common/AppEvent';
+
 import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
 import RepositoryFactory from './infra/db/factories/RepositoryFactory';
 import ListenersConfigs from './infra/listeners/ListenersConfigs';

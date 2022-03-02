@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SearchSource } from '../../../util/DefaultEntities';
 import RoundedButton from '../../RoundedButton';
 
@@ -17,6 +17,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   item,
   index,
 }) => {
+
   return (
     <>
       <li

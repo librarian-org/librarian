@@ -4,12 +4,12 @@ import { FiBook, FiSettings, FiUser } from 'react-icons/fi';
 import i18n from '../i18n';
 import { trigger } from './EventHandler';
 import { AppEvent } from '../../common/AppEvent';
-import Borrow from '../components/Borrow';
 import { Actions } from '../../common/Actions';
 
 export interface SearchSource {
   name: string;
   label: string;
+  complement?: string,
   icon: React.ComponentType<IconBaseProps>;
   iconColor: string;
   iconAction?: React.ComponentType<IconBaseProps>;

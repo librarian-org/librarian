@@ -43,7 +43,7 @@ export class ListPersonRepository extends RepositoryBase {
           'borrows',
           'borrows.titlePublisher',
           'borrows.titlePublisher.title',
-          'borrows.titlePublisher.publisher'
+          'borrows.titlePublisher.publisher',
         ],
         skip: content.pageStart || 0,
         take: content.pageSize || 10,
