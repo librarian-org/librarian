@@ -15,8 +15,8 @@ export default class RepositoryFactory {
   }
 
   private loadRepositories(): void {
-    Object.entries(AllRepositories).map((a) => {
-      this.products[a[1].repositoryName] = a[1];
+    Object.entries(AllRepositories).map((repository) => {
+      this.products[repository[1].repositoryName] = repository[1];
     });
   }
 
