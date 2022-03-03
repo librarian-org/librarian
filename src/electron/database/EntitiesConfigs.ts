@@ -20,26 +20,30 @@ import { TitlePublisher } from './models/TitlePublisher.schema';
 import { UserType } from './models/UserType.schema';
 import { User } from './models/User.schema';
 
-export const entityMap = [
-  { key: 'Permission', value: Permission },
-  { key: 'Title', value: Title },
-  { key: 'TitlePublisher', value: TitlePublisher },
-  { key: 'User', value: User },
-  { key: 'Author', value: Author },
-  { key: 'Program', value: Program },
-  { key: 'Category', value: Category },
-  { key: 'Publisher', value: Publisher },
-  { key: 'Region', value: Region },
-  { key: 'City', value: City },
-  { key: 'Address', value: Address },
-  { key: 'Country', value: Country },
-  { key: 'Profile', value: Profile },
-  { key: 'UserType', value: UserType },
-  { key: 'ContactType', value: ContactType },
-  { key: 'Contact', value: Contact },
-  { key: 'Settings', value: Settings },
-  { key: 'Borrow', value: Borrow },
-  { key: 'BorrowRenovation', value: BorrowRenovation },
-  { key: 'TitleCategory', value: TitleCategory },
-  { key: 'TitleAuthor', value: TitleAuthor },
-];
+export default class EntitiesConfigs {
+  public static getEntities(): unknown[] {
+    return [
+      Permission,
+      Title,
+      TitlePublisher,
+      User,
+      Author,
+      Program,
+      Category,
+      Publisher,
+      Region,
+      City,
+      Address,
+      Country,
+      Profile,
+      UserType,
+      ContactType,
+      Contact,
+      Settings,
+      Borrow,
+      BorrowRenovation,
+      TitleCategory,
+      TitleAuthor,
+    ];
+  }
+}
