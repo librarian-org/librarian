@@ -98,7 +98,7 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
   const globalSearchHandler = useCallback(
     (search) => {
       const ret: any = window.api.sendSync('globalSearch', {
-        entity: 'Any',
+        entity: 'Title',
         value: search,
       });
 

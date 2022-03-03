@@ -1,14 +1,29 @@
-import RepositoryBase from './RepositoryBase';
-import { BorrowStatus } from '../../../common/BorrowStatus';
+import typeORM from 'typeorm';
+import RepositoryBase from '../../RepositoryBase';
+import { BorrowStatus } from '../../../../../common/BorrowStatus';
 
-interface ListTitlePublisher {
-  where: unknown;
-}
+export class ListEditionRepository extends RepositoryBase {
+  private static instance: ListEditionRepository = null;
 
-export default class TitlePublisherRepository extends RepositoryBase {
-  public async listTitle(
-    content: ListTitlePublisher
-  ): Promise<unknown | unknown[]> {
+  static repositoryName = 'ListEdition';
+
+  private constructor() {
+    super();
+  }
+
+  public static getInstance(
+    typeOrm: typeORM.Repository<unknown>
+  ): ListEditionRepository {
+    if (!ListEditionRepository.instance) {
+      ListEditionRepository.instance = new ListEditionRepository();
+    }
+
+    ListEditionRepository.instance.repository = typeOrm;
+
+    return ListEditionRepository.instance;
+  }
+
+  public async execute(): Promise<unknown> {
     try {
       const freeTitles = await this.repository
         .createQueryBuilder('titlePublisher')
