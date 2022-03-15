@@ -50,6 +50,12 @@ export default class DefaultMenu implements MenuBuildTemplate {
           },
           { type: 'separator' },
           { role: 'quit', label: this.i18nAdapter.translate('menu.quit') },
+          { type: 'separator' },
+          {
+            label: this.i18nAdapter.translate('menu.file.save'),
+            accelerator: 'Ctrl+S',
+            click: this.actionHandler.save,
+          },
         ],
       },
     ];

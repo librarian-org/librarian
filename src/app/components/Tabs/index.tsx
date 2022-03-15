@@ -155,6 +155,10 @@ const Tabs: React.FC = () => {
     setOpen((oldState) => !oldState);
   }, []);
 
+  const save = useCallback(() => {
+    console.log( activeTab);
+  }, [activeTab]);
+
   const registerEvents: Event[] = useMemo(
     () => [
       { event: 'closeCurrentTab', handler: closeCurrentTab },
@@ -163,8 +167,9 @@ const Tabs: React.FC = () => {
       { event: 'titleTab', handler: titleTab },
       { event: 'settingsTab', handler: settingsTab },
       { event: 'quickSearch', handler: quickSearch },
+      { event: 'save', handler: save },
     ],
-    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab, quickSearch]
+    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab, quickSearch, save]
   );
 
   useEffect(() => {
@@ -238,9 +243,9 @@ const Tabs: React.FC = () => {
                     <Person action={tab.action} item={tab.item} />
                   )}
                   {tab.type === 'title' && (
-                    <Title action={tab.action} item={tab.item} />
+                    <Title action={tab.action} item={tab.item}  />
                   )}
-                  {tab.type === 'settings' && <Settings />}
+                  {tab.type === 'settings' && <Settings  />}
                 </TabContent>
               )
           )}

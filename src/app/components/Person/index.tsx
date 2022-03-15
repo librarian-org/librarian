@@ -6,9 +6,9 @@ import { Person } from './Person';
 
 import PersonUpdate from './Update';
 
-const Person: React.FC<{ action: string; item?: unknown }> = ({
+const Person: React.FC<{ action: string; item?: unknown;}> = ({
   action,
-  item,
+  item
 }) => {
   const person = item as Person;
   return (
