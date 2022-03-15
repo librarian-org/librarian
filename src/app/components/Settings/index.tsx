@@ -14,10 +14,14 @@ const defaultSetting: Setting = {
   backupPath: '',
 };
 
-const Settings: React.FC = () => {
+const Settings: React.FC<{globalSave: any}> = ({globalSave}) => {
   const { addToast } = useToast();
 
   const [settings, setSettings] = useState<Setting>(defaultSetting);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [globalSave, settings, addToast]);
 
   useEffect(() => {
     const result = window.api.sendSync('list', {

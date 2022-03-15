@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+} from 'react';
 import { on, off } from '../../util/EventHandler';
 import { v4 } from 'uuid';
 
@@ -32,6 +38,7 @@ const Tabs: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<Tab>(null);
   const [isOpen, setOpen] = useState(false);
   const [, setAction] = useState('list');
+  const globalSave = useRef(null);
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -156,8 +163,10 @@ const Tabs: React.FC = () => {
   }, []);
 
   const save = useCallback(() => {
-    console.log( activeTab);
-  }, [activeTab]);
+    if (globalSave.current) {
+      globalSave.current();
+    }
+  }, []);
 
   const registerEvents: Event[] = useMemo(
     () => [
@@ -169,7 +178,15 @@ const Tabs: React.FC = () => {
       { event: 'quickSearch', handler: quickSearch },
       { event: 'save', handler: save },
     ],
-    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab, quickSearch, save]
+    [
+      closeCurrentTab,
+      borrowTab,
+      personTab,
+      titleTab,
+      settingsTab,
+      quickSearch,
+      save,
+    ]
   );
 
   useEffect(() => {
@@ -238,14 +255,24 @@ const Tabs: React.FC = () => {
                   isActive={activeTab === tab}
                   key={`tab-content-${tab.id}`}
                 >
-                  {tab.type === 'borrow' && <Borrow />}
+                  {tab.type === 'borrow' && <Borrow globalSave={globalSave} />}
                   {tab.type === 'person' && (
-                    <Person action={tab.action} item={tab.item} />
+                    <Person
+                      action={tab.action}
+                      item={tab.item}
+                      globalSave={globalSave}
+                    />
                   )}
                   {tab.type === 'title' && (
-                    <Title action={tab.action} item={tab.item}  />
+                    <Title
+                      action={tab.action}
+                      item={tab.item}
+                      globalSave={globalSave}
+                    />
                   )}
-                  {tab.type === 'settings' && <Settings  />}
+                  {tab.type === 'settings' && (
+                    <Settings globalSave={globalSave} />
+                  )}
                 </TabContent>
               )
           )}

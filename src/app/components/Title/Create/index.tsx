@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 import { format, parseISO } from 'date-fns';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import { v4 } from 'uuid';
@@ -34,7 +40,7 @@ interface Publisher {
   publishedAt: Date;
 }
 
-const TitleCreate: React.FC = () => {
+const TitleCreate: React.FC<{ globalSave: any }> = ({ globalSave }) => {
   const { addToast } = useToast();
 
   const [title, setTitle] = useState('');
@@ -55,6 +61,10 @@ const TitleCreate: React.FC = () => {
 
   const [categories, setCategories] = useState<SelectType[]>([]);
   const refCategory = useRef<SelectHandles>(null);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [globalSave, addToast, authors, categories, isbn, publishers, title]);
 
   const handleAddPublisher = useCallback(() => {
     const publisher = refPublisher.current.getValue<SelectType>();
@@ -255,8 +265,7 @@ const TitleCreate: React.FC = () => {
     addToast({
       title: i18n.t('notifications.success'),
       type: 'success',
-      description: i18n
-        .t('title.successSave'),
+      description: i18n.t('title.successSave'),
     });
 
     trigger(AppEvent.titleTab, { action: Actions.read, value: insertedTitle });
@@ -289,7 +298,7 @@ const TitleCreate: React.FC = () => {
             name="ISBN"
             label="ISBN"
             value={isbn}
-            onChange={(e) => setIsbn(e.target.value.replace(/\D/,''))}
+            onChange={(e) => setIsbn(e.target.value.replace(/\D/, ''))}
             placeholder={i18n.t('title.typeISBN')}
           />
         </div>

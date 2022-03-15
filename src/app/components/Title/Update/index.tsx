@@ -41,7 +41,10 @@ interface Publisher {
   publishedAt: Date;
 }
 
-const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
+const TitleUpdate: React.FC<{ item: Title; globalSave: any }> = ({
+  item,
+  globalSave,
+}) => {
   const { addToast } = useToast();
 
   const [title, setTitle] = useState('');
@@ -62,6 +65,19 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
 
   const [categories, setCategories] = useState<SelectType[]>([]);
   const refCategory = useRef<SelectHandles>(null);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [
+    globalSave,
+    addToast,
+    authors,
+    categories,
+    isbn,
+    item,
+    publishers,
+    title,
+  ]);
 
   useEffect(() => {
     if (item !== undefined) {
@@ -302,8 +318,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
     addToast({
       title: i18n.t('notifications.success'),
       type: 'success',
-      description: i18n
-        .t('title.successSave'),
+      description: i18n.t('title.successSave'),
     });
 
     trigger(AppEvent.titleTab, { action: Actions.read, value: updatedTitle });
@@ -337,7 +352,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
               name="ISBN"
               label="ISBN"
               value={isbn}
-              onChange={(e) => setIsbn(e.target.value.replace(/\D/,''))}
+              onChange={(e) => setIsbn(e.target.value.replace(/\D/, ''))}
               placeholder={i18n.t('title.typeISBN')}
             />
           </div>

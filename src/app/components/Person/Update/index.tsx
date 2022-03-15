@@ -55,7 +55,10 @@ interface Address {
   complement: string;
 }
 
-const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
+const PersonUpdate: React.FC<{ item: Person; globalSave: any }> = ({
+  item,
+  globalSave,
+}) => {
   const { addToast } = useToast();
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
@@ -112,6 +115,21 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
       setContacts(contactsAux);
     }
   }, [item]);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [
+    globalSave,
+    addToast,
+    addresses,
+    contacts,
+    document,
+    item.id,
+    login,
+    name,
+    notes,
+    password,
+  ]);
 
   useEffect(() => {
     if (isInitialMount.current) {
@@ -322,8 +340,7 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
     addToast({
       title: i18n.t('notifications.success'),
       type: 'success',
-      description: i18n
-        .t('person.successSave'),
+      description: i18n.t('person.successSave'),
     });
 
     trigger(AppEvent.personTab, {
