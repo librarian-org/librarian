@@ -5,7 +5,7 @@ import ReadTitle from './Read';
 import { Title } from './Title';
 import TitleUpdate from './Update';
 
-const Title: React.FC<{ action: string, item?: unknown }> = ({ action, item }) => {
+const Title: React.FC<{ action: string, item?: unknown , reference?: string}> = ({ action, item }) => {
   const title = item as Title;
   return (
     <>

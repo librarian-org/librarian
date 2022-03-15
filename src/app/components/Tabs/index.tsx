@@ -16,10 +16,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import SearchMenu from '../SearchMenu';
 import { Actions } from '../../../common/Actions';
+import { User as UserSchema } from '../../../electron/database/models/User.schema';
+import { Settings as SettingsSchema } from '../../../electron/database/models/Settings.schema';
+import { Borrow as  BorrowSchema } from '../../../electron/database/models/Borrow.schema';
+import { Title as TitleSchema } from '../../../electron/database/models/Title.schema';
 
 interface ActionParameter {
   action: Actions;
-  value?: unknown;
+  value?: UserSchema | TitleSchema | SettingsSchema | BorrowSchema;
+  reference?: string
 }
 interface Event {
   event: string;
@@ -74,13 +79,14 @@ const Tabs: React.FC = () => {
   }, [activeIndex, activeTab, firstTab, lastTab, setActiveTab, tabItems]);
 
   const handleCreateTab = useCallback(
-    (type: string, action: Actions, item: unknown) => {
+    (type: string, action: Actions, item: UserSchema | TitleSchema | SettingsSchema | BorrowSchema, reference?: string) => {
       const hash = v4();
 
       const tabAlreadyOpened = tabItems.filter((t) => t.type === type);
       if (tabAlreadyOpened.length > 0) {
         tabAlreadyOpened[0].action = action;
         tabAlreadyOpened[0].item = item;
+        tabAlreadyOpened[0].reference = reference;
         setAction(action);
         setTabItems(tabItems);
         setSelectedTab(tabAlreadyOpened[0]);
@@ -93,6 +99,7 @@ const Tabs: React.FC = () => {
         title: `${type}.label`,
         action: action,
         item: item ? item : undefined,
+        reference: reference ? reference : undefined,
       };
 
       addTab(tab);
@@ -125,8 +132,8 @@ const Tabs: React.FC = () => {
 
   const borrowTab = useCallback(
     (params: CustomEvent<ActionParameter>) => {
-      const { action, value } = params.detail;
-      handleCreateTab('borrow', action, value);
+      const { action, value, reference } = params.detail;
+      handleCreateTab('borrow', action, value, reference);
     },
     [handleCreateTab]
   );
@@ -148,7 +155,7 @@ const Tabs: React.FC = () => {
   );
 
   const settingsTab = useCallback(() => {
-    handleCreateTab('settings', Actions.update, {});
+    handleCreateTab('settings', Actions.update, null);
   }, [handleCreateTab]);
 
   const quickSearch = useCallback(() => {
@@ -227,18 +234,18 @@ const Tabs: React.FC = () => {
         {tabItems.length === 0 && <Shortcuts />}
         {tabItems &&
           tabItems.map(
-            (tab) =>
+            (tab) => 
               tab === activeTab && (
                 <TabContent
                   isActive={activeTab === tab}
                   key={`tab-content-${tab.id}`}
                 >
-                  {tab.type === 'borrow' && <Borrow />}
+                  {tab.type === 'borrow' && <Borrow item={tab.item} reference={tab.reference} />}
                   {tab.type === 'person' && (
-                    <Person action={tab.action} item={tab.item} />
+                    <Person action={tab.action} item={tab.item} reference={tab.reference} />
                   )}
                   {tab.type === 'title' && (
-                    <Title action={tab.action} item={tab.item} />
+                    <Title action={tab.action} item={tab.item} reference={tab.reference} />
                   )}
                   {tab.type === 'settings' && <Settings />}
                 </TabContent>

@@ -36,14 +36,14 @@ class Title {
         onClick: (): void => {
           trigger(AppEvent.quickSearch);
           trigger(AppEvent.borrowTab, {
-            action: Actions.create,
+            action: Actions.update,
             value: item.item,
           });
         },
         onPress: (): void => {
           trigger(AppEvent.quickSearch);
           trigger(AppEvent.borrowTab, {
-            action: Actions.create,
+            action: Actions.update,
             value: item.item,
           });
         },

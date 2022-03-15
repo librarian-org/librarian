@@ -7,7 +7,6 @@ interface ListTitle extends Where {
   pageStart: number;
   pageSize: number;
 }
-
 export default class TitleRepository extends RepositoryBase {
   public async listTitle(content: ListTitle): Promise<unknown | unknown[]> {
     try {
@@ -79,10 +78,10 @@ export default class TitleRepository extends RepositoryBase {
             )
             .orWhere(`Title__titleAuthors__author.name like '%${content}%'`);
         },
-        limit: 15,
+        take: 15,
       };
-      const data = await this.repository.find(filter);
-      return data;
+
+      return await this.repository.find(filter);
     } catch (err) {
       console.log(err);
       throw err;

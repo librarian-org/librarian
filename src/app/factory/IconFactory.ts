@@ -1,4 +1,4 @@
-import { FaPlus, FaUser, FaBook, FaHandshake } from 'react-icons/fa';
+import { FaPlus, FaUser, FaBook, FaHandshake, FaPen } from 'react-icons/fa';
 import { FiBook } from 'react-icons/fi';
 import { IconBaseProps } from 'react-icons';
 
@@ -13,6 +13,7 @@ class IconFactory {
     FaUser: FaUser,
     FaBook: FaBook,
     FaHandshake: FaHandshake,
+    FaPen: FaPen
   };
 
   static icon(param: string): React.ComponentType<IconBaseProps> {

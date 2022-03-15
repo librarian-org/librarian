@@ -14,7 +14,7 @@ export default class TitleAdapter implements AdapterBase{
           complement: item.name,
           icon: 'FaBook',
           iconColor: '#50fa7b',
-          iconAction: 'FaPlus',
+          iconAction: 'FaPen',
           handler: 'Title',
           action: 'Title',
           item: item,

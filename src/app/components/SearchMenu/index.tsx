@@ -89,7 +89,6 @@ const SearchMenu: React.FC<SearchMenuProps> = ({ isOpen, setOpen }) => {
 
   const factorySearchHandler = useCallback((ret) => {
     const processed = ret.map((item: AdapterBaseProps) => {
-      console.log(item);
       return BehaviourFactory.make(item);
     });
     return processed;

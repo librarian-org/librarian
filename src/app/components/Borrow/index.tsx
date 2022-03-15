@@ -27,6 +27,10 @@ import { ThemeContext } from 'styled-components';
 import { OnChangeValue } from 'react-select';
 import { BorrowStatus } from '../../../common/BorrowStatus';
 import { useSettings } from '../../hooks/useSettings';
+import { Borrow as BorrowSchema } from '../../../electron/database/models/Borrow.schema';
+import { Title } from '../../../electron/database/models/Title.schema';
+import { User } from '../../../electron/database/models/User.schema';
+import {Settings} from '../../../electron/database/models/Settings.schema';
 
 interface SelectType {
   id: string;
@@ -37,12 +41,14 @@ interface BorrowSearch extends Search {
   userId: string;
 }
 
-const Borrow: React.FC = () => {
+const Borrow: React.FC<{ item?:  User | Title | BorrowSchema | Settings, reference?: string }> = ({
+  item,
+  reference,
+}) => {
   const { colors } = useContext(ThemeContext);
   const { addToast } = useToast();
   const settings = useSettings();
-
-  const refUser = useRef<SelectHandles>(null);
+  const refUser = useRef<SelectHandles>();
   const refTitle = useRef<SelectHandles>(null);
   const [borrowDate, setBorrowDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
@@ -532,6 +538,7 @@ const Borrow: React.FC = () => {
         <UserSelect
           autoFocus
           ref={refUser}
+         // item={item}
           handleCustomChange={handleCustomChange}
         />
       </Header>

@@ -10,6 +10,10 @@ import { Container } from './styles';
 import i18n from '../../i18n';
 import { SelectHandles } from '../CreatableSelectInput';
 import SelectInput from '../SelectInput';
+import { User as UserSchema } from '../../../electron/database/models/User.schema';
+import { Settings as SettingsSchema } from '../../../electron/database/models/Settings.schema';
+import { Borrow as  BorrowSchema } from '../../../electron/database/models/Borrow.schema';
+import { Title as TitleSchema } from '../../../electron/database/models/Title.schema';
 
 export interface Option {
   readonly label: string;
@@ -28,8 +32,9 @@ interface User {
 }
 
 const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
-  { containerStyle, autoFocus, handleCustomChange },
-  selectRef
+  { containerStyle, autoFocus, handleCustomChange},
+  selectRef: any
+  //item: UserSchema | TitleSchema | BorrowSchema | SettingsSchema
 ) => {
   const [options, setOptions] = useState<Option[]>([]);
   const [value, setValue] = useState(undefined);
@@ -48,6 +53,7 @@ const UserSelect: React.ForwardRefRenderFunction<SelectHandles, UserProps> = (
   }, []);
 
   const handleChange = (selectedValue: OnChangeValue<Option, false>) => {
+    debugger;
     setValue(selectedValue);
     handleCustomChange(selectedValue);
   };

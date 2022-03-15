@@ -39,6 +39,7 @@ class Person {
           trigger(AppEvent.borrowTab, {
             action: Actions.create,
             value: item.item,
+            reference: 'Person'
           });
         },
         onPress: (): void => {
@@ -46,6 +47,7 @@ class Person {
           trigger(AppEvent.borrowTab, {
             action: Actions.create,
             value: item.item,
+            reference: 'Person'
           });
         },
       },
