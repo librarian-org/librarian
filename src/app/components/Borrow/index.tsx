@@ -28,7 +28,7 @@ import { ThemeContext } from 'styled-components';
 import { OnChangeValue } from 'react-select';
 import { BorrowStatus } from '../../../common/BorrowStatus';
 import { useSettings } from '../../hooks/useSettings';
-
+import {ActionSave} from '../Tabs';
 interface SelectType {
   id: string;
   name: string;
@@ -38,7 +38,7 @@ interface BorrowSearch extends Search {
   userId: string;
 }
 
-const Borrow: React.FC<{ globalSave: any }> = ({ globalSave }) => {
+const Borrow: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
   const { colors } = useContext(ThemeContext);
   const { addToast } = useToast();
   const settings = useSettings();

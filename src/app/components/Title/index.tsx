@@ -4,8 +4,9 @@ import ListTitle from './List';
 import ReadTitle from './Read';
 import { Title } from './Title';
 import TitleUpdate from './Update';
-
-const Title: React.FC<{ action: string, item?: unknown, globalSave: any }> = ({ action, item, globalSave }) => {
+import {ActionSave} from '../Tabs';
+ 
+const Title: React.FC<{ action: string, item?: unknown, globalSave: ActionSave }> = ({ action, item, globalSave }) => {
   const title = item as Title;
 
 

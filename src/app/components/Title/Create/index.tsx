@@ -27,7 +27,7 @@ import { isValidEAN13 } from '../../../hooks/useBarcode';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import { Title } from '../Title';
-
+import {ActionSave} from '../../Tabs';
 interface SelectType {
   id: string;
   name: string;
@@ -40,7 +40,7 @@ interface Publisher {
   publishedAt: Date;
 }
 
-const TitleCreate: React.FC<{ globalSave: any }> = ({ globalSave }) => {
+const TitleCreate: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
   const { addToast } = useToast();
 
   const [title, setTitle] = useState('');

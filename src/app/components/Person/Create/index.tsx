@@ -34,6 +34,7 @@ import UserTypeSelect from '../../UserTypeSelect';
 import CreateCity from '../../City';
 import { Person } from '../Person';
 import { v4 } from 'uuid';
+import {ActionSave} from '../../Tabs';
 
 interface SelectType {
   id: string;
@@ -54,7 +55,7 @@ interface Address {
   complement: string;
 }
 
-const CreatePerson: React.FC<{ globalSave: any }> = ({ globalSave }) => {
+const CreatePerson: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
   const { addToast } = useToast();
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');

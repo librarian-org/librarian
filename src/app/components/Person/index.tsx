@@ -3,10 +3,10 @@ import CreatePerson from './Create';
 import ListPerson from './List';
 import ReadPerson from './Read';
 import { Person } from './Person';
-
+import {ActionSave} from '../Tabs';
 import PersonUpdate from './Update';
 
-const Person: React.FC<{ action: string; item?: unknown; globalSave: any }> = ({
+const Person: React.FC<{ action: string; item?: unknown; globalSave: ActionSave }> = ({
   action,
   item,
   globalSave,

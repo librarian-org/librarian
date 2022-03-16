@@ -4,6 +4,9 @@ import React, {
   useMemo,
   useState,
   useRef,
+  MutableRefObject,
+  Ref,
+  RefObject,
 } from 'react';
 import { on, off } from '../../util/EventHandler';
 import { v4 } from 'uuid';
@@ -32,6 +35,10 @@ interface Event {
   handler: (...args: any[]) => any;
 }
 
+export interface ActionSave {
+  current: () => void;
+}
+
 const Tabs: React.FC = () => {
   const [tabItems, setTabItems] = useState<Tab[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(null);
@@ -39,6 +46,7 @@ const Tabs: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const [, setAction] = useState('list');
   const globalSave = useRef(null);
+
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];

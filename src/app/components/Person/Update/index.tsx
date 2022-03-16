@@ -34,7 +34,7 @@ import UserTypeSelect from '../../UserTypeSelect';
 import CreateCity from '../../City';
 import { Person } from '../Person';
 import { v4 } from 'uuid';
-
+import {ActionSave} from '../../Tabs';
 interface SelectType {
   id: string;
   name: string;
@@ -55,7 +55,7 @@ interface Address {
   complement: string;
 }
 
-const PersonUpdate: React.FC<{ item: Person; globalSave: any }> = ({
+const PersonUpdate: React.FC<{ item: Person; globalSave: ActionSave }> = ({
   item,
   globalSave,
 }) => {

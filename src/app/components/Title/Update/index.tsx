@@ -27,6 +27,7 @@ import { isValidEAN13 } from '../../../hooks/useBarcode';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import { Title } from '../Title';
+import {ActionSave} from '../../Tabs';
 
 interface SelectType {
   id: string;
@@ -41,7 +42,7 @@ interface Publisher {
   publishedAt: Date;
 }
 
-const TitleUpdate: React.FC<{ item: Title; globalSave: any }> = ({
+const TitleUpdate: React.FC<{ item: Title; globalSave: ActionSave }> = ({
   item,
   globalSave,
 }) => {
