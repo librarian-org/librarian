@@ -4,11 +4,7 @@ import path from 'path';
 import isDev from 'electron-is-dev';
 import Resource from '../../data/protocols/Resource/Resource';
 
-
-export default class DefaultResources
-  implements
-    Resource
-{
+export default class DefaultResources implements Resource {
   public getLanguages(): string[] {
     const folder = path.resolve(
       __dirname,
@@ -33,7 +29,7 @@ export default class DefaultResources
   }
 
   public getIcon(): string {
-    return path.resolve(
+    const iconPath = path.resolve(
       __dirname,
       '..',
       'renderer',
@@ -42,6 +38,7 @@ export default class DefaultResources
       'images',
       'librarian.png'
     );
+    return iconPath;
   }
 
   public writeLanguageFile(language: string): void {
