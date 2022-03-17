@@ -11,6 +11,9 @@ interface User {
   name: string;
   login: string;
   password: string;
+  userType: {
+    name: string;
+  };
 }
 
 interface AuthState {
@@ -52,15 +55,12 @@ const AuthProvider: React.FC = ({ children }) => {
     const user = window.api.sendSync('userLogin', {
       entity: 'User',
       value: {
-        where: {
-          login,
-        },
+        login,
         password,
       },
     }) as User;
 
     if (user) {
-
       localStorage.setItem('@librarian:user', JSON.stringify(user));
       setData({ user });
       return true;
