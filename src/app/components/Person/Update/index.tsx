@@ -370,7 +370,7 @@ const PersonUpdate: React.FC<{ item: Person; globalSave: ActionSave }> = ({
 
   return (
     <Container>
-      {name && (
+      {item && (
         <>
           <Header>
             <Row>
