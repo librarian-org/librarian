@@ -70,8 +70,9 @@ export default class Main {
           });
         }
       });
-
+      console.log('RESOURCES: ', this.resources);
       const handler = new NativeMenuActionHandlers(this.resources);
+      console.log('MENU HANDLER: ', handler);
 
       const menu = new DefaultMenu(this.adapter, this.resources, handler);
       Menu.setApplicationMenu(
