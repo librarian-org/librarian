@@ -31,6 +31,7 @@ export default class DefaultMenu implements MenuBuildTemplate {
             accelerator: 'Ctrl+T',
             click: this.actionHandler.newTitle,
           },
+          { type: 'separator' },
           {
             label: this.i18nAdapter.translate('menu.file.save'),
             accelerator: 'Ctrl+S',
