@@ -6,6 +6,7 @@ import i18n from '../../i18n';
 import Button from '../Button';
 import Input from '../Input';
 import { ButtonContainer, Container, Wrapper, Row } from './styles';
+import {ActionSave} from '../Tabs';
 
 const defaultSetting: Setting = {
   id: 1,
@@ -14,10 +15,14 @@ const defaultSetting: Setting = {
   backupPath: '',
 };
 
-const Settings: React.FC = () => {
+const Settings: React.FC<{globalSave: ActionSave}> = ({globalSave}) => {
   const { addToast } = useToast();
 
   const [settings, setSettings] = useState<Setting>(defaultSetting);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [globalSave, settings, addToast]);
 
   useEffect(() => {
     const result = window.api.sendSync('list', {

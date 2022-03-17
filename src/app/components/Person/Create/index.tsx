@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useCallback, useRef } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect,
+} from 'react';
 import Button from '../../Button';
 import { FiPlus, FiSave, FiTrash2 } from 'react-icons/fi';
 import i18n from '../../../i18n';
@@ -28,6 +34,7 @@ import UserTypeSelect from '../../UserTypeSelect';
 import CreateCity from '../../City';
 import { Person } from '../Person';
 import { v4 } from 'uuid';
+import {ActionSave} from '../../Tabs';
 
 interface SelectType {
   id: string;
@@ -48,7 +55,7 @@ interface Address {
   complement: string;
 }
 
-const CreatePerson: React.FC = () => {
+const CreatePerson: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
   const { addToast } = useToast();
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
@@ -76,6 +83,20 @@ const CreatePerson: React.FC = () => {
   const refContactType = useRef<SelectHandles>(null);
 
   const refUserType = useRef<SelectHandles>(null);
+
+  useEffect(() => {
+    globalSave.current = handleSave;
+  }, [
+    globalSave,
+    addToast,
+    addresses,
+    contacts,
+    document,
+    login,
+    name,
+    notes,
+    password,
+  ]);
 
   const handleAddContact = useCallback(() => {
     const contactType = refContactType.current.getValue<SelectType>();
@@ -261,8 +282,7 @@ const CreatePerson: React.FC = () => {
     addToast({
       title: i18n.t('notifications.success'),
       type: 'success',
-      description: i18n
-        .t('person.successSave'),
+      description: i18n.t('person.successSave'),
     });
 
     trigger(AppEvent.personTab, {

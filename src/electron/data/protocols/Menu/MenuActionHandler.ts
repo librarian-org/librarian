@@ -10,6 +10,7 @@ export interface MenuActionHandler {
   closeTab: (menuItem: MenuItem, win: ElectronWindow) => void;
   settings: (menuItem: MenuItem, win: ElectronWindow) => void;
   quit: (menuItem: MenuItem, win: ElectronWindow) => void;
+  save: (menuItem: MenuItem, win: ElectronWindow) => void;
 
   undo: (menuItem: MenuItem, win: ElectronWindow) => void;
   redo: (menuItem: MenuItem, win: ElectronWindow) => void;

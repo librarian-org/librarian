@@ -10,5 +10,6 @@ export enum AppEvent {
   setTheme = 'setTheme',
   getTheme = 'getTheme',
   getInitialTranslations = 'getInitialTranslations',
-  tabClick = "tabClick"
+  tabClick = "tabClick",
+  save = "save"
 }

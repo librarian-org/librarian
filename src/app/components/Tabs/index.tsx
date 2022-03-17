@@ -1,4 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  MutableRefObject,
+  Ref,
+  RefObject,
+} from 'react';
 import { on, off } from '../../util/EventHandler';
 import { v4 } from 'uuid';
 
@@ -26,12 +35,18 @@ interface Event {
   handler: (...args: any[]) => any;
 }
 
+export interface ActionSave {
+  current: () => void;
+}
+
 const Tabs: React.FC = () => {
   const [tabItems, setTabItems] = useState<Tab[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(null);
   const [selectedTab, setSelectedTab] = useState<Tab>(null);
   const [isOpen, setOpen] = useState(false);
   const [, setAction] = useState('list');
+  const globalSave = useRef(null);
+
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -155,6 +170,12 @@ const Tabs: React.FC = () => {
     setOpen((oldState) => !oldState);
   }, []);
 
+  const save = useCallback(() => {
+    if (globalSave.current) {
+      globalSave.current();
+    }
+  }, []);
+
   const registerEvents: Event[] = useMemo(
     () => [
       { event: 'closeCurrentTab', handler: closeCurrentTab },
@@ -163,8 +184,17 @@ const Tabs: React.FC = () => {
       { event: 'titleTab', handler: titleTab },
       { event: 'settingsTab', handler: settingsTab },
       { event: 'quickSearch', handler: quickSearch },
+      { event: 'save', handler: save },
     ],
-    [closeCurrentTab, borrowTab, personTab, titleTab, settingsTab, quickSearch]
+    [
+      closeCurrentTab,
+      borrowTab,
+      personTab,
+      titleTab,
+      settingsTab,
+      quickSearch,
+      save,
+    ]
   );
 
   useEffect(() => {
@@ -233,14 +263,24 @@ const Tabs: React.FC = () => {
                   isActive={activeTab === tab}
                   key={`tab-content-${tab.id}`}
                 >
-                  {tab.type === 'borrow' && <Borrow />}
+                  {tab.type === 'borrow' && <Borrow globalSave={globalSave} />}
                   {tab.type === 'person' && (
-                    <Person action={tab.action} item={tab.item} />
+                    <Person
+                      action={tab.action}
+                      item={tab.item}
+                      globalSave={globalSave}
+                    />
                   )}
                   {tab.type === 'title' && (
-                    <Title action={tab.action} item={tab.item} />
+                    <Title
+                      action={tab.action}
+                      item={tab.item}
+                      globalSave={globalSave}
+                    />
                   )}
-                  {tab.type === 'settings' && <Settings />}
+                  {tab.type === 'settings' && (
+                    <Settings globalSave={globalSave} />
+                  )}
                 </TabContent>
               )
           )}
