@@ -353,7 +353,7 @@ const PersonUpdate: React.FC<{ item: Person }> = ({ item }) => {
 
   return (
     <Container>
-      {name && (
+      {item && (
         <>
           <Header>
             <Row>

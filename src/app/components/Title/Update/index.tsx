@@ -311,7 +311,7 @@ const TitleUpdate: React.FC<{ item: Title }> = ({ item }) => {
 
   return (
     <Container>
-      {title && (
+      {item && (
         <>
           <div
             style={{
