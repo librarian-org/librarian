@@ -327,7 +327,7 @@ const TitleUpdate: React.FC<{ item: Title; globalSave: ActionSave }> = ({
 
   return (
     <Container>
-      {title && (
+      {item && (
         <>
           <div
             style={{
