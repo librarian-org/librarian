@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  useEffect,
 } from 'react';
 import { Cell, Column } from 'react-table';
 import { Setting } from '../../util/DefaultEntities';
@@ -27,7 +28,7 @@ import { ThemeContext } from 'styled-components';
 import { OnChangeValue } from 'react-select';
 import { BorrowStatus } from '../../../common/BorrowStatus';
 import { useSettings } from '../../hooks/useSettings';
-
+import {ActionSave} from '../Tabs';
 interface SelectType {
   id: string;
   name: string;
@@ -37,7 +38,7 @@ interface BorrowSearch extends Search {
   userId: string;
 }
 
-const Borrow: React.FC = () => {
+const Borrow: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
   const { colors } = useContext(ThemeContext);
   const { addToast } = useToast();
   const settings = useSettings();
@@ -66,6 +67,16 @@ const Borrow: React.FC = () => {
   const handleIsReservation = (): void => {
     setIsReservation(!isReservation);
   };
+
+  useEffect(() => {
+    globalSave.current = handleAddBorrow;
+  }, [
+    globalSave,
+    addToast,
+    borrowDate,
+    isReservation,
+    returnDate,
+  ]);
 
   const handleReservationSubmit = useCallback(
     async ({ pageIndex = 0, userId }: BorrowSearch) => {

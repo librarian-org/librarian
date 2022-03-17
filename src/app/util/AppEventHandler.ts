@@ -26,6 +26,7 @@ export default class {
     this.forward(AppEvent.languageChange);
     this.forward(AppEvent.quickSearch);
     this.forward(AppEvent.tabClick);
+    this.forward(AppEvent.save);
   }
 
   forward(event: string): void {

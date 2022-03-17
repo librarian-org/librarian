@@ -11,7 +11,6 @@ const actionCreate = {
 type ElectronWindow = BrowserWindow | undefined;
 
 export default class NativeMenuActionHandlers implements MenuActionHandler {
-
   constructor(private resources: Resource) {}
 
   newBorrow(_menuItem: MenuItem, win: ElectronWindow): void {
@@ -46,6 +45,11 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
   }
   quit(): void {
     app.quit();
+  }
+  save(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.save);
+    }
   }
   undo(_menuItem: MenuItem, win: ElectronWindow): void {
     if (win) {
@@ -107,7 +111,7 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
     if (win) win.webContents.zoomLevel = win.webContents.zoomLevel - 0.5;
   }
   fullScreen(_menuItem: MenuItem, win: ElectronWindow): void {
-    if (win) win.setFullScreen(!win.isFullScreen())
+    if (win) win.setFullScreen(!win.isFullScreen());
   }
   minimize(_menuItem: MenuItem, win: ElectronWindow): void {
     if (win) win.minimize();
@@ -119,7 +123,7 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
     shell.openExternal('https://librarian-org.gitbook.io/librarian/');
   }
   reportIssue(): void {
-    'https://github.com/librarian-org/librarian/issues/new'
+    'https://github.com/librarian-org/librarian/issues/new';
   }
   website(): void {
     shell.openExternal('https://librarian-org.github.io/');
