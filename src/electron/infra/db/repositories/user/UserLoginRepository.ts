@@ -1,4 +1,4 @@
-import typeORM, { In, QueryBuilder } from 'typeorm';
+import typeORM, { In } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../../../../database/models/User.schema';
 import RepositoryBase from '../../RepositoryBase';
