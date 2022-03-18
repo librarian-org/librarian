@@ -1,10 +1,10 @@
-import typeORM from 'typeorm';
+import typeORM, { In } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import { User } from '../../../../database/models/User.schema';
 import RepositoryBase from '../../RepositoryBase';
 
 interface Where {
-  where: unknown;
+  login: string;
   password: string;
 }
 
@@ -17,7 +17,9 @@ export class UserLoginRepository extends RepositoryBase {
     super();
   }
 
-  public static getInstance(typeOrm: typeORM.Repository<unknown>): UserLoginRepository {
+  public static getInstance(
+    typeOrm: typeORM.Repository<unknown>
+  ): UserLoginRepository {
     if (!UserLoginRepository.instance) {
       UserLoginRepository.instance = new UserLoginRepository();
     }
@@ -29,7 +31,17 @@ export class UserLoginRepository extends RepositoryBase {
 
   public async execute(content: Where): Promise<unknown> {
     try {
-      const user = (await this.repository.findOne(content.where)) as User;
+      const filter = {
+        relations: ['userType'],
+        where: {
+          login: content.login,
+          userType: {
+            name: In(['admin', 'librarian']),
+          },
+        },
+      };
+
+      const user = (await this.repository.findOne(filter)) as User;
 
       if (user && bcrypt.compareSync(content.password, user.password)) {
         return user;

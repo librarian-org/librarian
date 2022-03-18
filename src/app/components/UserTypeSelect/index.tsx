@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { OnChangeValue } from 'react-select';
-
+import { useAuth } from '../../hooks/auth';
 import { Container } from './style';
 import i18n from '../../i18n';
 import SelectInput, { SelectHandles } from '../SelectInput';
@@ -30,6 +30,8 @@ const UserTypeSelect: React.ForwardRefRenderFunction<
   SelectHandles,
   UserTypeProps
 > = ({ containerStyle, autoFocus, handleCustomChange }, selectRef) => {
+  const { user } = useAuth();
+
   const [options, setOptions] = useState<Option[]>([]);
   const [value, setValue] = useState(undefined);
 
@@ -38,13 +40,27 @@ const UserTypeSelect: React.ForwardRefRenderFunction<
       entity: 'UserType',
     }) as UserType[];
 
-    const mappedOptions = result.map((item) => ({
-      label: i18n.t(`userType.${item.name}`),
-      value: item.id.toString(),
-    }));
+    const filtered = result.filter((item) => {
+      if (user.userType.name === 'librarian') {
+        return item.name !== 'admin';
+      }
+
+      if (user.userType.name === 'person') {
+        return item.name === 'person';
+      }
+
+      return item;
+    });
+
+    const mappedOptions = filtered.map((item) => {
+      return {
+        label: i18n.t(`userType.${item.name}`),
+        value: item.id.toString(),
+      };
+    });
 
     setOptions(mappedOptions);
-  }, []);
+  }, [user.userType.name]);
 
   const handleChange = (selectedValue: OnChangeValue<Option, false>) => {
     setValue(selectedValue);
