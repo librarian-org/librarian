@@ -140,7 +140,9 @@
     "success": "Sucesso",
     "warning": "Aviso",
     "noNewNotifications": "Sem novas notificações",
-    "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo"
+    "restartFullEffect": "É preciso reiniciar para que as alterações tenham efeito completo",
+    "clearAll": "Limpar todas as notificações",
+    "hide": "Esconder as notificações"
   },
   "publisher": {
     "label": "Editora",

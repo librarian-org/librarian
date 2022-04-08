@@ -4,7 +4,7 @@ import { on, off } from '../../util/EventHandler';
 import { ToastMessage, useToast } from '../../hooks/toast';
 import AlertsPanel from '../AlertsPanel';
 
-import { Container, StatusItem, StatusItemContainer } from './styles';
+import { Container, Counter, StatusItem, StatusItemContainer } from './styles';
 import i18n from '../../i18n';
 import LoggedUser from '../LoggedUser';
 
@@ -45,11 +45,20 @@ const StatusBar: React.FC = () => {
       <StatusItem>
         <StatusItemContainer onClick={handleAlertPanelClick}>
           <span>
-            {alerts && alerts.length > 0 ? <FaBell /> : <FaRegBell />}
+            {alerts && alerts.length > 0 ? (
+              <span>
+                <FaBell />
+                <Counter>{alerts.length}</Counter>
+              </span>
+            ) : (
+              <FaRegBell />
+            )}
           </span>
         </StatusItemContainer>
       </StatusItem>
-      {alertsPanel && <AlertsPanel alerts={alerts} />}
+      {alertsPanel && (
+        <AlertsPanel alerts={alerts} handleAlertPanelClick={handleAlertPanelClick} />
+      )}
     </Container>
   );
 };

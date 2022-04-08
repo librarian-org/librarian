@@ -31,3 +31,24 @@ export const StatusItemContainer = styled.div`
     font-size: 12px;
   }
 `;
+
+export const Counter = styled.small`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-size: 8px;
+  font-weight: bold;
+
+  position: relative;
+
+  background-color: ${(props) => props.theme.colors.error};
+
+  border-radius: 50%;
+
+  height: 12px;
+  width: 12px;
+  left: -6px;
+  top: -6px;
+`;
