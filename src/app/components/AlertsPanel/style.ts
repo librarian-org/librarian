@@ -80,7 +80,6 @@ export const Clear = styled.button`
   margin-left: 4px;
 
   &:hover {
-    /* color: ${(props) => props.theme.colors.primary.dark}; */
     background-color: ${(props) => tint(0.4, props.theme.colors.background)};
   }
 `;
