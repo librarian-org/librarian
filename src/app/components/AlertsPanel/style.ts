@@ -75,9 +75,18 @@ export const Clear = styled.button`
   border: 0;
   font-size: 10px;
   color: ${(props) => props.theme.colors.text};
-  padding: 3px;
+  padding: 1px;
+  border-radius: 6px;
+  margin-left: 4px;
 
   &:hover {
-    color: ${(props) => props.theme.colors.primary.dark};
+    /* color: ${(props) => props.theme.colors.primary.dark}; */
+    background-color: ${(props) => tint(0.4, props.theme.colors.background)};
   }
+`;
+
+export const AlertsActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px;
 `;

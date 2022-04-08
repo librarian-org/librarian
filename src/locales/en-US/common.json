@@ -138,7 +138,9 @@
     "success": "Success",
     "warning": "Warning",
     "noNewNotifications": "No new notifications",
-    "restartFullEffect": "You'll need restart app for this changes take full effect"
+    "restartFullEffect": "You'll need restart app for this changes take full effect",
+    "clearAll": "Clear all notifications",
+    "hide": "Hide notifications"
   },
   "publisher": {
     "label": "Publisher",
