@@ -7,6 +7,7 @@ export * from './GenericUpdateRepository';
 export * from './GlobalSearchRepository';
 export * from './title/ListTitleRepository';
 export * from './title/ReadTitleRepository';
+export * from './title/CheckTitleClassificationRepository';
 export * from './title/TitleSearchRepository';
 export * from './person/ListPersonRepository';
 export * from './person/ReadPersonRepository';

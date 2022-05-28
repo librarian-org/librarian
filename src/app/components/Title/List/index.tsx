@@ -10,7 +10,7 @@ import { useToast } from '../../../hooks/toast';
 import { AppEvent } from '../../../../common/AppEvent';
 import { trigger } from '../../../util/EventHandler';
 import { Actions } from '../../../../common/Actions';
-import { FaPen } from 'react-icons/fa';
+import { FaPen, FaTags } from 'react-icons/fa';
 
 const TitleList: React.FC = () => {
   const { addToast } = useToast();
@@ -22,25 +22,24 @@ const TitleList: React.FC = () => {
 
   useEffect(() => {
     try {
-    setLoading(true);
-    const response = window.api.sendSync('listTitle', {
-      entity: 'Title',
-      value: {
-        where: null,
-        pageStart: 0,
-        pageSize: rowsPerPage,
-      },
-    }) as PaginatedSearch<Title>;
-    setList(response.data);
-    setLoading(false);
-  } catch (err) {
-    console.error(err);
-  }
-
+      setLoading(true);
+      const response = window.api.sendSync('listTitle', {
+        entity: 'Title',
+        value: {
+          where: null,
+          pageStart: 0,
+          pageSize: rowsPerPage,
+        },
+      }) as PaginatedSearch<Title>;
+      setList(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
   }, [rowsPerPage]);
 
   const handleUpdate = (item: Title): void => {
-    trigger(AppEvent.titleTab, { action: Actions.update, value: item});
+    trigger(AppEvent.titleTab, { action: Actions.update, value: item });
   };
 
   const handleRowClick = (item: Title) => {
@@ -49,6 +48,18 @@ const TitleList: React.FC = () => {
 
   const columns: Array<Column<Title>> = useMemo(
     () => [
+      {
+        Header: () => null,
+        id: 'info',
+        Cell: (row: Cell<Title>) => {
+          const classifications = row.row.original.titlePublishers.map(
+            (publisher) => {
+              return publisher.classification;
+            }
+          );
+          return <FaTags title={classifications.join(', ')} size={15} />;
+        },
+      },
       {
         Header: i18n.t('title.label'),
         accessor: 'name',
@@ -62,15 +73,22 @@ const TitleList: React.FC = () => {
         id: 'edit',
         Cell: (row: Cell<Title>) => {
           return (
-          <>
-            <FaPen size={20} title={i18n.t('title.edit')} onClick={(event) => { event.stopPropagation(); handleUpdate(row.row.original)}} />
-          </>)
-        }
-      }
+            <>
+              <FaPen
+                size={20}
+                title={i18n.t('title.edit')}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleUpdate(row.row.original);
+                }}
+              />
+            </>
+          );
+        },
+      },
     ],
-    [],
+    []
   );
-
 
   const handleSubmit = useCallback(
     async ({ pageIndex = 0 }: Search) => {
@@ -99,7 +117,7 @@ const TitleList: React.FC = () => {
         });
       }
     },
-    [addToast, rowsPerPage],
+    [addToast, rowsPerPage]
   );
 
   return (

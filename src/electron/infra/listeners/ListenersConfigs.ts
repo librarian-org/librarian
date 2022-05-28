@@ -14,6 +14,10 @@ export default class ListenersConfigs {
 
       { listenerName: 'listTitle', repositoryName: 'ListTitle' },
       { listenerName: 'readTitle', repositoryName: 'ReadTitle' },
+      {
+        listenerName: 'checkTitleClassification',
+        repositoryName: 'CheckTitleClassification',
+      },
 
       { listenerName: 'listPerson', repositoryName: 'ListPerson' },
       { listenerName: 'readPerson', repositoryName: 'ReadPerson' },
