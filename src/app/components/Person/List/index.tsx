@@ -60,7 +60,7 @@ const PersonList: React.FC = () => {
         },
       },
       {
-        Header: () => null,
+        Header: (): void => null,
         id: 'edit',
         Cell: (row: Cell<Person>) => {
           return (
