@@ -27,7 +27,7 @@ import { isValidEAN13 } from '../../../hooks/useBarcode';
 
 import { ButtonContainer, Container, List, ListItem, Row } from './styles';
 import { Title } from '../Title';
-import {ActionSave} from '../../Tabs';
+import { ActionSave } from '../../Tabs';
 interface SelectType {
   id: string;
   name: string;
@@ -38,6 +38,13 @@ interface Publisher {
   classification: string;
   edition: string;
   publishedAt: Date;
+}
+
+interface ClassificationWithTitle {
+  classification: string;
+  title: {
+    name: string;
+  };
 }
 
 const TitleCreate: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
@@ -92,13 +99,24 @@ const TitleCreate: React.FC<{ globalSave: ActionSave }> = ({ globalSave }) => {
       return;
     }
 
-    if (
-      publishers.filter((a) => a.publisher.name === publisher.name).length > 0
-    ) {
+    const classificationWithTitle = window.api.sendSync(
+      'checkTitleClassification',
+      {
+        entity: 'TitlePublisher',
+        value: {
+          where: { classification },
+        },
+      }
+    ) as ClassificationWithTitle;
+
+    if (classificationWithTitle) {
       addToast({
         title: i18n.t('notifications.warning'),
         type: 'error',
-        description: `${publisher.name} ${i18n.t('title.hasBeenAdd')}`,
+        description: i18n
+          .t('title.classificationCheck')
+          .replace('#classification#', classification)
+          .replace('#title#', classificationWithTitle.title.name),
       });
       return;
     }
