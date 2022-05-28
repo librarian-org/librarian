@@ -30,11 +30,15 @@ const ReadPerson: React.FC<{ item: Person }> = ({ item }) => {
         <Card
           title={item.name}
           actions={
-            <FaPen
-              size={20}
-              title={i18n.t('title.edit')}
-              onClick={() => handleEditClick(item)}
-            />
+            <>
+              {item.login !== 'admin' && (
+                <FaPen
+                  size={20}
+                  title={i18n.t('title.edit')}
+                  onClick={() => handleEditClick(item)}
+                />
+              )}
+            </>
           }
         >
           {item.login} <br />
@@ -92,7 +96,7 @@ const ReadPerson: React.FC<{ item: Person }> = ({ item }) => {
         </Card>
         <Card title={i18n.t('person.addresses')}>
           {item.addresses.map((address) => (
-            <Subpanel key={address.id} >
+            <Subpanel key={address.id}>
               {i18n.t('country.label')}:{' '}
               {i18n.t(`countries.${address.city.region.country.name}`)} <br />
               {i18n.t('region.label')}: {address.city.region.name} <br />

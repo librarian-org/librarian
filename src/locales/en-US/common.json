@@ -115,7 +115,9 @@
     "edit": "Edit",
 
     "invalidISBN": "Invalid ISBN",
-    "successSave": "Title saved successfully "
+    "successSave": "Title saved successfully ",
+
+    "classificationCheck": "Classification: #classification#, already exists for title: #title#"
   },
   "settings": {
     "label": "Settings",

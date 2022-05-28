@@ -117,7 +117,9 @@
     "edit": "Editar",
 
     "invalidISBN": "ISBN inválido",
-    "successSave": "Título salvo com sucesso"
+    "successSave": "Título salvo com sucesso",
+
+    "classificationCheck": "Classificação (Tombo): #classification#, já existe para o título: #title#"
   },
   "settings": {
     "label": "Configurações",
