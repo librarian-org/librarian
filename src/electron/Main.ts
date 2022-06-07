@@ -1,31 +1,34 @@
 import 'reflect-metadata';
 import { app, BrowserWindow, ipcMain, IpcMainEvent, Menu } from 'electron';
 import log from 'electron-log';
-import isDev from 'electron-is-dev';
 import updater from 'update-electron-app';
 
 import { Connection, createConnection, EntitySchema } from 'typeorm';
-import { Event } from '../electron/contracts/Event';
-import DefaultResources from './infra/resources/DefaultResources';
+import { Event } from './contracts/Event';
 import LibrarianWindow from './LibrarianWindow';
 import DefaultMenu from './infra/menu/DefaultMenu';
-import { AppEvent } from '../common/AppEvent';
+import { AppEvent } from '@common/AppEvent';
 
 import NativeMenuActionHandlers from './infra/menu/NativeMenuActionHandler';
 import RepositoryFactory from './infra/db/factories/RepositoryFactory';
 import ListenersConfigs from './infra/listeners/ListenersConfigs';
-import I18NextAdapter from './infra/i18n/I18NextAdapter';
 import I18nAdapter from './data/protocols/I18n/I18n';
 import Resource from './data/protocols/Resource/Resource';
 import EntitiesConfigs from './database/EntitiesConfigs';
 
 export default class Main {
   private connection: Connection;
-  private adapter: I18nAdapter = new I18NextAdapter();
-  private resources: Resource = new DefaultResources();
+
+  constructor(
+    private resources: Resource,
+    private adapter: I18nAdapter,
+    private librarianWindow: LibrarianWindow
+  ) {
+    //
+  }
 
   public async initialize(): Promise<void> {
-    if (!isDev && process.platform !== 'linux') {
+    if (!this.resources.isDev() && process.platform !== 'linux') {
       updater({
         logger: log,
       });
@@ -41,7 +44,7 @@ export default class Main {
         type: 'sqlite',
         migrationsRun: true,
         migrations: this.resources.getMigrationPath(),
-        logging: isDev,
+        logging: this.resources.isDev(),
         logger: 'simple-console',
         database: this.resources.getDatabasePath(),
         entities: EntitiesConfigs.getEntities() as EntitySchema[],
@@ -53,34 +56,29 @@ export default class Main {
   }
 
   protected async setMainListeners(): Promise<void> {
-    app.on('ready', async () => {
-      LibrarianWindow.build(this.resources);
+    await app.whenReady();
 
-      await this.adapter.initialize(this.resources.getSelectedLanguage());
-      await this.adapter.load(this.resources.getLanguages());
+    await this.librarianWindow.initialize();
 
-      this.adapter.onLoaded();
-      this.adapter.onLanguageChanged((language: string) => {
-        const win = BrowserWindow.getFocusedWindow();
-        if (win) {
-          win.webContents.send(AppEvent.languageChange, {
-            language,
-            namespace: 'common',
-            resource: this.adapter.getResource(language),
-          });
-        }
-      });
-
-      const handler = new NativeMenuActionHandlers(this.resources);
-
-      const menu = new DefaultMenu(this.adapter, this.resources, handler);
-      Menu.setApplicationMenu(
-        Menu.buildFromTemplate(await menu.buildTemplate())
-      );
-
-      await this.setConnection();
-      await this.setCustomListeners();
+    this.adapter.onLoaded();
+    this.adapter.onLanguageChanged((language: string) => {
+      const win = BrowserWindow.getFocusedWindow();
+      if (win) {
+        win.webContents.send(AppEvent.languageChange, {
+          language,
+          namespace: 'common',
+          resource: this.adapter.getResource(language),
+        });
+      }
     });
+
+    const handler = new NativeMenuActionHandlers(this.resources);
+
+    const menu = new DefaultMenu(this.adapter, this.resources, handler);
+    Menu.setApplicationMenu(Menu.buildFromTemplate(await menu.buildTemplate()));
+
+    await this.setConnection();
+    await this.setCustomListeners();
 
     app.on('window-all-closed', () => {
       if (process.platform !== 'darwin') {
@@ -90,7 +88,7 @@ export default class Main {
 
     app.on('activate', async () => {
       if (BrowserWindow.getAllWindows().length === 0) {
-        LibrarianWindow.build(this.resources);
+        LibrarianWindow.build(this.resources).initialize();
       }
     });
   }

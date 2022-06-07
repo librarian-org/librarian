@@ -3,6 +3,7 @@ import { ResourceGetIcon } from './ResourceGetIcon';
 import { ResourceGetLanguages } from './ResourceGetLanguages';
 import { ResourceGetMigrationPath } from './ResourceGetMigrationsPath';
 import { ResourceGetSelectedLanguages } from './ResourceGetSelectedLanguage';
+import { ResourceIsDev } from './ResourceIsDev';
 import { ResourceWriteLanguageFile } from './ResourceWriteLanguageFile';
 
 export default interface Resource
@@ -11,4 +12,5 @@ export default interface Resource
     ResourceGetLanguages,
     ResourceGetMigrationPath,
     ResourceGetSelectedLanguages,
+    ResourceIsDev,
     ResourceWriteLanguageFile {}

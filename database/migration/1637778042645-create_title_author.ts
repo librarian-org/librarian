@@ -41,7 +41,7 @@ export class createTitleAuthor1637778042645 implements MigrationInterface {
       new TableForeignKeyPatch({
         columnNames: ['authorId'],
         referencedColumnNames: ['id'],
-        referencedTableName: 'category',
+        referencedTableName: 'author',
         onDelete: 'CASCADE',
       })
     );

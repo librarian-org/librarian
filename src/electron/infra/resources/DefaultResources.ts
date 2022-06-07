@@ -1,10 +1,14 @@
 import { app } from 'electron';
 import fs from 'fs';
 import path from 'path';
-import isDev from 'electron-is-dev';
+// import isDev from 'electron-is-dev';
 import Resource from '../../data/protocols/Resource/Resource';
 
 export default class DefaultResources implements Resource {
+  public isDev(): boolean {
+    return !app.isPackaged;
+  }
+
   public getLanguages(): string[] {
     const folder = path.resolve(
       __dirname,
@@ -61,7 +65,7 @@ export default class DefaultResources implements Resource {
       app.name,
       'database.sqlite'
     );
-    return isDev ? devPath : prodPath;
+    return this.isDev() ? devPath : prodPath;
   }
 
   public getMigrationPath(): string[] {

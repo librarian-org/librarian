@@ -59,6 +59,7 @@ export const Container = styled.div<ContainerProps>`
     `}
 
   input {
+    color-scheme: ${(props) => props.theme.title};
     flex: 1;
     background: transparent;
     border: 0;

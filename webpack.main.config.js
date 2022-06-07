@@ -1,4 +1,5 @@
 const TerserPlugin = require('terser-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   /**
@@ -11,6 +12,7 @@ module.exports = {
     rules: require('./webpack.rules'),
   },
   resolve: {
+    plugins: [new TsconfigPathsPlugin()],
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json']
   },
   optimization: {

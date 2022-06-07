@@ -1,5 +1,4 @@
 import { BrowserWindow } from 'electron';
-import isDev from 'electron-is-dev';
 import Resource from './data/protocols/Resource/Resource';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -8,9 +7,11 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 export default class LibrarianWindow {
   private window: BrowserWindow | null;
 
-  constructor(
-    private resources: Resource
-  ) {
+  constructor(private resources: Resource) {
+    //
+  }
+
+  public async initialize(): Promise<void> {
     this.window = new BrowserWindow({
       icon: this.resources.getIcon(),
       minWidth: 800,
@@ -27,7 +28,7 @@ export default class LibrarianWindow {
 
     this.window.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-    if (isDev) {
+    if (this.resources.isDev()) {
       this.window.webContents.openDevTools();
     }
 

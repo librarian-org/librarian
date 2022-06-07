@@ -14,14 +14,20 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "jsx": "react",
+    "rootDirs": ["./src", "./tests"],
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@app/*": ["./src/app/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@common/*": ["./src/common/*"],
+      "@electron/*": ["./src/electron/*"]
     }
   },
   "include": [
-    "src/**/*"
+    "./src/**/*",
+    "./tests/**/*"
   ],
   "exclude": [
-    "tests",
+    //"tests",
   ]
 }

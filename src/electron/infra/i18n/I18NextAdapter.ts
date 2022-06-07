@@ -58,18 +58,23 @@ export default class I18NextAdapter implements I18nAdapter {
   public async loadAditional(languages: string[]): Promise<any> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let initial: any;
-    await Promise.all(
-      languages.map(async (item) => {
-        await loadLanguages(item, () => {
-          const lang = {
-            [item]: {
-              common: this.getResource(item),
-            },
-          };
-          initial = { ...initial, ...lang };
-        });
-      })
-    );
+
+    try {
+      await Promise.all(
+        languages.map(async (item) => {
+          await loadLanguages(item, () => {
+            const lang = {
+              [item]: {
+                common: this.getResource(item),
+              },
+            };
+            initial = { ...initial, ...lang };
+          });
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
 
     return initial;
   }

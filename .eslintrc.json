@@ -14,5 +14,34 @@
     "plugin:react-hooks/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": ["node_modules", "../**/dist"]
+  "ignorePatterns": ["node_modules", "../**/dist"],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "camelcase": "off",
+    "import/export": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never"
+      }
+    ]
+  },
 }
