@@ -1,6 +1,7 @@
 import { ResourceGetDatabasePath } from './ResourceGetDatabasePath';
 import { ResourceGetIcon } from './ResourceGetIcon';
 import { ResourceGetLanguages } from './ResourceGetLanguages';
+import { ResourceGetLogsPath } from './ResourceGetLogsPath';
 import { ResourceGetMigrationPath } from './ResourceGetMigrationsPath';
 import { ResourceGetSelectedLanguages } from './ResourceGetSelectedLanguage';
 import { ResourceWriteLanguageFile } from './ResourceWriteLanguageFile';
@@ -11,4 +12,5 @@ export default interface Resource
     ResourceGetLanguages,
     ResourceGetMigrationPath,
     ResourceGetSelectedLanguages,
-    ResourceWriteLanguageFile {}
+    ResourceWriteLanguageFile,
+    ResourceGetLogsPath {}

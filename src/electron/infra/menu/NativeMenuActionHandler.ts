@@ -13,6 +13,7 @@ type ElectronWindow = BrowserWindow | undefined;
 export default class NativeMenuActionHandlers implements MenuActionHandler {
   constructor(private resources: Resource) {
     this.about = this.about.bind(this);
+    this.showLogs = this.showLogs.bind(this);
   }
 
   public newBorrow(_menuItem: MenuItem, win: ElectronWindow): void {
@@ -153,6 +154,10 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
 
   website(): void {
     shell.openExternal('https://librarian-org.github.io/');
+  }
+
+  showLogs(): void {
+    shell.openPath(this.resources.getLogsPath());
   }
 
   public about(): void {
