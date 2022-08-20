@@ -1,6 +1,7 @@
 # About Librarian
 
-[![Build](https://github.com/librarian-org/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/librarian-org/librarian/actions/workflows/build.yml)
+[![Build](https://github.com/librarian-org/librarian/actions/workflows/build.yml/badge.svg)](https://github.com/librarian-org/librarian/actions/workflows/build.yml) 
+[![Release](https://github.com/librarian-org/librarian/actions/workflows/release.yml/badge.svg)](https://github.com/librarian-org/librarian/actions/workflows/release.yml)
 
 A free OpenSource software to handle with books. It's ideal for school libraries
 and for someone who have many books.
