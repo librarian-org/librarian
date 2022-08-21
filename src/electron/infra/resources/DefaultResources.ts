@@ -77,4 +77,13 @@ export default class DefaultResources implements Resource {
       ),
     ];
   }
+
+  public getLogsPath(): string {
+    const logsPath = path.resolve(
+      app.getPath('appData'),
+      app.name,
+      'logs'
+    );
+    return logsPath;
+  };
 }

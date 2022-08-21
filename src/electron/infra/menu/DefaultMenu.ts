@@ -219,6 +219,11 @@ export default class DefaultMenu implements MenuBuildTemplate {
           },
           { type: 'separator' },
           {
+            label: this.i18nAdapter.translate('menu.help.showLogs'),
+            click: this.actionHandler.showLogs,
+          },
+          { type: 'separator' },
+          {
             id: 'about-menu',
             label: this.i18nAdapter.translate('menu.help.about'),
             click: this.actionHandler.about,
