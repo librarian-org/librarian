@@ -34,5 +34,6 @@ export interface MenuActionHandler {
   documentation: (menuItem: MenuItem, win: ElectronWindow) => void;
   reportIssue: (menuItem: MenuItem, win: ElectronWindow) => void;
   website: (menuItem: MenuItem, win: ElectronWindow) => void;
+  showLogs: (menuItem: MenuItem, win: ElectronWindow) => void;
   about: (menuItem: MenuItem, win: ElectronWindow) => void;
 }
