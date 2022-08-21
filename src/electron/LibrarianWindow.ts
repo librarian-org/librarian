@@ -29,6 +29,8 @@ export default class LibrarianWindow {
 
     if (isDev) {
       this.window.webContents.openDevTools();
+    } else {
+      this.window.maximize();
     }
 
     this.window.once('ready-to-show', () => {
