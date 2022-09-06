@@ -4,9 +4,6 @@ import React, {
   useMemo,
   useState,
   useRef,
-  MutableRefObject,
-  Ref,
-  RefObject,
 } from 'react';
 import { on, off } from '../../util/EventHandler';
 import { v4 } from 'uuid';
@@ -20,6 +17,7 @@ import Borrow from '../Borrow';
 import Title from '../Title';
 import Person from '../Person';
 import Settings from '../Settings';
+import Dashboard from '../Dashboard';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -46,7 +44,6 @@ const Tabs: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
   const [, setAction] = useState('list');
   const globalSave = useRef(null);
-
 
   const lastTab = useCallback((): Tab => {
     return tabItems[tabItems.length - 1];
@@ -166,6 +163,10 @@ const Tabs: React.FC = () => {
     handleCreateTab('settings', Actions.update, {});
   }, [handleCreateTab]);
 
+  const dashboardTab = useCallback(() => {
+    handleCreateTab('dashboard', Actions.create, {});
+  }, [handleCreateTab]);
+
   const quickSearch = useCallback(() => {
     setOpen((oldState) => !oldState);
   }, []);
@@ -184,6 +185,7 @@ const Tabs: React.FC = () => {
       { event: 'titleTab', handler: titleTab },
       { event: 'settingsTab', handler: settingsTab },
       { event: 'quickSearch', handler: quickSearch },
+      { event: 'dashboardTab', handler: dashboardTab },
       { event: 'save', handler: save },
     ],
     [
@@ -193,6 +195,7 @@ const Tabs: React.FC = () => {
       titleTab,
       settingsTab,
       quickSearch,
+      dashboardTab,
       save,
     ]
   );
@@ -280,6 +283,9 @@ const Tabs: React.FC = () => {
                   )}
                   {tab.type === 'settings' && (
                     <Settings globalSave={globalSave} />
+                  )}
+                  {tab.type === 'dashboard' && (
+                    <Dashboard />
                   )}
                 </TabContent>
               )

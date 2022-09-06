@@ -10,7 +10,7 @@ export default class RepositoryBase implements Repository {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async execute(content: unknown): Promise<unknown> {
+  public async execute(content?: unknown): Promise<unknown> {
     throw new Error('Must be implemented on children classes.');
   }
 }
