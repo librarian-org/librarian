@@ -1,5 +1,6 @@
 export enum AppEvent {
   languageChange = 'languageChange',
+  dashboardTab = 'dashboardTab',
   borrowTab = 'borrowTab',
   personTab = 'personTab',
   titleTab = 'titleTab',

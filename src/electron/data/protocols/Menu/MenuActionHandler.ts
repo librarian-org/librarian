@@ -3,6 +3,7 @@ import { BrowserWindow, MenuItem } from 'electron';
 type ElectronWindow = BrowserWindow | undefined;
 
 export interface MenuActionHandler {
+  showDashboard: (menuItem: MenuItem, win: ElectronWindow) => void;
   newBorrow: (menuItem: MenuItem, win: ElectronWindow) => void;
   newPerson: (menuItem: MenuItem, win: ElectronWindow) => void;
   newTitle: (menuItem: MenuItem, win: ElectronWindow) => void;
