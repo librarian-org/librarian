@@ -18,6 +18,7 @@ export default class {
   registerCallbacks(): void {
     window.api.on(AppEvent.languageChange, this.languageChange.bind(this));
 
+    this.forward(AppEvent.dashboardTab);
     this.forward(AppEvent.borrowTab);
     this.forward(AppEvent.personTab);
     this.forward(AppEvent.titleTab);

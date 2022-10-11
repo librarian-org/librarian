@@ -20,7 +20,12 @@ export default class RepositoryFactory {
     });
   }
 
-  public make(repository: string, entity: string): Repository {
+  public make(repository: string, entity?: string): Repository {
+    if (!entity) {
+      const dynamicRepository = this.products[repository].getInstance();
+      return dynamicRepository;
+    }
+
     const typeOrmRepository = this.connection.getRepository(entity);
     const dynamicRepository = this.products[repository].getInstance(typeOrmRepository);
 

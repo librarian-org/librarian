@@ -9,7 +9,7 @@
     "url": "https://github.com/librarian-org/librarian/issues"
   },
   "productName": "librarian",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "The Librarian app is ideal for schools libraries and for someone who have many books.",
   "main": ".webpack/main",
   "scripts": {
@@ -104,6 +104,7 @@
     "react-spinners-kit": "^1.9.1",
     "react-spring": "^9.3.2",
     "react-table": "^7.7.0",
+    "recharts": "^2.1.13",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.2",
     "styled-components": "^5.3.3",
