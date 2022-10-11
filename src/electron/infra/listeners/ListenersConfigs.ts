@@ -39,6 +39,11 @@ export default class ListenersConfigs {
       { listenerName: 'changePassword', repositoryName: 'ChangePassword' },
 
       { listenerName: 'globalSearch', repositoryName: 'GlobalSearch' },
+
+      { listenerName: 'regiteredSamples', repositoryName: 'RegisteredSamples' },
+      { listenerName: 'regiteredPeople', repositoryName: 'RegisteredPeople' },
+      { listenerName: 'overdueBorrows', repositoryName: 'OverdueBorrows' },
+      { listenerName: 'activeBorrows', repositoryName: 'ActiveBorrows' },
     ];
 
     return products;

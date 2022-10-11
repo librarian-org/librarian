@@ -18,6 +18,7 @@ import I18NextAdapter from './infra/i18n/I18NextAdapter';
 import I18nAdapter from './data/protocols/I18n/I18n';
 import Resource from './data/protocols/Resource/Resource';
 import EntitiesConfigs from './database/EntitiesConfigs';
+import { Repository } from './data/protocols';
 
 export default class Main {
   private connection: Connection;
@@ -105,8 +106,15 @@ export default class Main {
         listener.listenerName,
         async (event: IpcMainEvent, content: Event[]) => {
           try {
+            let repository: Repository;
+            if (content[0] === undefined) {
+              repository = repositoryFactory.make(listener.repositoryName);
+              event.returnValue = await repository.execute();
+              return;
+            }
+
             const { value, entity } = content[0];
-            const repository = repositoryFactory.make(
+            repository = repositoryFactory.make(
               listener.repositoryName,
               entity
             );

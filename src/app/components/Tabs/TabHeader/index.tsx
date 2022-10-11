@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Tab } from '../Tab';
 import { FiX, FiBook, FiUser, FiSettings } from 'react-icons/fi';
 import { FaHandshake } from 'react-icons/fa';
+import { AiFillDashboard } from 'react-icons/ai';
 import { Container } from './styles';
 import Translator from '../../I18n/Translator';
 import { DropTargetMonitor, useDrag, useDrop, XYCoord } from 'react-dnd';
@@ -103,6 +104,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ moveTab, index, title, id, onClic
         {tab.type === 'person' && (<FiUser size={14} color="#ff78f7" />)}
         {tab.type === 'borrow' && (<FaHandshake size={14} color="#50fa7b" />)}
         {tab.type === 'settings' && (<FiSettings size={14} color="#e3bb06" />)}
+        {tab.type === 'dashboard' && (<AiFillDashboard size={14} color="#CC0000" />)}
       </div>
       <span><Translator path={title} /></span>
       <div>

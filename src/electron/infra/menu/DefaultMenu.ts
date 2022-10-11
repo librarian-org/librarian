@@ -17,6 +17,12 @@ export default class DefaultMenu implements MenuBuildTemplate {
         label: this.i18nAdapter.translate('menu.file.label'),
         submenu: [
           {
+            label: this.i18nAdapter.translate('menu.file.showDashboard'),
+            accelerator: 'Ctrl+D',
+            click: this.actionHandler.showDashboard,
+          },
+          { type: 'separator' },
+          {
             label: this.i18nAdapter.translate('menu.file.newBorrow'),
             accelerator: 'Ctrl+B',
             click: this.actionHandler.newBorrow,

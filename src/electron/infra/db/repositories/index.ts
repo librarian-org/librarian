@@ -23,3 +23,7 @@ export * from './user/ChangePasswordRepository';
 export * from './user/UserCreateRepository';
 export * from './user/UserLoginRepository';
 export * from './user/UserUpdateRepository';
+export * from './dashboard/RegisteredSamplesRepository';
+export * from './dashboard/RegisteredPeopleRepository';
+export * from './dashboard/ActiveBorrowsRepository';
+export * from './dashboard/OverdueBorrowsRepository';

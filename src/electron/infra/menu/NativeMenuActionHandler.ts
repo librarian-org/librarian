@@ -16,6 +16,12 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
     this.showLogs = this.showLogs.bind(this);
   }
 
+  public showDashboard(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.dashboardTab);
+    }
+  }
+
   public newBorrow(_menuItem: MenuItem, win: ElectronWindow): void {
     if (win) {
       win.webContents.send(AppEvent.borrowTab, actionCreate);
