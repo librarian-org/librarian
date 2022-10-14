@@ -13,6 +13,12 @@ export interface MenuActionHandler {
   quit: (menuItem: MenuItem, win: ElectronWindow) => void;
   save: (menuItem: MenuItem, win: ElectronWindow) => void;
 
+  borrowedTitles: (menuItem: MenuItem, win: ElectronWindow) => void;
+  titleSituation: (menuItem: MenuItem, win: ElectronWindow) => void;
+  reservedTitles: (menuItem: MenuItem, win: ElectronWindow) => void;
+  registeredTitles: (menuItem: MenuItem, win: ElectronWindow) => void;
+  registeredPeople: (menuItem: MenuItem, win: ElectronWindow) => void;
+
   undo: (menuItem: MenuItem, win: ElectronWindow) => void;
   redo: (menuItem: MenuItem, win: ElectronWindow) => void;
   cut: (menuItem: MenuItem, win: ElectronWindow) => void;

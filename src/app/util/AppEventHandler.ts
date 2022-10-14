@@ -28,6 +28,12 @@ export default class {
     this.forward(AppEvent.quickSearch);
     this.forward(AppEvent.tabClick);
     this.forward(AppEvent.save);
+
+    this.forward(AppEvent.borrowedTitles);
+    this.forward(AppEvent.titleSituation);
+    this.forward(AppEvent.reservedTitles);
+    this.forward(AppEvent.registeredTitles);
+    this.forward(AppEvent.registeredPeople);
   }
 
   forward(event: string): void {

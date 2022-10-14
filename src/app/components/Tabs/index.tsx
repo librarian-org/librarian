@@ -177,6 +177,26 @@ const Tabs: React.FC = () => {
     }
   }, []);
 
+  const borrowedTitles = useCallback(() => {
+    console.log('Not implemented yet');
+  }, []);
+
+  const titleSituation = useCallback(() => {
+    //
+  }, []);
+
+  const reservedTitles = useCallback(() => {
+    //
+  }, []);
+
+  const registeredTitles = useCallback(() => {
+    //
+  }, []);
+
+  const registeredPeople = useCallback(() => {
+    //
+  }, []);
+
   const registerEvents: Event[] = useMemo(
     () => [
       { event: 'closeCurrentTab', handler: closeCurrentTab },
@@ -187,6 +207,12 @@ const Tabs: React.FC = () => {
       { event: 'quickSearch', handler: quickSearch },
       { event: 'dashboardTab', handler: dashboardTab },
       { event: 'save', handler: save },
+
+      { event: 'borrowedTitles', handler: borrowedTitles },
+      { event: 'titleSituation', handler: titleSituation },
+      { event: 'reservedTitles', handler: reservedTitles },
+      { event: 'registeredTitles', handler: registeredTitles },
+      { event: 'registeredPeople', handler: registeredPeople },
     ],
     [
       closeCurrentTab,
@@ -197,6 +223,11 @@ const Tabs: React.FC = () => {
       quickSearch,
       dashboardTab,
       save,
+      borrowedTitles,
+      titleSituation,
+      reservedTitles,
+      registeredTitles,
+      registeredPeople,
     ]
   );
 
@@ -284,9 +315,7 @@ const Tabs: React.FC = () => {
                   {tab.type === 'settings' && (
                     <Settings globalSave={globalSave} />
                   )}
-                  {tab.type === 'dashboard' && (
-                    <Dashboard />
-                  )}
+                  {tab.type === 'dashboard' && <Dashboard />}
                 </TabContent>
               )
           )}

@@ -12,5 +12,11 @@ export enum AppEvent {
   getTheme = 'getTheme',
   getInitialTranslations = 'getInitialTranslations',
   tabClick = "tabClick",
-  save = "save"
+  save = "save",
+
+  borrowedTitles = "borrowedTitles",
+  titleSituation = "titleSituation",
+  reservedTitles = "reservedTitles",
+  registeredTitles = "registeredTitles",
+  registeredPeople = "registeredPeople",
 }

@@ -13,6 +13,14 @@
       "settings": "Configurações",
       "save": "Salvar"
     },
+    "reports": {
+      "label": "&Relatórios",
+      "borrowedTitles": "Títulos Emprestados",
+      "titleSituation": "Situação do Título",
+      "reservedTitles": "Títulos Reservados",
+      "registeredTitles": "Títulos Cadastrados",
+      "registeredPeople": "Pessoas Cadastradas"
+    },
     "edit": {
       "label": "&Editar",
       "undo": "&Desfazer",

@@ -13,6 +13,14 @@
       "settings": "Settings",
       "save": "Save"
     },
+    "reports": {
+      "label": "&Reports",
+      "borrowedTitles": "Borrowed Titles",
+      "titleSituation": "Title Situation",
+      "reservedTitles": "Reserved Titles",
+      "registeredTitles": "Registered Titles",
+      "registeredPeople": "Registered People"
+    },
     "edit": {
       "label": "&Edit",
       "undo": "&Undo",

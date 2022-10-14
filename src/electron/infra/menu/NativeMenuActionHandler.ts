@@ -68,6 +68,36 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
     }
   }
 
+  borrowedTitles(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.borrowedTitles);
+    }
+  }
+
+  titleSituation(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.titleSituation);
+    }
+  }
+
+  reservedTitles(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.reservedTitles);
+    }
+  }
+
+  registeredTitles(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.reservedTitles);
+    }
+  }
+
+  registeredPeople(_menuItem: MenuItem, win: ElectronWindow): void {
+    if (win) {
+      win.webContents.send(AppEvent.registeredPeople);
+    }
+  }
+
   undo(_menuItem: MenuItem, win: ElectronWindow): void {
     if (win) {
       win.webContents.undo();
@@ -168,6 +198,8 @@ export default class NativeMenuActionHandlers implements MenuActionHandler {
 
   public about(): void {
     app.setAboutPanelOptions({
+      credits: "Librarian Team",
+      version: app.getVersion(),
       applicationName: 'Librarian',
       applicationVersion: app.getVersion(),
       copyright: 'Librarian Team',

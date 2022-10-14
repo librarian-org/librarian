@@ -67,6 +67,42 @@ export default class DefaultMenu implements MenuBuildTemplate {
     ];
   }
 
+  private buildReportsMenu(): MenuItemConstructorOptions[] {
+    return [
+      {
+        label: this.i18nAdapter.translate('menu.reports.label'),
+        submenu: [
+          {
+            label: this.i18nAdapter.translate('menu.reports.borrowedTitles'),
+            accelerator: 'Ctrl+Alt+B',
+            click: this.actionHandler.borrowedTitles,
+          },
+          {
+            label: this.i18nAdapter.translate('menu.reports.titleSituation'),
+            accelerator: 'Ctrl+Alt+S',
+            click: this.actionHandler.titleSituation,
+          },
+          {
+            label: this.i18nAdapter.translate('menu.reports.reservedTitles'),
+            accelerator: 'Ctrl+Alt+R',
+            click: this.actionHandler.reservedTitles,
+          },
+          {
+            label: this.i18nAdapter.translate('menu.reports.registeredTitles'),
+            accelerator: 'Ctrl+Alt+T',
+            click: this.actionHandler.registeredTitles,
+          },
+          { type: 'separator' },
+          {
+            label: this.i18nAdapter.translate('menu.reports.registeredPeople'),
+            accelerator: 'Ctrl+Alt+P',
+            click: this.actionHandler.registeredPeople,
+          },
+        ],
+      },
+    ];
+  }
+
   private buildEditMenu(): MenuItemConstructorOptions[] {
     return [
       {
@@ -243,6 +279,7 @@ export default class DefaultMenu implements MenuBuildTemplate {
     const appMenu: MenuItemConstructorOptions[] = [];
 
     appMenu.push(...this.buildFileMenu());
+    appMenu.push(...this.buildReportsMenu());
     appMenu.push(...this.buildEditMenu());
     const viewMenu = await this.buildViewMenu();
     appMenu.push(...viewMenu);
