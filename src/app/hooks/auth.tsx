@@ -3,7 +3,6 @@ import React, {
   useCallback,
   useState,
   useContext,
-  useEffect,
 } from 'react';
 
 interface User {
@@ -35,20 +34,16 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [data, setData] = useState<AuthState>({} as AuthState);
+  const [data, setData] = useState<AuthState>(() => {
+    const user = localStorage.getItem('@librarian:user');
+
+    return { user: JSON.parse(user) };
+  });
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@librarian:user');
 
     setData({} as AuthState);
-  }, []);
-
-  useEffect(() => {
-    const user = localStorage.getItem('@librarian:user');
-
-    if (user) {
-      setData({ user: JSON.parse(user) });
-    }
   }, []);
 
   const signIn = useCallback(async ({ login, password }): Promise<boolean> => {
