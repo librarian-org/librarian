@@ -145,6 +145,15 @@
     "allowedRenovations": "Renovações permitidas",
     "saved": "Suas configurações foram salvas"
   },
+  "borrowedTitles":
+  {
+    "label": "Títulos Emprestados",
+    "overdueBorrows": "Empréstimos atrasados",
+    "activeBorrows": "Empréstimos ativos",
+    "registeredSamples": "Exemplares cadastrados",
+    "registeredPeople": "Pessoas cadastradas"
+  },
+
   "login": {
     "login": "Entrar",
     "username": "Usuário",

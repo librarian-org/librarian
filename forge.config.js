@@ -1,7 +1,8 @@
 module.exports = {
   packagerConfig: {
     icon: `${__dirname}/src/assets/images/librarian`,
-    appCopyright: "Librarian Org"
+    appCopyright: "Librarian Org",
+    extraResource: ['node_modules/pdf-to-printer/dist/SumatraPDF.exe'],
   },
   makers: [
     {

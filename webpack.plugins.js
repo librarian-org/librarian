@@ -53,6 +53,7 @@ module.exports = [
       { from: 'dist/', to: './database/' },
       { from: 'node_modules/@fontsource/nunito/files/nunito-all-400-normal.woff', to: 'nunito-all-400-normal.woff' },
       { from: 'node_modules/@fontsource/nunito/files/nunito-latin-400-normal.woff2', to: 'nunito-latin-400-normal.woff2' },
+      // { from: 'node_modules/pdf-to-printer/dist/SumatraPDF.exe', to: './' },
     ],
   }),
   new ForkTsCheckerWebpackPlugin(),

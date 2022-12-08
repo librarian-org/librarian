@@ -23,6 +23,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import SearchMenu from '../SearchMenu';
 import { Actions } from '../../../common/Actions';
+import BorrowedTitles from '../reports/BorrowedTitles';
 
 interface ActionParameter {
   action: Actions;
@@ -178,8 +179,8 @@ const Tabs: React.FC = () => {
   }, []);
 
   const borrowedTitles = useCallback(() => {
-    console.log('Not implemented yet');
-  }, []);
+    handleCreateTab('borrowedTitles', Actions.list, {});
+  }, [handleCreateTab]);
 
   const titleSituation = useCallback(() => {
     //
@@ -316,6 +317,7 @@ const Tabs: React.FC = () => {
                     <Settings globalSave={globalSave} />
                   )}
                   {tab.type === 'dashboard' && <Dashboard />}
+                  {tab.type === 'borrowedTitles' && <BorrowedTitles />}
                 </TabContent>
               )
           )}
