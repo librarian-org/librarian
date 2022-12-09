@@ -27,3 +27,5 @@ export * from './dashboard/RegisteredSamplesRepository';
 export * from './dashboard/RegisteredPeopleRepository';
 export * from './dashboard/ActiveBorrowsRepository';
 export * from './dashboard/OverdueBorrowsRepository';
+
+export * from './reports/ListBorrowedTitlesRepository';

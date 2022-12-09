@@ -44,6 +44,11 @@ export default class ListenersConfigs {
       { listenerName: 'regiteredPeople', repositoryName: 'RegisteredPeople' },
       { listenerName: 'overdueBorrows', repositoryName: 'OverdueBorrows' },
       { listenerName: 'activeBorrows', repositoryName: 'ActiveBorrows' },
+
+      {
+        listenerName: 'listBorrowedTitles',
+        repositoryName: 'ListBorrowedTitles',
+      },
     ];
 
     return products;

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Tab } from '../Tab';
-import { FiX, FiBook, FiUser, FiSettings } from 'react-icons/fi';
+import { FiX, FiBook, FiUser, FiSettings, FiFileText } from 'react-icons/fi';
 import { FaHandshake } from 'react-icons/fa';
 import { AiFillDashboard } from 'react-icons/ai';
 import { Container } from './styles';
@@ -105,6 +105,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ moveTab, index, title, id, onClic
         {tab.type === 'borrow' && (<FaHandshake size={14} color="#50fa7b" />)}
         {tab.type === 'settings' && (<FiSettings size={14} color="#e3bb06" />)}
         {tab.type === 'dashboard' && (<AiFillDashboard size={14} color="#CC0000" />)}
+        {tab.type === 'borrowedTitles' && (<FiFileText size={14} color="#EEEEEE" />)}
       </div>
       <span><Translator path={title} /></span>
       <div>

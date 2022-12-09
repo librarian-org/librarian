@@ -61,7 +61,8 @@
     "add": "Adicionar",
     "create": "Criar",
     "logout": "Sair",
-    "changePassword": "Trocar senha"
+    "changePassword": "Trocar senha",
+    "pdfExport": "Exportar para PDF"
   },
   "home": {
     "message": "Olá Mundo!"
@@ -147,13 +148,20 @@
   },
   "borrowedTitles":
   {
-    "label": "Títulos Emprestados",
-    "overdueBorrows": "Empréstimos atrasados",
-    "activeBorrows": "Empréstimos ativos",
-    "registeredSamples": "Exemplares cadastrados",
-    "registeredPeople": "Pessoas cadastradas"
+    "label": "Títulos Emprestados"
   },
-
+  "titleSituation": {
+    "label": "Situação do Título"
+  },
+  "reservedTitles": {
+    "label": "Títulos Reservados"
+  },
+  "registeredTitles": {
+    "label": "Títulos Cadastrados"
+  },
+  "registeredPeople": {
+    "label": "Pessoas cadastradas"
+  },
   "login": {
     "login": "Entrar",
     "username": "Usuário",

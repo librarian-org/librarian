@@ -61,7 +61,8 @@
     "add": "Add",
     "create": "Create",
     "logout": "Logout",
-    "changePassword": "Change password"
+    "changePassword": "Change password",
+    "pdfExport": "Export to PDF"
   },
   "home": {
     "message": "Hello World!"
@@ -142,6 +143,22 @@
     "backupPath": "Database backup path",
     "allowedRenovations": "Allowed renovations",
     "saved": "Your settings have been saved"
+  },
+  "borrowedTitles":
+  {
+    "label": "Borrwed Titles"
+  },
+  "titleSituation": {
+    "label": "Title Situation"
+  },
+  "reservedTitles": {
+    "label": "Reserved Titles"
+  },
+  "registeredTitles": {
+    "label": "Registered Titles"
+  },
+  "registeredPeople": {
+    "label": "Registered People"
   },
   "login": {
     "login": "Log In",
